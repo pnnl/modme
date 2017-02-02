@@ -7,12 +7,9 @@ import tornado.ioloop
 import tornado.wsgi
 import django.core.handlers.wsgi
 import tornado.web
-import django
-import tornado
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'multiTask.settings'
 django.setup()
-from django.utils import timezone
 
 def main(port=9000):
 	f=open("pid","w")
@@ -27,8 +24,6 @@ def main(port=9000):
 	settings={'static_path': os.path.join(PATH,'static')}
 	tornado_application = tornado.web.Application(
 		[
-			# ('/MATB', tornado.web.StaticFileHandler, dict(path=settings['static_path'])),
-#			('/admin', tornado.web.StaticFileHandler, dict(path=settings['static_path'])),
 			('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)),
 			], **settings)
 	http_server = tornado.httpserver.HTTPServer(tornado_application)
