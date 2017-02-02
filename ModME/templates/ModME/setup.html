@@ -1,0 +1,79 @@
+<!-- <select id = "Parameters" name = "parameter_id">
+	<option value="%">---------</option>
+	{% for entry in parameters_list %}
+		<option value="{{ entry.id }}">{{ entry.param_name }}</option>
+	{% endfor %}
+</select><br> -->
+<html lang="en-us">
+<head>
+	<title>Configuration</title>
+	<link rel="stylesheet" type="text/css" href="/static/ModME/base.css">
+	<link rel=​"stylesheet" type=​"text/​css" href=​"/​static/​admin/​css/​changelists.css">​
+<script type=​"text/​javascript" src=​"/​admin/​jsi18n/​">​</script>​
+<script type=​"text/​javascript">​window.__admin_media_prefix__ = "/static/admin/";​</script>​
+<script type=​"text/​javascript" src=​"/​static/​admin/​js/​core.js">​</script>​
+<script type=​"text/​javascript" src=​"/​static/​admin/​js/​admin/​RelatedObjectLookups.js">​</script>​
+<script type=​"text/​javascript" src=​"/​static/​admin/​js/​jquery.js">​</script>​
+<script type=​"text/​javascript" src=​"/​static/​admin/​js/​jquery.init.js">​</script>​
+<script type=​"text/​javascript" src=​"/​static/​admin/​js/​actions.js">​</script>​
+<script type=​"text/​javascript" src=​"/​static/​test.js">​</script>
+
+</head>
+
+<body>
+	<div id=​"container">​
+
+		<div id="header">
+			<div id="branding">
+				<h1 id="site-name">
+					mMAT-B Experimentation Configuration
+				</h1>
+			</div>
+		</div>
+
+		<form>
+			<table id="results_list">
+				<thead>
+					<tr>
+						<td scope="col">
+							<div class="text">
+								<span>
+									<input id="action-toggle" type="checkbox" style="display: inline-block;"></td>
+								</span>
+							</div>
+							<div class="clear"></div>
+						</td>
+						<th scope="col" class="sortable column-param_name">
+							<div class="text"><a>Name</a></div>
+							<div class="clear"></div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- {% if parameters_list %}
+						<ul style="list-style:none;">
+						{% for param in parameters_list %}
+							<input type="checkbox"><a href="/ModME/configuration/{{ param.id }}/">{{ param.param_name }}</a></input>
+						{% endfor %}
+						</ul>
+					{% endif %} -->
+					{% if parameters_list %}
+						{% for param in parameters_list %}
+							<tr class="{% cycle 'row1' 'row2' %}">
+								<td>
+									<input type="checkbox"></input>
+								</td>
+								<th>
+									<a href="/ModME/configuration/{{ param.id }}/">{{ param.param_name }}</a>
+								</th>
+							</tr>
+						{% endfor %}
+					{% endif %}
+				</tbody>
+			</table>
+		</form>
+
+		<a href="/ModME/configuration/new/"><button>New</button></a>
+	</div>
+</body>
+</html>

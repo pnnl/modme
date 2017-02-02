@@ -1,0 +1,23 @@
+<head>
+<style>
+
+</style>
+</head>
+
+<body>
+
+{% for file in fileList%}
+    <script src="/static/{{ file }}"></script>
+{% endfor %}
+<script src="/static/{{ survey }}"></script>
+
+<form action="{% url 'ModME:survey' %}" style="display:none" method="post">
+{% csrf_token %}
+<input type="hidden" name="data" id="data"/>
+<input type="hidden" name="ind" id="ind" value="{{ ind }}"/>
+<input type="hidden" name="condId" id="condId" value="{{ condition.id }}"/>
+<input type="hidden" name="sessionID" id="sessionID" value="{{ sessionID }}"/>
+<input type="submit" value="submit" id="submit" style="visibility:hidden"/>
+</form>
+
+</body>

@@ -1,0 +1,66 @@
+<head>
+<style type="text/css">
+    p {
+        font-family: "Arial";
+    }
+</style>
+</head>
+
+<body style="background-color:EEEEEE">
+<div id="header" style="background-color:#FFA500;">
+    <h1 style="margin-bottom:0;text-align:center;font-size:100px;color:#000000">ModME</h1>
+</div>
+
+
+
+<div id="content" style="background-color:#DDDDDD;height=600px;width=600px;text-align:center;">
+    <form action="{% url 'ModME:begin' %}" method="post">
+        {% csrf_token %}
+        <select id = "Parameters" name = "parameter_id">
+            <option value="%">---------</option>
+            {% for entry in parameters_list %}
+                <option value="{{ entry.id }}">{{ entry.Name }}</option>
+            {% endfor %}
+        </select><br>
+        <p>Participant id: <input id="participant_id" type="text" name="participant_id"/></p>
+        <p>Session id: <input id="sessionNumber" type="text" name="sessionNumber"/></p>
+        <input id="submit" type="submit" value="Begin" style="display:none"/>
+    </form>
+        <button id="begin" onclick="check()"> Begin </button>
+</div>
+
+<script type="text/javascript">
+
+var array = [{% for meta in meta_list %}
+            {sessionID: "{{ meta.sessionID }}"},
+        {% endfor %}];
+
+function check() {
+    var select = document.getElementById("Parameters");
+    var condition = select.options[select.selectedIndex].innerHTML;
+    newArray = array.filter(function(d){
+        //var select = document.getElementById("parameter_id")
+        return d.sessionID == (document.getElementById("participant_id").value + "_session:" + document.getElementById("sessionNumber").value) + "_condition:" + condition;
+    });
+    console.log(condition);
+    if(newArray.length==0) {
+        document.getElementById("submit").click();
+    } else {
+        if(confirm("The ID " + document.getElementById("participant_id").value +
+            " is already in use for condition " + condition + " and session " + document.getElementById("sessionNumber").value
+            + ". Do you wish to continue?")){
+            document.getElementById("submit").click();
+        }
+    }
+}
+
+function stopRKey(evt) {
+
+    var evt = evt ? evt : ((event) ? event :null);
+    var node = (evt.target) ? (evt.target) : (evt.srcElement ? (evt.srcElement) : null);
+    if ((evt.keyCode == 13) && (node.type=="text")) {return false;}
+
+}
+document.onkeypress = stopRKey;
+
+</script>

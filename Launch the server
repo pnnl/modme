@@ -1,0 +1,44 @@
+Launch the server
+	1) Open up terminal application
+	2) change directory to ~/Documents/Experiments/
+		*type: 'cd ~/Documents/Experiments/'
+	3) run python file Tornado.py
+		*type: 'python Tornado.py'
+
+Running an experiment
+	1) In web browser (chrome) goto 'localhost:9000/MATB/'
+	2) Choose parameter from drop down menu
+	3) Input participant id, session id, and condition name
+		**** Important: Do not use '&' when setting participant id, session id, and condition name
+	4) Click begin and the experiment will start
+		The data will save to the database automatically when the experiment is done.
+		After the experiment is done the participant will be prompted first with the NASA TLX survey then with the Beford survey which will both be saved to the database once completed
+	5) Once a participant is done to start the next participant goto 'localhost:9000/MATB/' in the browser and follow the above steps again
+		To stop running participants close the browser and follow the steps bellow to shut down the server
+
+Using the configuration gui
+	*) The way the configuration GUI works is you click on the thing you want to configure 
+	*) This will change the text boxes on the right and give you options of what you can change and its current value
+	*) NOTE all time values are in milliseconds
+
+Configure an existing parameter
+	1) In web browser goto localhost:9000/admin/MATB/parameter
+		If prompted for user name and password both are datawall
+	2) In the last column of the parameter you wish to configure click Configure
+	3) Make the changes you want using the configuration GUI then click Submit Changes
+		NOTE: If you change the name it will create a new parameter with the settings you currently have and will not change the one you started editing
+
+#### Currently broken will fix ####
+Creating a new parameter
+	1) In web browser goto 'localhost:9000/admin/MATB/parameter'
+	2) On the right side of the screen towards the top click 'add parameter'
+	3) Give a name to the parameter and a duration (milliseconds)
+	4) Leave every other field alone and click save at the bottom of the page
+	5) Follow the steps above to configure an existing parameter on the one you just created
+
+Viewing data
+	*) One way to view the data is to use the Django admin page. By going to 'localhost:9000/admin/' in a web browser you can select the table you wish to view and see the data.
+	*) A better way to view the data is to use R. The database file that is needed to run with R is in Documents/Experiments/ and is called db.sqlite3
+
+Shutting Down the Server
+	1) To shut down the server goto the terminal that the server is running in and press CONTROL-C

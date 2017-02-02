@@ -1,0 +1,27 @@
+<!DOCTYPE>
+<html>
+	<body>
+		<img src="/static/ModME/Bedford_MATB.png" width="70%" id="picture">
+		<div style="width:70%">
+			<button style="float: right; font-size:16px; margin: 5px; display:inline border-radius:4px" id="button" onclick="buttonClick()"> submit </button>
+			<form action="{% url 'ModME:complete' %}" style="display:inline" method="post">
+				{% csrf_token %}
+				<input style = "float: right; font-size:26px; margin: 5px; display:none" id = "submit" type = "submit"></input>
+				<input type="hidden" name = "sessionID" value="{{ sessionID }}"/>
+				<input type="hidden" name = "time" value="12"/>
+				<input name = "rating" id="rating" style = "float: right; margin: 7px; display:inline" size="5"></input>
+				<label style = "float: right; font-size: 26px;">Type your overall workload rating here:</label>
+			</form>
+			
+		</div>
+		<script>
+			function buttonClick() {
+				if(document.getElementById("rating").value-'0'>=1 && document.getElementById("rating").value-'0'<=10) {
+					document.getElementById("submit").click();
+				} else {
+					alert("Please enter your rating before submiting");
+				}
+			}
+		</script>
+	</body>
+</html>

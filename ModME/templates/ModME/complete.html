@@ -1,0 +1,54 @@
+<head>
+<style type="text/css">
+.fullscreenDiv{
+	background-color: #e8e8e8;
+	width:100%;
+	height: auto;
+	bottom: 0px;
+	top: 0px;
+	left: 0;
+	position: absolute;
+}
+.center{
+	position: absolute;
+	width: 1200px;
+	height: 50px;
+	top: 50%;
+	left: 50%;
+	margin-top: -200px;
+	margin-left: -600px;
+}
+p.fullScreenCenteredTextExperimentee {
+    font-size: 16px;
+    font-size: 3vw;
+    font-family: Arial;
+}
+p.fullScreenCenteredTextExperimentor {
+    font-size: 18px;
+    font-size: 1.5vw;
+    font-family: Arial;
+}
+</style>
+</head>
+<div class="fullscreenDiv">
+	<div class="center">
+		<p class="fullScreenCenteredTextExperimentee" align="center">
+			Thank you for completing the experiment.<br>You may now alert the experimenter that you are done.
+		</p>
+		<p class="fullScreenCenteredTextExperimentor" align="center">
+			Experimenter press space or tap the screen to return to experiment home page.
+		</p>
+	</div>
+</div>
+<script src="/static/d3/d3.v3.min.js"></script>
+<script>
+	d3.select(window).on("keydown",function(){
+		var keyCode = d3.event.keyCode;
+		if(keyCode == 32){
+			window.location.href = window.location.href.substr(0,window.location.href.length-9);0
+		}
+	});
+	d3.select(window).on("touchstart", function(){
+        window.location.href = window.location.href.substr(0,window.location.href.length-9);
+    });
+</script>

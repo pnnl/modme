@@ -1,0 +1,1649 @@
+<head>
+	<link href = "/static/ModME/MAT-B_Styles.css" rel="stylesheet">
+</head>
+
+<body>
+<script src="/static/d3/d3.v3.min.js"></script>
+<script src="/static/d3/d3.chart.min.js"></script>
+<script src="/static/ModME/MAT-B_Charts.js"></script>
+<table>
+	<tr>
+		<td style="width:20%">
+
+			<table>
+				<tr>
+					<td>
+						<label><b>Included Tasks</b></label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="checkbox1" checked=true>monitor_show</input>
+					</td>
+					<td>
+						<input type="checkbox" id="checkbox2" checked=true>track_show</input>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="checkbox3" checked=true>comm_show</input>
+					</td>
+					<td>
+						<input type="checkbox" id="checkbox4" checked=true>resource_show</input>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label><b>Experiment settings</b></label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Name</label>
+					</td>
+					<td>
+						<textarea id="name">New</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Duration</label>
+					</td>
+					<td>
+						<textarea id="duration">1200000</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>load preset here</label>
+					</td>
+					<td>
+						<textarea>probably going to be a button</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="task_name" style="font-weight:bold;">Task Name</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Time to first event</label>
+					</td>
+					<td>
+						<textarea id="first_event"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Event Function</label>
+					</td>
+					<td>
+						<select id="event_function">
+							<option>Uniform</option>
+							<option>Geometric</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Event Function Parameters</label>
+					</td>
+					<td>
+						<textarea id="event_parameters"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label13">label13</label>
+					</td>
+					<td>
+						<textarea id="textArea13"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label14">label14</label>
+					</td>
+					<td>
+						<textarea id="textArea14"></textarea>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<button id = "button1" type = "button"> button 1 </button>
+ 					</td>
+ 					<td>
+						<button id = "button2" type = "button"> button 2 </button>
+ 					</td>
+				</tr>
+				<tr>
+					<td>
+						<button id = "button3" type = "button"> button 3 </button>
+ 					</td>
+ 					<td>
+						<button id = "button4" type = "button"> button 4 </button>
+ 					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<label id="object_name" style="font-weight:bold">Name of object to edit</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label1">label1</label>
+					</td>
+					<td>
+						<textarea id="textArea1"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label2">label2</label>
+					</td>
+					<td>
+						<textarea id="textArea2"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label3">label3</label>
+					</td>
+					<td>
+						<textarea id="textArea3"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label4">label4</label>
+					</td>
+					<td>
+						<textarea id="textArea4"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label5">label5</label>
+					</td>
+					<td>
+						<textarea id="textArea5"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label6">label6</label>
+					</td>
+					<td>
+						<textarea id="textArea6"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label7">label7</label>
+					</td>
+					<td>
+						<textarea id="textArea7"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label8">label8</label>
+					</td>
+					<td>
+						<textarea id="textArea8"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label9">label9</label>
+					</td>
+					<td>
+						<textarea id="textArea9"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label10">label10</label>
+					</td>
+					<td>
+						<textarea id="textArea10"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label11">label11</label>
+					</td>
+					<td>
+						<textarea id="textArea11"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="label12">label12</label>
+					</td>
+					<td>
+						<textarea id="textArea12"></textarea>
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<button id="applyButton" type="button"> Apply </button>
+					</td>
+					<td>
+						<button id="submit" type="button"> Submit Changes </button>
+					</td>
+				</tr>
+			</table> 
+
+			
+		</td>
+		<td id = "task_table"></td>
+
+	</tr>
+</table>
+
+<script>
+
+	d3.chart("Monitoring").extend("MonitoringGUI",{
+		
+		initialize: function(){
+
+			this.layer("buttons").on("enter",function(){
+
+				var chart = this.chart();
+
+				console.log(this);
+
+				this.on("click", function(d,i){
+					document.getElementById("object_name").innerHTML = "Button "+(i+1);
+
+					console.log("test");
+
+					document.getElementById("label1").hidden = false;
+			 		document.getElementById("textArea1").hidden = false;
+					document.getElementById("label1").innerHTML = "Probability";
+			 		document.getElementById("textArea1").value = d.prob;
+
+			 		document.getElementById("label2").hidden = false;
+			 		document.getElementById("textArea2").hidden = false;
+			 		document.getElementById("label2").innerHTML = "Alert Timeout";
+			 		document.getElementById("textArea2").value = d.autoCorrect;
+
+			 		document.getElementById("label3").hidden = false;
+			 		document.getElementById("textArea3").hidden = false;
+			 		document.getElementById("label3").innerHTML = "Keyboard Key";
+			 		document.getElementById("textArea3").value = d.key;
+
+			 		document.getElementById("label4").hidden = false;
+			 		document.getElementById("textArea4").hidden = false;
+			 		document.getElementById("label4").innerHTML = "Keyboard ASCII";
+			 		document.getElementById("textArea4").value = d.button;
+
+			 		document.getElementById("label5").hidden = false;
+			 		document.getElementById("textArea5").hidden = false;
+			 		document.getElementById("label5").innerHTML = "Base color";
+			 		document.getElementById("textArea5").value = d.color;
+
+			 		document.getElementById("label6").hidden = false;
+			 		document.getElementById("textArea6").hidden = false;
+			 		document.getElementById("label6").innerHTML = "Alert Color";
+			 		document.getElementById("textArea6").value = d.alert_color;
+
+			 		document.getElementById("label7").hidden = true;
+			 		document.getElementById("textArea7").hidden = true;
+
+			 		document.getElementById("label8").hidden = true;
+			 		document.getElementById("textArea8").hidden = true;
+
+			 		document.getElementById("label9").hidden = true;
+			 		document.getElementById("textArea9").hidden = true;
+
+			 		document.getElementById("label10").hidden = true;
+			 		document.getElementById("textArea10").hidden = true;
+
+			 		document.getElementById("label11").hidden = true;
+			 		document.getElementById("textArea11").hidden = true;
+
+			 		document.getElementById("label12").hidden = true;
+			 		document.getElementById("textArea12").hidden = true;
+
+			 		document.getElementById("task_name").innerHTML = "Monitoring";
+
+			 		document.getElementById("event_parameters").value = JSON.stringify(monitor_param);
+
+			 		document.getElementById("first_event").value = chart.startFunc();
+
+			 		document.getElementById("label13").hidden = false;
+			 		document.getElementById("textArea13").hidden = false;
+			 		document.getElementById("label13").innerHTML = "Tick marks";
+			 		document.getElementById("textArea13").value = chart.ticks;
+
+			 		document.getElementById("label14").hidden = 	false;
+			 		document.getElementById("textArea14").hidden = 	false;
+			 		document.getElementById("label14").innerHTML = "Slider Range";
+			 		document.getElementById("textArea14").value = JSON.stringify(chart.slider_range);
+
+			 		if(monitor_param.min){
+			 			document.getElementById("event_function").selectedIndex = 0;
+			 		}
+			 		else{
+			 			document.getElementById("event_function").selectedIndex = 1;
+			 		}
+
+			 		document.getElementById("button1").hidden = false;
+			 		document.getElementById("button1").innerHTML = "Decrease Sliders";
+			 		document.getElementById("button2").hidden = false;
+			 		document.getElementById("button2").innerHTML = "Increase Sliders";
+			 		document.getElementById("button3").hidden = false;
+			 		document.getElementById("button3").innerHTML = "Decrease Buttons";
+			 		document.getElementById("button4").hidden = false;
+			 		document.getElementById("button4").innerHTML = "Increase Buttons";
+				});
+
+			return this;
+
+			});
+	
+		this.layer("scale").on("enter", function() {
+			
+			var chart = this.chart();
+
+		 	return this.on("click", function(d,i){
+		 		document.getElementById("object_name").innerHTML = "Slider "+(i+1);
+				console.log("test");
+		 		document.getElementById("label1").hidden = false;
+		 		document.getElementById("textArea1").hidden = false;
+		 		document.getElementById("label1").innerHTML = "Probability";
+		 		document.getElementById("textArea1").value = d.prob;
+
+		 		document.getElementById("label2").hidden = false;
+		 		document.getElementById("textArea2").hidden = false;
+		 		document.getElementById("label2").innerHTML = "Slider Interval";
+		 		document.getElementById("textArea2").value = d.slider_interval;
+
+				document.getElementById("label3").hidden = false;
+		 		document.getElementById("textArea3").hidden = false;
+		 		document.getElementById("label3").innerHTML = "Keyboard Key";
+		 		document.getElementById("textArea3").value = d.key;
+
+		 		document.getElementById("label4").hidden = false;
+		 		document.getElementById("textArea4").hidden = false;
+		 		document.getElementById("label4").innerHTML = "Keyboard ASCII";
+		 		document.getElementById("textArea4").value = d.button;
+
+		 		document.getElementById("label5").hidden = true;
+		 		document.getElementById("textArea5").hidden = true;
+
+		 		document.getElementById("label6").hidden = true;
+		 		document.getElementById("textArea6").hidden = true;
+
+		 		document.getElementById("label7").hidden = true;
+		 		document.getElementById("textArea7").hidden = true;
+
+		 		document.getElementById("label8").hidden = true;
+		 		document.getElementById("textArea8").hidden = true;
+
+		 		document.getElementById("label9").hidden = true;
+		 		document.getElementById("textArea9").hidden = true;
+
+		 		document.getElementById("label10").hidden = true;
+		 		document.getElementById("textArea10").hidden = true;
+
+		 		document.getElementById("label11").hidden = true;
+		 		document.getElementById("textArea11").hidden = true;
+
+		 		document.getElementById("label12").hidden = true;
+		 		document.getElementById("textArea12").hidden = true;
+
+		 		document.getElementById("task_name").innerHTML = "Monitoring";
+
+		 		document.getElementById("event_parameters").value = JSON.stringify(monitor_param);
+
+		 		document.getElementById("first_event").value = chart.startFunc();
+
+		 		if(monitor_param.min){
+		 			document.getElementById("event_function").selectedIndex = 0;
+		 		}
+		 		else{
+		 			document.getElementById("event_function").selectedIndex = 1;
+		 		}
+
+		 		document.getElementById("label13").hidden = false;
+		 		document.getElementById("textArea13").hidden = false;
+		 		document.getElementById("label13").innerHTML = "Tick marks";
+		 		document.getElementById("textArea13").value = chart.ticks;
+
+		 		document.getElementById("label14").hidden = 	false;
+		 		document.getElementById("textArea14").hidden = 	false;
+		 		document.getElementById("label14").innerHTML = "Slider Range";
+		 		document.getElementById("textArea14").value = JSON.stringify(chart.slider_range);
+
+		 		document.getElementById("button1").hidden = false;
+		 		document.getElementById("button1").innerHTML = "Decrease Sliders";
+		 		document.getElementById("button2").hidden = false;
+		 		document.getElementById("button2").innerHTML = "Increase Sliders";
+		 		document.getElementById("button3").hidden = false;
+		 		document.getElementById("button3").innerHTML = "Decrease Buttons";
+		 		document.getElementById("button4").hidden = false;
+		 		document.getElementById("button4").innerHTML = "Increase Buttons";
+		 	});
+		});
+		}
+	});
+	
+
+d3.chart("Tracking").extend("TrackingGUI",{
+		
+		initialize: function(){
+
+		this.layer("path").on("enter",function(){
+			
+			var chart = this.chart();
+
+			if(d3.select("#tracking_area")){
+				d3.select("#tracking_area").remove();
+			}
+
+			return this.on("click", function(d,i){
+				document.getElementById("object_name").innerHTML = "Path "+(i+1);
+				console.log("test2");
+		 		document.getElementById("label1").hidden = false;
+		 		document.getElementById("textArea1").hidden = false;
+		 		document.getElementById("label1").innerHTML = "Points";
+		 		document.getElementById("textArea1").value = JSON.stringify(d.points);
+
+		 		document.getElementById("label2").hidden = false;
+		 		document.getElementById("textArea2").hidden = false;
+		 		document.getElementById("label2").innerHTML = "Path Interval";
+		 		document.getElementById("textArea2").value = d.interval;
+
+				document.getElementById("label3").hidden = false;
+		 		document.getElementById("textArea3").hidden = false;
+		 		document.getElementById("label3").innerHTML = "Satelite Radius";
+		 		document.getElementById("textArea3").value = d.radius;
+
+		 		document.getElementById("label4").hidden = true;
+		 		document.getElementById("textArea4").hidden = true;
+
+		 		document.getElementById("label5").hidden = true;
+		 		document.getElementById("textArea5").hidden = true;
+
+		 		document.getElementById("label6").hidden = true;
+		 		document.getElementById("textArea6").hidden = true;
+
+		 		document.getElementById("label7").hidden = true;
+		 		document.getElementById("textArea7").hidden = true;
+
+		 		document.getElementById("label8").hidden = true;
+		 		document.getElementById("textArea8").hidden = true;
+
+		 		document.getElementById("label9").hidden = true;
+		 		document.getElementById("textArea9").hidden = true;
+
+		 		document.getElementById("label10").hidden = true;
+		 		document.getElementById("textArea10").hidden = true;
+
+		 		document.getElementById("label11").hidden = true;
+		 		document.getElementById("textArea11").hidden = true;
+
+		 		document.getElementById("label12").hidden = true;
+		 		document.getElementById("textArea12").hidden = true;
+
+		 		document.getElementById("task_name").innerHTML = "Tracking";
+
+		 		document.getElementById("event_parameters").value = JSON.stringify(track_param);
+
+		 		document.getElementById("first_event").value = chart.startFunc();
+
+		 		if(track_param.min){
+		 			document.getElementById("event_function").selectedIndex = 0;
+		 		}
+		 		else{
+		 			document.getElementById("event_function").selectedIndex = 1;
+		 		}
+
+		 		document.getElementById("label13").hidden = 	false;
+		 		document.getElementById("textArea13").hidden = 	false;
+		 		document.getElementById("label13").innerHTML = "Refresh Rate";
+		 		document.getElementById("textArea13").value = chart.refresh;
+
+		 		document.getElementById("label14").hidden = 	true;
+		 		document.getElementById("textArea14").hidden = 	true;
+
+		 		document.getElementById("button1").hidden = false;
+		 		document.getElementById("button1").innerHTML = "Decrease Paths";
+		 		document.getElementById("button2").hidden = false;
+		 		document.getElementById("button2").innerHTML = "Increase Paths";
+		 		document.getElementById("button3").hidden = true;
+		 		document.getElementById("button4").hidden = true;
+			});
+
+		});
+
+		this.layer("configPath").on("enter",function(){
+			
+			var chart = this.chart();
+
+			if(d3.select("#tracking_area")){
+				d3.select("#tracking_area").remove();
+			}
+
+			return this.on("click", function(d,i){
+				document.getElementById("object_name").hidden = false;
+				document.getElementById("object_name").innerHTML = "Path "+(i+1);
+		 		document.getElementById("label1").hidden = false;
+		 		document.getElementById("textArea1").hidden = false;
+		 		document.getElementById("label1").innerHTML = "Points";
+		 		document.getElementById("textArea1").value = JSON.stringify(d.points);
+
+		 		document.getElementById("label2").hidden = false;
+		 		document.getElementById("textArea2").hidden = false;
+		 		document.getElementById("label2").innerHTML = "Path Interval";
+		 		document.getElementById("textArea2").value = d.interval;
+
+				document.getElementById("label3").hidden = false;
+		 		document.getElementById("textArea3").hidden = false;
+		 		document.getElementById("label3").innerHTML = "Satelite Radius";
+		 		document.getElementById("textArea3").value = d.radius;
+
+		 		document.getElementById("label4").hidden = false;
+		 		document.getElementById("textArea4").hidden = false;
+		 		document.getElementById("label4").innerHTML = "Probability";
+		 		document.getElementById("textArea4").value = d.prob;
+
+		 		document.getElementById("label5").hidden = true;
+		 		document.getElementById("textArea5").hidden = true;
+
+		 		document.getElementById("label6").hidden = true;
+		 		document.getElementById("textArea6").hidden = true;
+
+		 		document.getElementById("label7").hidden = true;
+		 		document.getElementById("textArea7").hidden = true;
+
+		 		document.getElementById("label8").hidden = true;
+		 		document.getElementById("textArea8").hidden = true;
+
+		 		document.getElementById("label9").hidden = true;
+		 		document.getElementById("textArea9").hidden = true;
+
+		 		document.getElementById("label10").hidden = true;
+		 		document.getElementById("textArea10").hidden = true;
+
+		 		document.getElementById("label11").hidden = true;
+		 		document.getElementById("textArea11").hidden = true;
+
+		 		document.getElementById("label12").hidden = true;
+		 		document.getElementById("textArea12").hidden = true;
+
+		 		document.getElementById("task_name").hidden = false;
+		 		document.getElementById("task_name").innerHTML = "Tracking";
+
+		 		document.getElementById("event_parameters_label").hidden = false;
+		 		document.getElementById("event_parameters").hidden = false;
+		 		document.getElementById("event_parameters").value = JSON.stringify(track_param);
+
+		 		document.getElementById("first_event_label").hidden = false;
+		 		document.getElementById("first_event").hidden = false;
+		 		document.getElementById("first_event").value = chart.startFunc();
+
+		 		document.getElementById("event_function_label").hidden = false;
+		 		document.getElementById("event_function").hidden = false;
+		 		if(track_param.min){
+		 			document.getElementById("event_function").selectedIndex = 0;
+		 		}
+		 		else{
+		 			document.getElementById("event_function").selectedIndex = 1;
+		 		}
+
+		 		document.getElementById("label13").hidden = 	false;
+		 		document.getElementById("textArea13").hidden = 	false;
+		 		document.getElementById("label13").innerHTML = "Refresh Rate";
+		 		document.getElementById("textArea13").value = chart.refresh;
+
+		 		document.getElementById("label14").hidden = 	true;
+		 		document.getElementById("textArea14").hidden = 	true;
+
+		 		document.getElementById("button1").hidden = false;
+		 		document.getElementById("button1").innerHTML = "Decrease Paths";
+		 		document.getElementById("button2").hidden = false;
+		 		document.getElementById("button2").innerHTML = "Increase Paths";
+		 		document.getElementById("button3").hidden = true;
+		 		document.getElementById("button4").hidden = true;
+			});
+
+		});
+
+		this.layer("circles").on("enter", function() {
+
+			var chart = this.chart();
+			
+		 	return this.on("click", function(d,i){
+		 		document.getElementById("object_name").innerHTML = "Path "+(i+1);
+				console.log("test3");
+		 		document.getElementById("label1").hidden = false;
+		 		document.getElementById("textArea1").hidden = false;
+		 		document.getElementById("label1").innerHTML = "Points";
+		 		document.getElementById("textArea1").value = JSON.stringify(d.points);
+
+		 		document.getElementById("label2").hidden = false;
+		 		document.getElementById("textArea2").hidden = false;
+		 		document.getElementById("label2").innerHTML = "Path Interval";
+		 		document.getElementById("textArea2").value = d.interval;
+
+				document.getElementById("label3").hidden = false;
+		 		document.getElementById("textArea3").hidden = false;
+		 		document.getElementById("label3").innerHTML = "Satelite Radius";
+		 		document.getElementById("textArea3").value = d.radius;
+
+		 		document.getElementById("label4").hidden = true;
+		 		document.getElementById("textArea4").hidden = true;
+
+		 		document.getElementById("label5").hidden = true;
+		 		document.getElementById("textArea5").hidden = true;
+
+		 		document.getElementById("label6").hidden = true;
+		 		document.getElementById("textArea6").hidden = true;
+
+		 		document.getElementById("label7").hidden = true;
+		 		document.getElementById("textArea7").hidden = true;
+
+		 		document.getElementById("label8").hidden = true;
+		 		document.getElementById("textArea8").hidden = true;
+
+		 		document.getElementById("label9").hidden = true;
+		 		document.getElementById("textArea9").hidden = true;
+
+		 		document.getElementById("label10").hidden = true;
+		 		document.getElementById("textArea10").hidden = true;
+
+		 		document.getElementById("label11").hidden = true;
+		 		document.getElementById("textArea11").hidden = true;
+
+		 		document.getElementById("label12").hidden = true;
+		 		document.getElementById("textArea12").hidden = true;
+
+		 		document.getElementById("task_name").innerHTML = "Tracking";
+
+		 		document.getElementById("event_parameters").value = JSON.stringify(track_param);
+
+		 		document.getElementById("first_event").value = chart.startFunc();
+
+		 		if(track_param.min){
+		 			document.getElementById("event_function").selectedIndex = 0;
+		 		}
+		 		else{
+		 			document.getElementById("event_function").selectedIndex = 1;
+		 		}
+
+		 		document.getElementById("label13").hidden = 	false;
+		 		document.getElementById("textArea13").hidden = 	false;
+		 		document.getElementById("label13").innerHTML = "Refresh Rate";
+		 		document.getElementById("textArea13").value = chart.refresh;
+
+		 		document.getElementById("label14").hidden = 	true;
+		 		document.getElementById("textArea14").hidden = 	true;
+
+		 		document.getElementById("button1").hidden = false;
+		 		document.getElementById("button1").innerHTML = "Decrease Paths";
+		 		document.getElementById("button2").hidden = false;
+		 		document.getElementById("button2").innerHTML = "Increase Paths";
+		 		document.getElementById("button3").hidden = true;
+		 		document.getElementById("button4").hidden = true;
+		 	});
+		});
+		
+		}
+	});
+
+d3.chart("Communication").extend("CommunicationGUI",{
+		
+		initialize: function(){
+
+		this.layer("communication").on("enter",function(){
+			
+			var chart = this.chart();
+
+			return this.on("click", function(d,i){
+				document.getElementById("object_name").innerHTML = "Channels "+(i+1);
+				console.log("comm");
+		 		document.getElementById("label1").hidden = false;
+		 		document.getElementById("textArea1").hidden = false;
+		 		document.getElementById("label1").innerHTML = "Channels Name";
+		 		document.getElementById("textArea1").value = d.name;
+
+		 		document.getElementById("label2").hidden = false;
+		 		document.getElementById("textArea2").hidden = false;
+		 		document.getElementById("label2").innerHTML = "Avalible Frequencies";
+		 		document.getElementById("textArea2").value = d.avalibleFrequency;
+
+				document.getElementById("label3").hidden = true;
+		 		document.getElementById("textArea3").hidden = true;
+
+		 		document.getElementById("label4").hidden = true;
+		 		document.getElementById("textArea4").hidden = true;
+
+		 		document.getElementById("label5").hidden = true;
+		 		document.getElementById("textArea5").hidden = true;
+
+		 		document.getElementById("label6").hidden = true;
+		 		document.getElementById("textArea6").hidden = true;
+
+		 		document.getElementById("label7").hidden = true;
+		 		document.getElementById("textArea7").hidden = true;
+
+		 		document.getElementById("label8").hidden = true;
+		 		document.getElementById("textArea8").hidden = true;
+
+		 		document.getElementById("label9").hidden = true;
+		 		document.getElementById("textArea9").hidden = true;
+
+		 		document.getElementById("label10").hidden = true;
+		 		document.getElementById("textArea10").hidden = true;
+
+		 		document.getElementById("label11").hidden = true;
+		 		document.getElementById("textArea11").hidden = true;
+
+		 		document.getElementById("label12").hidden = true;
+		 		document.getElementById("textArea12").hidden = true;
+
+		 		document.getElementById("task_name").innerHTML = "Communication";
+
+		 		document.getElementById("event_parameters").value = JSON.stringify(comm_param);
+
+		 		document.getElementById("first_event").value = chart.startFunc();
+
+		 		if(comm_param.min){
+		 			document.getElementById("event_function").selectedIndex = 0;
+		 		}
+		 		else{
+		 			document.getElementById("event_function").selectedIndex = 1;
+		 		}
+
+		 		document.getElementById("label13").hidden = 	false;
+		 		document.getElementById("textArea13").hidden = 	false;
+		 		document.getElementById("label13").innerHTML = "Timeout";
+		 		document.getElementById("textArea13").value = chart.rt;
+
+		 		document.getElementById("label14").hidden = 	true;
+		 		document.getElementById("textArea14").hidden = 	true;
+
+		 		document.getElementById("button1").hidden = false;
+		 		document.getElementById("button1").innerHTML = "Decrease Channels";
+		 		document.getElementById("button2").hidden = false;
+		 		document.getElementById("button2").innerHTML = "Increase Channels";
+		 		document.getElementById("button3").hidden = true;
+		 		document.getElementById("button4").hidden = true;
+			});
+
+		});
+
+		}
+	});
+
+d3.chart("Resource").extend("ResourceGUI",{
+		
+		initialize: function(){
+
+		this.layer("tanks").on("enter",function(){
+
+			var chart = this.chart();
+			
+			return this.on("click", function(d,i){
+				document.getElementById("object_name").innerHTML = "Tank "+(i+1);
+				console.log("tanks");
+		 		document.getElementById("label1").hidden = false;
+		 		document.getElementById("textArea1").hidden = false;
+		 		document.getElementById("label1").innerHTML = "Max Resource";
+		 		document.getElementById("textArea1").value = d.maxResource;
+
+		 		document.getElementById("label2").hidden = false;
+		 		document.getElementById("textArea2").hidden = false;
+		 		document.getElementById("label2").innerHTML = "Starting Reource";
+		 		document.getElementById("textArea2").value = d.startingResource;
+
+				document.getElementById("label3").hidden = false;
+		 		document.getElementById("textArea3").hidden = false;
+		 		document.getElementById("label3").innerHTML = "Decay Rate(in milliseconds)";
+		 		document.getElementById("textArea3").value = d.decayRate;
+
+		 		document.getElementById("label4").hidden = false;
+		 		document.getElementById("textArea4").hidden = false;
+		 		document.getElementById("label4").innerHTML = "Target Range Maximum";
+		 		document.getElementById("textArea4").value = d.targetRangeMax;
+
+		 		document.getElementById("label5").hidden = false;
+		 		document.getElementById("textArea5").hidden = false;
+		 		document.getElementById("label5").innerHTML = "Target Range Minimum";
+		 		document.getElementById("textArea5").value = d.targetRangeMin;
+
+		 		document.getElementById("label6").hidden = true;
+		 		document.getElementById("textArea6").hidden = true;
+
+		 		document.getElementById("label7").hidden = true;
+		 		document.getElementById("textArea7").hidden = true;
+
+		 		document.getElementById("label8").hidden = true;
+		 		document.getElementById("textArea8").hidden = true;
+
+		 		document.getElementById("label9").hidden = true;
+		 		document.getElementById("textArea9").hidden = true;
+
+		 		document.getElementById("label10").hidden = true;
+		 		document.getElementById("textArea10").hidden = true;
+
+		 		document.getElementById("label11").hidden = true;
+		 		document.getElementById("textArea11").hidden = true;
+
+		 		document.getElementById("label12").hidden = true;
+		 		document.getElementById("textArea12").hidden = true;
+
+		 		document.getElementById("task_name").innerHTML = "Resource";
+
+		 		document.getElementById("event_parameters").value = JSON.stringify(manage_param);
+
+		 		document.getElementById("first_event").value = chart.startFunc();
+
+		 		if(manage_param.min){
+		 			document.getElementById("event_function").selectedIndex = 0;
+		 		}
+		 		else{
+		 			document.getElementById("event_function").selectedIndex = 1;
+		 		}
+
+		 		document.getElementById("label13").hidden = 	false;
+		 		document.getElementById("textArea13").hidden = 	false;
+		 		document.getElementById("label13").innerHTML = "Refresh Rate";
+		 		document.getElementById("textArea13").value = chart.refresh;
+
+		 		document.getElementById("label14").hidden = 	true;
+		 		document.getElementById("textArea14").hidden = 	true;
+
+		 		document.getElementById("button1").hidden = true;
+		 		document.getElementById("button2").hidden = true;
+		 		document.getElementById("button3").hidden = true;
+		 		document.getElementById("button4").hidden = true;
+			});
+
+		});
+
+		this.layer("switches").on("enter", function() {
+
+			var chart = this.chart();
+
+
+		 	return this.on("click", function(d,i){
+		 		console.log("switches");
+		 		document.getElementById("object_name").innerHTML = "Switch "+(i+1);
+
+		 		document.getElementById("label1").hidden = false;
+		 		document.getElementById("textArea1").hidden = false;
+		 		document.getElementById("label1").innerHTML = "Transfer Rate(in milliseconds)";
+		 		document.getElementById("textArea1").value = d.transferRate;
+
+		 		document.getElementById("label2").hidden = false;
+		 		document.getElementById("textArea2").hidden = false;
+		 		document.getElementById("label2").innerHTML = "Repair Time";
+		 		document.getElementById("textArea2").value = d.repairTime;
+
+		 		document.getElementById("label3").hidden = false;
+		 		document.getElementById("textArea3").hidden = false;
+		 		document.getElementById("label3").innerHTML = "Keyboard Key";
+		 		document.getElementById("textArea3").value = d.keyboard;
+
+		 		document.getElementById("label4").hidden = false;
+		 		document.getElementById("textArea4").hidden = false;
+		 		document.getElementById("label4").innerHTML = "Keyboard ASCII";
+		 		document.getElementById("textArea4").value = d.key;
+
+		 		document.getElementById("label5").hidden = true;
+		 		document.getElementById("textArea5").hidden = true;
+
+		 		document.getElementById("label6").hidden = true;
+		 		document.getElementById("textArea6").hidden = true;
+
+		 		document.getElementById("label7").hidden = true;
+		 		document.getElementById("textArea7").hidden = true;
+
+		 		document.getElementById("label8").hidden = true;
+		 		document.getElementById("textArea8").hidden = true;
+
+		 		document.getElementById("label9").hidden = true;
+		 		document.getElementById("textArea9").hidden = true;
+
+		 		document.getElementById("label10").hidden = true;
+		 		document.getElementById("textArea10").hidden = true;
+
+		 		document.getElementById("label11").hidden = true;
+		 		document.getElementById("textArea11").hidden = true;
+
+		 		document.getElementById("label12").hidden = true;
+		 		document.getElementById("textArea12").hidden = true;
+
+		 		document.getElementById("task_name").innerHTML = "Resource";
+
+		 		document.getElementById("event_parameters").value = JSON.stringify(manage_param);
+
+		 		document.getElementById("first_event").value = chart.startFunc();
+
+		 		if(manage_param.min){
+		 			document.getElementById("event_function").selectedIndex = 0;
+		 		}
+		 		else{
+		 			document.getElementById("event_function").selectedIndex = 1;
+		 		}
+
+		 		document.getElementById("label13").hidden = 	false;
+		 		document.getElementById("textArea13").hidden = 	false;
+		 		document.getElementById("label13").innerHTML = "Refresh Rate";
+		 		document.getElementById("textArea13").value = chart.refresh;
+
+		 		document.getElementById("label14").hidden = 	true;
+		 		document.getElementById("textArea14").hidden = 	true;
+
+		 		document.getElementById("button1").hidden = true;
+		 		document.getElementById("button2").hidden = true;
+		 		document.getElementById("button3").hidden = true;
+		 		document.getElementById("button4").hidden = true;
+		 	});
+		});
+		
+		}
+	});
+
+	document.getElementById("preset_label").hidden = true;
+	document.getElementById("label1").hidden = true;
+	document.getElementById("label2").hidden = true;
+	document.getElementById("label3").hidden = true;
+	document.getElementById("label4").hidden = true;
+	document.getElementById("label5").hidden = true;
+	document.getElementById("label6").hidden = true;
+	document.getElementById("label7").hidden = true;
+	document.getElementById("label8").hidden = true;
+	document.getElementById("label9").hidden = true;
+	document.getElementById("label10").hidden = true;
+	document.getElementById("label11").hidden = true;
+	document.getElementById("label12").hidden = true;
+	document.getElementById("label13").hidden = true;
+	document.getElementById("label14").hidden = true;
+
+	document.getElementById("preset_Text").hidden = true;
+	document.getElementById("textArea1").hidden = true;
+	document.getElementById("textArea2").hidden = true;
+	document.getElementById("textArea3").hidden = true;
+	document.getElementById("textArea4").hidden = true;
+	document.getElementById("textArea5").hidden = true;
+	document.getElementById("textArea6").hidden = true;
+	document.getElementById("textArea7").hidden = true;
+	document.getElementById("textArea8").hidden = true;
+	document.getElementById("textArea9").hidden = true;
+	document.getElementById("textArea10").hidden = true;
+	document.getElementById("textArea11").hidden = true;
+	document.getElementById("textArea12").hidden = true;
+	document.getElementById("textArea13").hidden = true;
+	document.getElementById("textArea14").hidden = true;
+
+	document.getElementById("button1").hidden = true;
+	document.getElementById("button2").hidden = true;
+	document.getElementById("button3").hidden = true;
+	document.getElementById("button4").hidden = true;
+
+	document.getElementById("task_name").hidden = true;
+	document.getElementById("object_name").hidden = true;
+	document.getElementById("first_event_label").hidden = true;
+	document.getElementById("first_event").hidden = true;
+	document.getElementById("event_function_label").hidden = true;
+	document.getElementById("event_function").hidden = true;
+	document.getElementById("event_parameters_label").hidden = true;
+	document.getElementById("event_parameters").hidden = true;
+
+	function objectToString(object){
+		var str = '{';
+		for(var p in object){
+				str += p + ':' + object[p] + ",";
+		}
+		str += '}';
+		return str;
+	}
+
+	function stringToArray(str){
+		var ary = [];
+		for(var i=1; i<str.length; i++){
+			var chr = str.charAt(i);
+			if(chr == "{"){
+				var j=i;
+				var num=1;
+				for(var k=0; k<num; k++){
+					while(str.charAt(j)!="}"){
+						j++;
+						if(str.charAt(j)=="{"){
+							num++;
+						}
+					}
+					j++;
+				}
+				ary.push(stringToObject(str.substring(i,j)));
+				i=j;
+			}
+			else if(chr == "["){
+				var j=i;
+				var num=1;
+				for(var k=0; k<num; k++){
+					while(str.charAt(j)!="]"){
+						j++;
+						if(str.charAt(j)=="["){
+							num++;
+						}
+					}
+					j++;
+				}
+				ary.push(stringToArray(str.substring(i,j)));
+				i=j;
+			}
+			else if(chr == "]"){}
+			else if(chr == "}"){}
+			else if(chr == " "){}
+			else if(chr == ","){}
+			else if(chr == "&"){
+				i+=7;
+				var j=i;
+				while(str.charAt(j)!="&"){
+					j++;
+				}
+				ary.push(str.substring(i,j));
+				i=j+7;
+			}
+			else{
+				var j=i;
+				while(str.charAt(j)!="," && str.charAt(j)!="]" && str.charAt(j)!=" "){
+					j++;
+				}
+				ary.push(JSON.parse(str.substring(i,j)));
+				i=j;
+			}
+		}
+		return ary;
+	}
+
+	function stringToObject(str){
+		var obj = {};
+		var fieldName = "";
+		for(var i=1; i<str.length; i++){
+			var chr = str.charAt(i);
+			if(chr == "{"){
+				var j=i;
+				var num=1;
+				for(var k=0; k<num; k++){
+					while(str.charAt(j)!="}"){
+						j++;
+						if(str.charAt(j)=="{"){
+							num++;
+						}
+					}
+					j++;
+				}
+				obj[fieldName] = stringToObject(str.substring(i,j));
+				i=j;
+				fieldName="";
+			}
+			else if(chr == "}"){}
+			else if(chr == "]"){}
+			else if(chr == " "){}
+			else if(chr == ","){}
+			else if(chr == ":"){}
+			else if(chr == "&"){
+				if(fieldName == ""){
+					i+=6;
+					var j=i;
+					while(str.charAt(j)!="&"){
+						j++;
+					}
+					fieldName = str.substring(i,j);
+					i=j+6;
+				}
+				else{
+					i+=6;
+					var j=i;
+					while(str.charAt(j)!="&"){
+						j++;
+					}
+					obj[fieldName] = str.substring(i,j);
+					i=j+6;
+					fieldName="";
+				}
+			}
+			else if(chr == "["){
+				var j=i;
+				var num=1;
+				for(var k=0; k<num; k++){
+					while(str.charAt(j)!="]"){
+						j++;
+						if(str.charAt(j)=="["){
+							num++;
+						}
+					}
+					j++;
+				}
+				obj[fieldName] = stringToArray(str.substring(i,j));
+				i=j;
+				fieldName="";
+			}
+			else if(fieldName == ""){
+				var j=i;
+				while(str.charAt(j)!=":"){
+					j++;
+				}
+				fieldName = str.substring(i,j);
+				i=j;
+			}
+			else{
+				var j=i;
+				while(str.charAt(j)!="," && str.charAt(j)!="}" && str.charAt(j)!=" "){
+					j++;
+				}
+				obj[fieldName] = JSON.parse(str.substring(i,j));
+				i=j;
+				fieldName="";
+			}
+		}
+		return obj;
+	}
+	
+
+	var False = false;
+	var True = true;
+	
+	var array = [];
+
+	var body = d3.select("#task_table");
+	
+	tempArray = [true, true, true, true];
+
+	var comm_show 		= true;
+	var track_show 		= true;
+	var resource_show 	= true;
+	var monitor_show 	= true;
+	
+
+
+	var area = 0;
+	var width = 0;
+	
+	tempArray.forEach(function(d,i){
+		if(d && (i==0 || i==2)){
+			area += 1;
+			if(width<3){
+				width += 1;
+			}
+		}
+		else if(d && (i==1 || i==3)){
+			area += 2;
+			if(width<3){
+				width += 2;
+			}
+		}
+	});
+	
+	var height = Math.ceil(area/width);
+	
+	var windowAR = (window.innerWidth-120)/(window.innerHeight-120);
+	var chartAR = width/height;
+	
+	var scale = d3.scale.linear();
+	
+	if(windowAR>chartAR){
+		scale.range([0,window.innerHeight-120]);
+		scale.domain([0,height]);
+	}
+	else{
+		scale.range([0,window.innerWidth-120]);
+		scale.domain([0,width]);
+	}
+	
+
+		var monitor_param = {min: 8000,max: 14000};
+
+		monitor_svg = get_generic_svg(
+			body,
+			650, 650,
+			scale(1),scale(1),
+			{top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)});
+
+		var monitor_chart = monitor_svg.chart("MonitoringGUI").eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;}).startFunc(5000)
+			.range([3,5]).tick(7);
+		
+		var monitor_data = {scales: [{button: 112, key: "F1", slider_interval: 2000, prob: 1},
+						{button: 113, key: "F2", slider_interval: 1400, prob: 1},
+						{button: 114, key: "F3", slider_interval: 1000, prob: 1},
+						{button: 115, key: "F4", slider_interval: 1600, prob: 1}],
+
+			buttons: [{color: "lightgreen", button: 116, key: "F5", alert_color:"black", autoCorrect: 8000, prob: 1},
+						{color: "black", button: 117, key: "F6", alert_color:"red", autoCorrect: 8000, prob: 1}]
+			};
+
+		
+		
+		monitor_chart.when("alert", function(args){});
+		monitor_chart.when("timeout", function(args){});
+		monitor_chart.when("response", function(args){});
+		
+		monitor_chart.draw(monitor_data);
+	
+
+		var track_param = {min:8000, max:14000};
+		
+		track_svg = get_generic_svg(
+			body,
+			1300, 650,
+			scale(2), scale(1),
+			{top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)});
+			
+		var track_chart = track_svg.chart("TrackingGUI").eventFunc(function(){rand = Math.random()*(track_param.max-track_param.min); return rand+track_param.min;}).startFunc(5000)
+									.refreshRate(100);
+				
+		track_svg.insert("circle", "g")
+				.attr("r", track_svg.h/4)
+				.attr("cx", track_svg.w/2)
+				.attr("cy", track_svg.h/2)
+				.style("stroke-width", "10px")
+				.style("stroke", "midnightblue")
+				.style("fill", "none");
+
+		track_chart.when("alert", function(args){});
+		track_chart.when("tick", function(args){});
+		track_chart.when("response", function(args){});
+		track_chart.when("timeout", function(args){});
+		
+		var track_data = {
+			orbits: [
+				{points: [{x:0.357,y:0.152},{x:0.342,y:0.179},{x:0.643,y:0.848},{x:0.658,y:0.821}], interval: 30000, radius:13},
+				{points: [{x:0.28,y:0.402},{x:0.277,y:0.442},{x:0.72,y:0.598},{x:0.723,y:0.558}],   interval: 30000, radius:13},
+				{points: [{x:0.28,y:0.597},{x:0.285,y:0.636},{x:0.72,y:0.403},{x:0.715,y:0.364}],   interval: 30000, radius:13}
+			]
+		};
+
+		
+
+		track_chart.draw(track_data);	
+
+		var comm_param = {min:8000, max:14000};
+		
+		var comm_svg = get_generic_svg(
+				body,
+				650, 650,
+				scale(1), scale(1),
+				{top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)});
+		
+		var comm_chart = comm_svg.chart("CommunicationGUI").eventFunc(function(){rand = Math.random()*(comm_param.max-comm_param.min); return rand+comm_param.min;}).startFunc(5000).responseTime(8000);
+		
+		comm_chart.when("alert", function(args){});
+		comm_chart.when("timeout", function(args){});
+		comm_chart.when("response", function(args){});
+		
+		var comm_data = {channels: [{name: "OPS 1", avalibleFrequency: [1173,1231,1123,1131]},
+					{name: "OPS 2", avalibleFrequency: [1235,1231,1123,1131]},
+					{name: "INT 1", avalibleFrequency: [1141,1231,1123,1131]},
+					{name: "INT 2", avalibleFrequency: [1259,1231,1123,1131]}
+					],
+			target: {name: "OPS 1",frequency:1173}
+			};
+
+		comm_data.controller = {indexUp: 40, indexDown:38, frequencyDown:37, frequencyUp:39, accept:13};
+		
+		comm_chart.draw(comm_data);
+	
+	
+	
+		var manage_param = {min:8000, max:14000};
+
+		
+		var resource_svg = get_generic_svg(
+			body,
+			1300, 650,
+			scale(2), scale(1),
+			{top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)});
+			
+
+       resource_chart = resource_svg.chart("ResourceGUI").eventFunc(function(){rand = Math.random()*(manage_param.max-manage_param.min); return rand+manage_param.min;})
+           .refreshRate(100).startFunc(5000);
+
+		var resource_data = {tanks: [{label: "A", x:3 , y: 8.75, width:4 , height: 3.75, decayRate: .0125, startingResource: 2400, maxResource: 4000, targetRangeMax:2800 ,targetRangeMin:2100, index:0},
+		 							{label: "B", x:11 , y: 8.75, width:4 , height: 3.75, decayRate: .0125, startingResource: 2400, maxResource: 4000, targetRangeMax:2800 ,targetRangeMin:2100, index:1},
+		 							{label: "C", x:2 , y: 3, width:2 , height: 2, decayRate: 0, startingResource: 1000, maxResource: 2000, index:2},
+		 							{label: "D", x:10 , y: 3, width:2 , height: 2, decayRate: 0, startingResource: 1000, maxResource: 2000, index:3}],
+		 		generators: [generator1 = {label: "S1", resource: Number.POSITIVE_INFINITY, cx: 7, cy: 2, r: 1, index:100},
+		 						generator2 = {label: "S2", resource: Number.POSITIVE_INFINITY, cx: 15, cy: 2, r: 1, index:101}],
+		 		switches:[{source: 2, target: 0, transferRate:.008, x1: 3.5, y1: 5, x2: 3.5, y2: 3, textX: 2.5, textY: 3.9, rotation: -90, on:0, key:49, keyboard: "1", repairTime: 4000},
+                           {source: 100, target: 0, transferRate:.008, x1: 6.5, y1: 5, x2: 6.5, y2: 2.85, textX: 5.5, textY: 3.9, rotation: -90, on:0, key: 50, keyboard: "2", repairTime: 4000},
+                           {source: 3, target: 1, transferRate:.008, x1: 11.5, y1: 5, x2: 11.5, y2: 3, textX: 10.5, textY: 3.9, rotation: -90, on:0, key: 51, keyboard: "3", repairTime: 4000},
+                           {source: 101, target: 1, transferRate:.008, x1: 14.5, y1: 5, x2: 14.5, y2: 2.85, textX: 13.5, textY: 3.9, rotation: -90, on:0, key: 52, keyboard: "4", repairTime: 4000},
+                           {source: 100, target: 2, transferRate:.0133, x1: 4, y1: 2, x2: 6, y2: 2, on:0, textX: 4.9, textY: 1, rotation: 180, key: 53, keyboard: "5", repairTime: 4000},
+                           {source: 101, target: 3, transferRate:.0133, x1: 12, y1: 2, x2: 14, y2: 2, on:0, textX: 12.9, textY: 1, rotation: 180, key: 54, keyboard: "6", repairTime: 4000},
+                           {source: 0, target: 1, transferRate:.00833, x1: 7, y1: 7.75, x2: 11, y2: 7.75, on:0, textX: 8.85, textY: 8.5, rotation: 0, key: 55, keyboard: "7", repairTime: 4000},
+                           {source: 1, target: 0, transferRate:.00833, x1: 7, y1: 6.25, x2: 11, y2: 6.25, on:0, textX: 8.85, textY: 5.25, rotation: 180, key: 56, keyboard: "8", repairTime: 4000}]
+		 					};
+
+            resource_data.switches.forEach(function(d){
+                if(d.source < 100){
+                    d.source = resource_data.tanks[d.source];
+                }
+                else{
+                    d.source = resource_data.generators[d.source-100];
+                }
+                if(d.target<100){
+                    d.target = resource_data.tanks[d.target];
+                }
+                else{
+                    d.target = resource_data.generators[d.source-100];
+                }
+            });
+		
+		
+		resource_chart.when("alert", function(args){});
+		resource_chart.when("tick", function(args){});
+		resource_chart.when("response", function(args){});
+		
+		resource_chart.draw(resource_data);
+	
+
+	var comm_rect = 	comm_svg.append("rect").attr("width", comm_svg.w).attr("height", comm_svg.h)
+			.style("fill-opacity", .3).style("fill", "none");
+
+	var track_rect = 	track_svg.append("rect").attr("width", track_svg.w).attr("height", track_svg.h)
+			.style("fill-opacity", .3).style("fill", "none");
+
+	var monitor_rect = 	monitor_svg.append("rect").attr("width", monitor_svg.w).attr("height", monitor_svg.h)
+			.style("fill-opacity", .3).style("fill", "none");
+
+	var resource_rect =	resource_svg.append("rect").attr("width", resource_svg.w).attr("height", resource_svg.h)
+			.style("fill-opacity", .3).style("fill", "none");
+
+
+	if(!(monitor_show)){
+		document.getElementById("checkbox1").checked = false;
+		monitor_rect.style("fill", "black");
+	}
+	if(!(track_show)){
+		document.getElementById("checkbox2").checked = false;
+		track_rect.style("fill", "black");
+	}
+
+	if(!(comm_show)){
+		document.getElementById("checkbox3").checked = false;
+		comm_rect.style("fill", "black");
+	}
+	if(!(resource_show)){
+		document.getElementById("checkbox4").checked = false;
+		resource_rect.style("fill", "black");
+	}
+
+	d3.select("#checkbox1").on("click", function(){
+		monitor_show = !monitor_show;
+		if(monitor_show){
+			monitor_rect.style("fill", "none");
+		}
+		else{
+			monitor_rect.style("fill", "black");
+		}
+	});
+
+	d3.select("#checkbox2").on("click", function(){
+		track_show = !track_show;
+		if(track_show){
+			track_rect.style("fill", "none");
+		}
+		else{
+			track_rect.style("fill", "black");
+		}
+	});
+
+	d3.select("#checkbox3").on("click", function(){
+		comm_show = !comm_show;
+		if(comm_show){
+			comm_rect.style("fill", "none");
+		}
+		else{
+			comm_rect.style("fill", "black");
+		}
+	});
+
+	d3.select("#checkbox4").on("click", function(){
+		resource_show = !resource_show;
+		if(resource_show){
+			resource_rect.style("fill", "none");
+		}
+		else{
+			resource_rect.style("fill", "black");
+		}
+	});
+
+	d3.select("#applyButton").on("click", function(){
+		taskName=document.getElementById("task_name").innerHTML;
+		objectName = document.getElementById("object_name").innerHTML.split(" ");
+
+		if(taskName == "Monitoring"){
+			monitor_param = JSON.parse(document.getElementById("event_parameters").value);
+			monitor_chart.startFunc(JSON.parse(document.getElementById("first_event").value));
+			console.log(monitor_chart.startFunc());
+			if(document.getElementById("event_function").selectedIndex==0){
+				monitor_chart.eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;});
+			}
+			else{
+				monitor_chart.eventFunc(function(){return 1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(monitor_param.avg_wait/1000)))) + 1);});
+			}
+			monitor_data.ticks = JSON.parse(document.getElementById("textArea13").value);
+			monitor_data.range = JSON.parse(document.getElementById("textArea14").value);
+
+			monitor_chart.tick(monitor_data.ticks);
+			monitor_chart.range(monitor_data.range);
+
+			if(objectName[0] == "Slider"){
+				monitor_data.scales[objectName[1]-1].prob = 				JSON.parse(document.getElementById("textArea1").value);
+				monitor_data.scales[objectName[1]-1].slider_interval =		JSON.parse(document.getElementById("textArea2").value);
+				monitor_data.scales[objectName[1]-1].key = 					document.getElementById("textArea3").value;
+				monitor_data.scales[objectName[1]-1].button = 				JSON.parse(document.getElementById("textArea4").value);
+				monitor_chart.draw(monitor_data);
+			}
+			else if(objectName[0] == "Button"){
+				monitor_data.buttons[objectName[1]-1].prob = 				JSON.parse(document.getElementById("textArea1").value);
+				monitor_data.buttons[objectName[1]-1].autoCorrect = 		JSON.parse(document.getElementById("textArea2").value);
+				monitor_data.buttons[objectName[1]-1].key = 				document.getElementById("textArea3").value;
+				monitor_data.buttons[objectName[1]-1].button = 				JSON.parse(document.getElementById("textArea4").value);
+				monitor_data.buttons[objectName[1]-1].color = 				document.getElementById("textArea5").value;
+				monitor_data.buttons[objectName[1]-1].alert_color = 		document.getElementById("textArea6").value;
+				monitor_chart.draw(monitor_data);
+			}
+		}
+		else if(taskName == "Tracking"){
+			track_param = JSON.parse(document.getElementById("event_parameters").value);
+			track_chart.startFunc(document.getElementById("first_event").value);
+			if(document.getElementById("event_function").selectedIndex==0){
+				track_chart.eventFunc(function(){rand = Math.random()*(track_param.max-track_param.min); return rand+track_param.min;});
+			}
+			else{
+				track_chart.eventFunc(function(){return 1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);});
+			}
+			track_data.refresh = 							JSON.parse(document.getElementById("textArea13").value);
+			track_data.orbits[objectName[1]-1].points = 	JSON.parse(document.getElementById("textArea1").value);
+			track_data.orbits[objectName[1]-1].interval = 	JSON.parse(document.getElementById("textArea2").value);
+			track_data.orbits[objectName[1]-1].radius = 	JSON.parse(document.getElementById("textArea3").value);
+			track_chart.draw(track_data);
+		}
+		else if(taskName == "Communication"){
+			comm_param = JSON.parse(document.getElementById("event_parameters").value);
+			comm_chart.startFunc(document.getElementById("first_event").value);
+			if(document.getElementById("event_function").selectedIndex==0){
+				comm_chart.eventFunc(function(){rand = Math.random()*(comm_param.max-comm_param.min); return rand+comm_param.min;});
+			}
+			else{
+				comm_chart.eventFunc(function(){return 1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(comm_param.avg_wait/1000)))) + 1);});
+			}
+			comm_data.response = 										JSON.parse(document.getElementById("textArea13").value);
+			comm_chart.responseTime(comm_data.response);
+
+			comm_data.channels[objectName[1]-1].name = 					document.getElementById("textArea1").value;
+			comm_data.channels[objectName[1]-1].avalibleFrequency = 	JSON.parse("["+document.getElementById("textArea2").value+"]");
+			comm_chart.draw(comm_data);
+		}
+		else if(taskName == "Resource"){
+			resource_param = JSON.parse(document.getElementById("event_parameters").value);
+			resource_chart.startFunc(document.getElementById("first_event").value);
+			
+			if(document.getElementById("event_function").selectedIndex==0){
+				resource_chart.eventFunc(function(){rand = Math.random()*(manage_param.max-manage_param.min); return rand+manage_param.min;});
+			}
+			else{
+				resource_chart.eventFunc(function(){return 1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(manage_param.avg_wait/1000)))) + 1);});
+			}
+
+			resource_data.refresh = JSON.parse(document.getElementById("textArea13").value);
+			resource_chart.refreshRate(resource_data.refresh);
+
+			if(objectName[0] == "Tank"){
+				resource_data.tanks[objectName[1]-1].maxResource = 			JSON.parse(document.getElementById("textArea1").value);
+				resource_data.tanks[objectName[1]-1].startingResource = 	JSON.parse(document.getElementById("textArea2").value);
+				resource_data.tanks[objectName[1]-1].decayRate = 			JSON.parse(document.getElementById("textArea3").value);
+				if(objectName[1]<=2){
+					resource_data.tanks[objectName[1]-1].targetRangeMax = 	JSON.parse(document.getElementById("textArea4").value);
+					resource_data.tanks[objectName[1]-1].targetRangeMin = 	JSON.parse(document.getElementById("textArea5").value);
+				}
+				
+			}
+			else if(objectName[0] == "Switch"){
+				resource_data.switches[objectName[1]-1].transferRate = 		JSON.parse(document.getElementById("textArea1").value);
+				resource_data.switches[objectName[1]-1].repairTime = 		JSON.parse(document.getElementById("textArea2").value);
+				resource_data.switches[objectName[1]-1].keyboard = 			document.getElementById("textArea3").value;
+				resource_data.switches[objectName[1]-1].key = 				JSON.parse(document.getElementById("textArea4").value);
+				
+			}
+			resource_data.tanks.forEach(function(d){
+				d.resource = d.startingResource;
+			});
+			resource_chart.draw(resource_data);
+		}
+	});
+
+	d3.select("#button2").on("click", function(){
+		if(document.getElementById("task_name").innerHTML == "Monitoring"){
+			monitor_data.scales.push({button: 112, key: "F1", slider_interval: 2000, event_probablity: .1});
+			monitor_chart.draw(monitor_data);
+		}
+		else if(document.getElementById("task_name").innerHTML == "Tracking"){
+			track_data.push({points: [{"x": .1,"y":.9},{"x": .1,"y":.8},{"x": .2,"y":.8},{"x": .2,"y":.9}], interval: 10000, radius:13});
+			track_chart.draw(track_data);
+		}
+		else if(document.getElementById("task_name").innerHTML == "Communication"){
+			comm_data.channels.push({name: "OPS 1", avalibleFrequency: [1173,1231,1123,1131]});
+			comm_chart.draw(comm_data);
+		}
+	});
+
+	d3.select("#button1").on("click", function(){
+		if(document.getElementById("task_name").innerHTML == "Monitoring"){
+			monitor_data.scales.pop();
+			monitor_chart.draw(monitor_data);
+		}
+		else if(document.getElementById("task_name").innerHTML == "Tracking"){
+			track_data.pop();
+			track_chart.draw(track_data);
+		}
+		else if(document.getElementById("task_name").innerHTML == "Communication"){
+			comm_data.channels.pop();
+			comm_chart.draw(comm_data);
+		}
+	});
+	d3.select("#button4").on("click", function(){
+		if(document.getElementById("task_name").innerHTML == "Monitoring"){
+			monitor_data.buttons.push({color: "lightgreen", button: 116, key: "F5", alert_color:"black", autoCorrect: 1000});
+			monitor_chart.draw(monitor_data);
+		}
+	});
+
+	d3.select("#button3").on("click", function(){
+		if(document.getElementById("task_name").innerHTML == "Monitoring"){
+			monitor_data.buttons.pop();
+			monitor_chart.draw(monitor_data);
+		}
+	});
+
+
+
+	d3.select("#submit").on("click", function(){
+		document.getElementById("comm_data_field").value = 		JSON.stringify(comm_data);
+		document.getElementById("track_data_field").value = 	JSON.stringify(track_data);
+		document.getElementById("monitor_data_field").value = 	JSON.stringify(monitor_data);
+        resource_data.switches.forEach(function(d){
+            d.source = d.source.index;
+            d.target = d.target.index;
+        });
+        
+		document.getElementById("resource_data_field").value = 	JSON.stringify(resource_data);
+
+		document.getElementById("comm_event_function_field").value = 	comm_chart.eventFunc();
+		document.getElementById("comm_event_parameters_field").value =	objectToString(comm_param);
+		document.getElementById("comm_first_event_field").value = 		comm_chart.startFunc();
+		document.getElementById("comm_show_field").value = 				comm_show ? "True":"False";
+
+		document.getElementById("track_event_function_field").value = 	track_chart.eventFunc();
+		document.getElementById("track_event_parameters_field").value = objectToString(track_param);
+		document.getElementById("track_first_event_field").value = 		track_chart.startFunc();
+		document.getElementById("track_show_field").value = 			track_show ? "True":"False";
+
+		document.getElementById("monitor_event_function_field").value = 	monitor_chart.eventFunc();
+		document.getElementById("monitor_event_parameters_field").value = 	objectToString(monitor_param);
+		document.getElementById("monitor_first_event_field").value = 		monitor_chart.startFunc();
+		document.getElementById("monitor_show_field").value = 				monitor_show ? "True":"False";
+
+		document.getElementById("resource_event_function_field").value = 	resource_chart.eventFunc();
+		document.getElementById("resource_event_parameters_field").value = 	objectToString(manage_param);
+		document.getElementById("resource_first_event_field").value = 		resource_chart.startFunc();
+		document.getElementById("resource_show_field").value = 				resource_show ? "True":"False";
+
+		document.getElementById("duration_field").value = document.getElementById("duration").value;
+		document.getElementById("name_field").value = document.getElementById("name").value;
+
+		document.getElementById("parameter_id_field").value = -1;
+
+		document.getElementById("save").click();
+	});
+
+</script>
+
+<form action="{% url 'ModME:save' %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="comm_data" id="comm_data_field"/>
+<input type="hidden" name="comm_show" id="comm_show_field"/>
+<input type="hidden" name="comm_event_function" id="comm_event_function_field"/>
+<input type="hidden" name="comm_event_parameters" id="comm_event_parameters_field"/>
+<input type="hidden" name="comm_first_event" id="comm_first_event_field"/>
+
+<input type="hidden" name="track_data" id="track_data_field"/>
+<input type="hidden" name="track_show" id="track_show_field"/>
+<input type="hidden" name="track_event_function" id="track_event_function_field"/>
+<input type="hidden" name="track_event_parameters" id="track_event_parameters_field"/>
+<input type="hidden" name="track_first_event" id="track_first_event_field"/>
+
+<input type="hidden" name="monitor_data" id="monitor_data_field"/>
+<input type="hidden" name="monitor_show" id="monitor_show_field"/>
+<input type="hidden" name="monitor_event_function" id="monitor_event_function_field"/>
+<input type="hidden" name="monitor_event_parameters" id="monitor_event_parameters_field"/>
+<input type="hidden" name="monitor_first_event" id="monitor_first_event_field"/>
+
+<input type="hidden" name="resource_data" id="resource_data_field"/>
+<input type="hidden" name="resource_show" id="resource_show_field"/>
+<input type="hidden" name="resource_event_function" id="resource_event_function_field"/>
+<input type="hidden" name="resource_event_parameters" id="resource_event_parameters_field"/>
+<input type="hidden" name="resource_first_event" id="resource_first_event_field"/>
+
+<input type="hidden" name="duration" id="duration_field"/>
+<input type="hidden" name="name" id="name_field"/>
+
+<input type="hidden" name="parameter_id" id="parameter_id_field"/>
+
+<input type="submit" value="Save" id="save" style="visibility:hidden"/>
+</form>
+
+</body>

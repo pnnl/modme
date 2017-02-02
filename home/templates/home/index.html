@@ -1,0 +1,58 @@
+<head>
+<style type="text/css">
+    body {
+        background-color: #eeeeee;
+    }
+    div#header {
+        background-color:#00308F;
+    }
+    div#content {
+        background-color:#DDDDDD;
+        height:"600px";
+        width:"600px";
+        text-align:center;
+    }
+    p {
+        font-family: "Arial";
+    }
+    a {
+        font-size: 26px;
+        color: #000;
+        text-decoration: none;
+    }
+    a:visited {
+        color: #000;
+    }
+    h1 {
+        margin-bottom:0;
+        text-align:center;
+        font-size:100px;
+        color:#B6B6B8;
+    }
+</style>
+</head>
+
+<div id="header">
+    <h1>INDEX</h1>
+</div>
+
+
+
+<div id="content">
+    <p><a href="/ModME">ModME</a></p>
+    <p><a href="/admin">Administration</a></p>
+    <p><a href="/admin/ModME/condition">Conditions</a></p>
+    <p><a href="/ModME/tableAdd">Add a New Table</a></p>
+</div>
+
+<script type="text/javascript">
+function stopRKey(evt) {
+
+    var evt = evt ? evt : ((event) ? event :null);
+    var node = (evt.target) ? (evt.target) : (evt.srcElement ? (evt.srcElement) : null);
+    if ((evt.keyCode == 13) && (node.type=="text")) {return false;}
+
+}
+document.onkeypress = stopRKey;
+
+</script>

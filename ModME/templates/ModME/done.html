@@ -1,0 +1,62 @@
+<!-- Purpose of this page is a visual que that the experiment is complete and only pass along the data without changing it -->
+<head>
+<style type="text/css">
+.fullscreenDiv{
+    background-color: #e8e8e8;
+    width:100%;
+    height: auto;
+    bottom: 0px;
+    top: 0px;
+    left: 0;
+    position: absolute;
+}
+.center{
+    position: absolute;
+    width: 1200px;
+    height: 50px;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -600px;
+}
+p.fullScreenCenteredText {
+    font-size: 12px;
+    font-size: 2vw;
+    font-family: Arial;
+}
+</style>
+</head>
+
+<body>
+<div class="fullscreenDiv">
+    <div class="center">
+        <p class="fullScreenCenteredText" align="center">
+            Please wait, saving data. Do not close page.
+        </p>
+    </div>
+</div>
+
+<form action="{% url 'ModME:complete' %}" style="display:none" method="post">
+{% csrf_token %}
+<input type="hidden" name="data" id="data"/>
+<input type="hidden" name="tasks" id="tasks"/>
+<input type="hidden" name="id" id="id" value="{{ id }}"/>
+<input type="submit" value="Complete" id="complete" />
+</form>
+
+<script src="/static/d3/d3.v3.min.js"></script>
+<script>
+	var temp2 = (("{{ data }}").replace(/&(l|g|quo)t;/g,
+		function(a,b){ 
+			return {
+				l :'<',
+				g :'>',
+				quo:'"'
+			}[b];
+		}));
+	var data = JSON.parse(temp2);
+	document.getElementById("data").value = JSON.stringify(data);
+	document.getElementById("tasks").value = "{{ tasks }}";
+	document.getElementById("complete").click();
+</script>
+

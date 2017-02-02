@@ -1,0 +1,63 @@
+<head>
+<style type="text/css">
+.fullscreenDiv{
+    background-color: #e8e8e8;
+    width:100%;
+    height: auto;
+    bottom: 0px;
+    top: 0px;
+    left: 0;
+    position: absolute;
+}
+.center{
+    position: absolute;
+    width: 1200px;
+    height: 50px;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -600px;
+}
+p.fullScreenCenteredText {
+    font-size: 12px;
+    font-size: 2vw;
+    font-family: Arial;
+}
+</style>
+</head>
+
+<body>
+<div class="fullscreenDiv">
+    <div class="center">
+        <p class="fullScreenCenteredText" align="center">
+            Press space bar or tap screen to start experiment
+        </p>
+    </div>
+</div>
+<script src="/static/d3/d3.v3.min.js"></script>
+<script>
+    function start(){
+        document.getElementById("participant_id_field").value="{{ participant_id }}";
+        document.getElementById("parameters_field").value={{ parameters }};
+        document.getElementById("sessionNumber_field").value="{{ sessionNumber }}";
+    }
+
+    setTimeout(start,1);
+    d3.select(window).on("keydown",function(){
+        var keyCode = d3.event.keyCode;
+        if(keyCode == 32){
+            document.getElementById("complete").click();
+        }
+    });
+    d3.select(window).on("touchstart", function(){
+        document.getElementById("complete").click();
+    });
+</script>
+
+<form action="{% url 'ModME:experiment' %}" style="display:none" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="parameter_id" id="parameters_field"/>
+    <input type="hidden" name="participant_id" id="participant_id_field"/>
+    <input type="hidden" name="sessionNumber" id="sessionNumber_field"/>
+    <input type="submit" value="Complete" id="complete" style="visibility:hidden"/>
+</form>

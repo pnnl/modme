@@ -1,0 +1,739 @@
+<head>
+{% for file in cssList %}
+    <link href = "/static/{{ file }}" rel="stylesheet"  type="text/css">
+{% endfor %}
+<style>
+html {
+/* font-family: 'Open Sans', 'Arial', sans-serif;
+ font-size: 16px;*/
+ font: 16px "Times New Roman";
+ line-height: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    clear:both;
+}
+
+input[type="text"] {
+    font: 16px "Times New Roman";
+    font-size: 14px;
+}
+
+button {
+    padding: 2px 6px 3px;
+    background-color: #bbbbbb;
+    border: 2px outset buttonface;
+    color: #333;
+/*    font-weight: bold;
+    font-family: 'Arail', 'Arial', sans-serif;
+    font-size: 14px;*/
+    font: 12px "Arial";
+    cursor: pointer;
+}
+
+button:hover {
+    border: 2px outset buttonface;
+}
+</style>
+</head>
+
+<body>
+{% for file in fileList %}
+    <script src="/static/{{ file }}"></script>
+{% endfor %}
+{% for task in taskList %}
+    <script src="/static/{{ task.configurator }}"></script>
+{% endfor %}
+<table>
+    <tr>
+        <td style="width:20%">
+
+            <table>
+                <tr>
+                    <td>
+                        <label><b>Included Tasks</b></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="task1">
+                            <option value="-1">--------</option>
+                            <option value="-2">Place Holder</option>
+                            {% for entry in taskList %}
+                                <option value="{{ entry.id }}">{{ entry.taskName }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                       <select id="task2">
+                            <option value="-1">--------</option>
+                            <option value="-2">Place Holder</option>
+                            {% for entry in taskList %}
+                                <option value="{{ entry.id }}">{{ entry.taskName }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="task3">
+                            <option value="-1">--------</option>
+                            <option value="-2">Place Holder</option>
+                            {% for entry in taskList %}
+                                <option value="{{ entry.id }}">{{ entry.taskName }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select id="task4">
+                            <option value="-1">--------</option>
+                            <option value="-2">Place Holder</option>
+                            {% for entry in taskList %}
+                                <option value="{{ entry.id }}">{{ entry.taskName }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Experiment Settings</b></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Name</label>
+                    </td>
+                    <td>
+                        <textarea id="name">{{ parameters.Name }}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Duration</label>
+                    </td>
+                    <td>
+                        <textarea id="duration">{{ parameters.experimentDuration }}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_name" style="font-weight:bold; display:none">Task Name</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_label1" style="display:none">Time to first event</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox1" style="display:none"></input>
+                        <select id="task_select1" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea1" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_label2" style="display:none">Event Function</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox2" style="display:none"></input>
+                        <select id="task_select2" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea2" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_label3" style="display:none">Event Function Parameters</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox3" style="display:none"></input>
+                        <select id="task_select3" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea3" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_label4" style="display:none">label13</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox4" style="display:none"></input>
+                        <select id="task_select4" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea4" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_label5" style="display:none">label14</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox5" style="display:none"></input>
+                        <select id="task_select5" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea5" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_label6" style="display:none">label15</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox6" style="display:none"></input>
+                        <select id="task_select6" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea6" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="task_label7" style="display:none">label15</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox7" style="display:none"></input>
+                        <select id="task_select7" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea7" style="display:none"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button id = "button1" type = "button" style="background-color:bbbbbb; display:none;"> button 1 </button>
+                     </td>
+                     <td>
+                        <button id = "button2" type = "button" style="background-color:bbbbbb; display:none"> button 2 </button>
+                     </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id = "button3" type = "button" style="background-color:bbbbbb; display:none"> button 3 </button>
+                     </td>
+                     <td>
+                        <button id = "button4" type = "button" style="background-color:bbbbbb; display:none"> button 4 </button>
+                     </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label id="object_name" style="font-weight:bold; display:none">Name of object to edit</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label1" style="display:none">label1</label>
+                    </td>
+                    <td>
+                        <select id="object_select1" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea1" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label2" style="display:none">label2</label>
+                    </td>
+                    <td>
+                        <select id="object_select2" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea2" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label3" style="display:none">label3</label>
+                    </td>
+                    <td>
+                        <select id="object_select3" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea3" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label4" style="display:none">label4</label>
+                    </td>
+                    <td>
+                        <select id="object_select4" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea4" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label5" style="display:none">label5</label>
+                    </td>
+                    <td>
+                        <select id="object_select5" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea5" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label6" style="display:none">label6</label>
+                    </td>
+                    <td>
+                        <select id="object_select6" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea6" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label7" style="display:none">label7</label>
+                    </td>
+                    <td>
+                        <select id="object_select7" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea7" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label8" style="display:none">label8</label>
+                    </td>
+                    <td>
+                        <select id="object_select8" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea8" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label9" style="display:none">label9</label>
+                    </td>
+                    <td>
+                        <select id="object_select9" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea9" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label10" style="display:none">label10</label>
+                    </td>
+                    <td>
+                        <select id="object_select10" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea10" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label11" style="display:none">label11</label>
+                    </td>
+                    <td>
+                        <select id="object_select11" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea11" style="display:none"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="object_label12" style="display:none">label12</label>
+                    </td>
+                    <td>
+                        <select id="object_select12" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="object_textarea12" style="display:none"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button id="applyButton" type="button" style="background-color:bbbbbb"> Apply </button>
+                    </td>
+                    <td>
+                        <button id="submit" type="button" onclick="submit()" style="background-color:bbbbbb"> Submit Changes </button>
+                    </td>
+                    <td>
+                        <button id="reset" type="button" style="background-color:bbbbbb"> Reset </button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td id = "task_table">
+            <div id="row1">
+                <div id="slot1" style="display:inline-block; position: relative;"></div>
+                <div id="slot2" style="display:inline-block; position: absolute;"></div>
+            </div>
+            <div id="row2">
+                <div id="slot3" style="display:inline-block; position: relative;"></div>
+                <div id="slot4" style="display:inline-block; position: absolute;"></div>
+            </div>
+        </td>
+
+    </tr>
+</table>
+
+<script>
+    var False = false;
+    var True = true;
+
+    var body = d3.select("#task_table");
+    var row1 = d3.select("#row1");
+    var row2 = d3.select("#row2");
+
+    d3.select("body")
+        .style("margin","0px")
+        .style("background-color", "#e8e8e8");
+
+    var scale = d3.scale.linear();
+
+    if((window.innerWidth)/(window.innerHeight-5)<=1.5){
+        scale.range([0,window.innerWidth]);
+        scale.domain([0,3]);
+    }
+    else{
+        scale.range([0,window.innerHeight-5]);
+        scale.domain([0,2]);
+    }
+
+    document.getElementById("slot1").style.width = scale(1);
+    document.getElementById("slot1").style.height = scale(1);
+
+    document.getElementById("slot2").style.width = scale(2);
+    document.getElementById("slot2").style.height = scale(1);
+
+    document.getElementById("slot3").style.width = scale(1);
+    document.getElementById("slot3").style.height = scale(1);
+
+    document.getElementById("slot4").style.width = scale(2);
+    document.getElementById("slot4").style.height = scale(1);
+
+    var setup = {
+        {% for entry in taskList %}
+            {{ entry.taskName }}: {
+                data: "{}",
+                container: "",
+                GUI: false
+            },
+        {% endfor %}
+        blank0: {
+            data: "{}",
+            container: "",
+            GUI: false
+        },
+        blank1: {
+            data: "{}",
+            container: "",
+            GUI: false
+        },
+        blank2: {
+            data: "{}",
+            container: "",
+            GUI: false
+        },
+        blank3: {
+            data: "{}",
+            container: "",
+            GUI: false
+        },
+        placeholder0: {
+            data: "{}",
+            container: "",
+            GUI: true
+        },
+        placeholder1: {
+            data: "{}",
+            container: "",
+            GUI: true
+        },
+        placeholder2: {
+            data: "{}",
+            container: "",
+            GUI: true
+        },
+        placeholder3: {
+            data: "{}",
+            container: "",
+            GUI: true
+        }
+    }
+
+    setup.{{ taskNames.0 }}.data = JSON.parse(("{{ parameters.task1Data }}").replace(/&(l|g|quo)t;/g,
+                    function(a,b){
+                        return {
+                            l :'<',
+                            g :'>',
+                            quo:'"'
+                        }[b];
+                    }));
+    setup.{{ taskNames.0 }}.container = "slot1";
+    setup.{{ taskNames.0 }}.GUI = {{ parameters.task1GUI }};
+
+    setup.{{ taskNames.1 }}.data = JSON.parse(("{{ parameters.task2Data }}").replace(/&(l|g|quo)t;/g,
+                    function(a,b){
+                        return {
+                            l :'<',
+                            g :'>',
+                            quo:'"'
+                        }[b];
+                    }));
+    setup.{{ taskNames.1 }}.container = "slot2";
+    setup.{{ taskNames.1 }}.GUI = {{ parameters.task2GUI }};
+
+    setup.{{ taskNames.2 }}.data = JSON.parse(("{{ parameters.task3Data }}").replace(/&(l|g|quo)t;/g,
+                    function(a,b){
+                        return {
+                            l :'<',
+                            g :'>',
+                            quo:'"'
+                        }[b];
+                    }));
+    setup.{{ taskNames.2 }}.container = "slot3";
+    setup.{{ taskNames.2 }}.GUI = {{ parameters.task3GUI }};
+
+    setup.{{ taskNames.3 }}.data = JSON.parse(("{{ parameters.task4Data }}").replace(/&(l|g|quo)t;/g,
+                    function(a,b){
+                        return {
+                            l :'<',
+                            g :'>',
+                            quo:'"'
+                        }[b];
+                    }));
+    setup.{{ taskNames.3 }}.container = "slot4";
+    setup.{{ taskNames.3 }}.GUI = {{ parameters.task4GUI }};
+
+    for (var name in setup) {
+        if (name.slice(0,5) != "blank" && name.slice(0,11) != "placeholder" && setup[name].container.slice(0,4) == "slot") {
+            for (var i=0; i<document.getElementById("task"+setup[name].container[4]).options.length; i++) {
+                if (document.getElementById("task"+setup[name].container[4]).options[i].innerHTML == name) {
+                    document.getElementById("task"+setup[name].container[4]).options.selectedIndex = i;
+                }
+            }
+            eval(name+"()");
+        } else if(name.slice(0,11) == "placeholder" && setup[name].container.slice(0,4) == "slot") {
+            document.getElementById("task"+setup[name].container[4]).options.selectedIndex = 1;
+        }
+    }
+
+    d3.select("#task1").on("change",function(){
+        slot1 = document.getElementById("slot1");
+        for (var i =0; i < slot1.childElementCount; i++) {
+            slot1.children[i].remove();
+        }
+        for(var name in setup){
+            if (setup[name].container == "slot1") {
+                setup[name].container = "";
+            }
+        }
+        select = document.getElementById("task1");
+        if (select.selectedIndex == 0) {
+            setup.blank0.container = "slot1";
+            setup.blank0.GUI = false;
+        } else if (select.selectedIndex == 1) {
+            setup.placeholder0.container = "slot1";
+            setup.placeholder0.GUI = true;
+        } else {
+            setup[select.options[select.selectedIndex].innerHTML].container = "slot1";
+            setup[select.options[select.selectedIndex].innerHTML].GUI = true;
+            eval(select.options[select.selectedIndex].innerHTML+"()");
+        }
+        
+    });
+
+    d3.select("#task2").on("change",function(){
+        slot2 = document.getElementById("slot2");
+
+        for (var i =0; i < slot2.childElementCount; i++) {
+            slot2.children[i].remove();
+        }
+        for(var name in setup){
+            if (setup[name].container == "slot2") {
+                setup[name].container = "";
+            }
+        }
+        select = document.getElementById("task2");
+        if (select.selectedIndex == 0) {
+            setup.blank1.container = "slot2";
+            setup.blank1.GUI = false;
+        } else if (select.selectedIndex == 1) {
+            setup.placeholder1.container = "slot2";
+            setup.placeholder1.GUI = true;
+        } else {
+            setup[select.options[select.selectedIndex].innerHTML].container = "slot2";
+            setup[select.options[select.selectedIndex].innerHTML].GUI = true;
+            eval(select.options[select.selectedIndex].innerHTML+"()");
+        }
+        
+    });
+
+    d3.select("#task3").on("change",function(){
+        slot3 = document.getElementById("slot3");
+        for (var i =0; i < slot3.childElementCount; i++) {
+            slot3.children[i].remove();
+        }
+        for(var name in setup){
+            if (setup[name].container == "slot3") {
+                setup[name].container = "";
+            }
+        }
+        select = document.getElementById("task3");
+        if (select.selectedIndex == 0) {
+            setup.blank2.container = "slot3";
+            setup.blank2.GUI = false;
+        } else if (select.selectedIndex == 1) {
+            setup.placeholder2.container = "slot3";
+            setup.placeholder2.GUI = true;
+        } else {
+            setup[select.options[select.selectedIndex].innerHTML].container = "slot3";
+            setup[select.options[select.selectedIndex].innerHTML].GUI = true;
+            eval(select.options[select.selectedIndex].innerHTML+"()");
+        }
+        
+    });
+
+    d3.select("#task4").on("change",function(){
+        slot4 = document.getElementById("slot4");
+        for (var i =0; i < slot4.childElementCount; i++) {
+            slot4.children[i].remove();
+        }
+        for(var name in setup){
+            if (setup[name].container == "slot4") {
+                setup[name].container = "";
+            }
+        }
+        select = document.getElementById("task4");
+        if (select.selectedIndex == 0) {
+            setup.blank3.container = "slot4";
+            setup.blank3.GUI = false;
+        } else if (select.selectedIndex == 1) {
+            setup.placeholder3.container = "slot4";
+            setup.placeholder3.GUI = true;
+        } else {
+            setup[select.options[select.selectedIndex].innerHTML].container = "slot4";
+            setup[select.options[select.selectedIndex].innerHTML].GUI = true;
+            eval(select.options[select.selectedIndex].innerHTML+"()");
+        }
+        
+    });
+
+    submit = function(){
+        save = ["","","",""];
+        for (task in setup) {
+            if(setup[task].container == "slot1"){
+                save[0] = task;
+            } else if(setup[task].container == "slot2"){
+                save[1] = task;
+            } else if(setup[task].container == "slot3"){
+                save[2] = task;
+            } else if(setup[task].container == "slot4"){
+                save[3] = task;
+            }
+        }
+        
+        document.getElementById("task1Field").value = document.getElementById("task1").options[document.getElementById("task1").selectedIndex].value;
+        if (setup[save[0]].data == "") {
+            document.getElementById("task1DataField").value = JSON.stringify(setup[save[0]].Default);
+        } else {
+            document.getElementById("task1DataField").value = JSON.stringify(setup[save[0]].data);
+        }
+        document.getElementById("task1GUIField").value = JSON.stringify(setup[save[0]].GUI);
+
+        document.getElementById("task2Field").value = document.getElementById("task2").options[document.getElementById("task2").selectedIndex].value;
+        if (setup[save[1]].data == "") {
+            document.getElementById("task2DataField").value = JSON.stringify(setup[save[1]].Default);
+        } else {
+            document.getElementById("task2DataField").value = JSON.stringify(setup[save[1]].data);
+        }
+        document.getElementById("task2GUIField").value = JSON.stringify(setup[save[1]].GUI);
+
+        document.getElementById("task3Field").value = document.getElementById("task3").options[document.getElementById("task3").selectedIndex].value;
+        if (setup[save[2]].data == "") {
+            document.getElementById("task3DataField").value = JSON.stringify(setup[save[2]].Default);
+        } else {
+            document.getElementById("task3DataField").value = JSON.stringify(setup[save[2]].data);
+        }
+        document.getElementById("task3GUIField").value = JSON.stringify(setup[save[2]].GUI);
+
+        document.getElementById("task4Field").value = document.getElementById("task4").options[document.getElementById("task4").selectedIndex].value;
+        if (setup[save[3]].data == "") {
+            document.getElementById("task4DataField").value = JSON.stringify(setup[save[3]].Default);
+        } else {
+            document.getElementById("task4DataField").value = JSON.stringify(setup[save[3]].data);
+        }
+        document.getElementById("task4GUIField").value = JSON.stringify(setup[save[3]].GUI);
+        
+        document.getElementById("durationField").value = document.getElementById("duration").value;
+        document.getElementById("nameField").value = document.getElementById("name").value;
+
+        document.getElementById("parameterIdField").value = {{ parameters.id }};
+
+        document.getElementById("save").click();
+    };
+
+</script>
+
+<form action="{% url 'ModME:save' %}" style="display:none" method="post">
+{% csrf_token %}
+<input type="hidden" name="task1" id="task1Field"/>
+<input type="hidden" name="task1Data" id="task1DataField"/>
+<input type="hidden" name="task1GUI" id="task1GUIField"/>
+
+<input type="hidden" name="task2" id="task2Field"/>
+<input type="hidden" name="task2Data" id="task2DataField"/>
+<input type="hidden" name="task2GUI" id="task2GUIField"/>
+
+<input type="hidden" name="task3" id="task3Field"/>
+<input type="hidden" name="task3Data" id="task3DataField"/>
+<input type="hidden" name="task3GUI" id="task3GUIField"/>
+
+<input type="hidden" name="task4" id="task4Field"/>
+<input type="hidden" name="task4Data" id="task4DataField"/>
+<input type="hidden" name="task4GUI" id="task4GUIField"/>
+
+<input type="hidden" name="duration" id="durationField"/>
+<input type="hidden" name="name" id="nameField"/>
+
+<input type="hidden" name="parameterId" id="parameterIdField"/>
+
+<input type="submit" value="Save" id="save" style="visibility:hidden"/>
+</form>
+
+</body>

@@ -1,0 +1,2 @@
+class asdfasf(models.Model):
+    qwer = models.IntegerField()

@@ -1,0 +1,898 @@
+<!-- <!DOCTYPE html> -->
+<meta charset="utf-8">
+<head>
+<style>
+
+	*, html { 
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+	}
+
+	body {
+		background-color: #ddd;
+	}
+
+	ol.tree
+	{
+		padding: 0 0 0 30px;
+		width: 100%;
+	}
+
+	li {
+		position: relative;
+		margin-left: -15px;
+		list-style: none;
+	}
+
+	li.parameter label
+	{
+		background: none;
+		color: #000000;
+		text-decoration: none;
+		display: inline-block;
+		padding-left: 0px;
+		vertical-align: 60%;
+	}
+	
+	li input:not(.survay) {
+		
+		position: absolute;
+		left: 0;
+		margin-left: 0;
+		opacity: 0;
+		z-index: 2;
+		cursor: pointer;
+		height: 1em;
+		width: 1em;
+		top: 9px;
+	}
+
+	li input:not(.survay) + ol {
+		width: 210;
+		background: url(/static/TableAdd/toggle-small-expand.png) 40px 0px no-repeat;
+		margin: -0.938em 0 0 -44px;
+		height: 1em;
+		position: relative;
+		top: -10px;
+	}
+
+	li input + ol > li {
+		display: none;
+		margin-left: -14px !important;
+		padding-left: 1px;
+	}
+
+	li label {
+		cursor: pointer;
+		display: inline-block;
+		padding-left: 15px;
+		vertical-align: 60%;
+	}
+
+
+	li input:not(.survay):checked + ol {
+		width: 210;
+		background: url(/static/TableAdd/toggle-small.png) 40px 5px no-repeat;
+		margin: -1.25em 0 0 -44px;  
+		padding: 35px 0 0 80px;
+		height: auto;
+		position: relative;
+		top: -10px;
+	}
+	li input:not(.survay):checked + ol > li { display: block; margin: 0 0 0.125em;}
+	li input:not(.survay):checked + ol > li:last-child { margin: 0 0 0.063em;}
+
+	li.field select {
+		vertical-align: 60%;
+	}
+
+	li.field textarea {
+		margin: 0px 4px 0px 80px;
+	}
+
+	li.parameter textarea {
+		margin: 0px 4px 0px 10px;
+		width: 90px;
+	}
+
+	li.addParam select {
+		vertical-align: 0%;
+	}
+
+	td.treeCol {
+		width: 70%;
+	}
+
+	button.fieldButton {
+		display: inline-block;
+		vertical-align: 60%;
+		margin-left: 5px;
+	}
+
+	table {
+		width: 100%;
+	}
+
+	p {
+		white-space: pre-wrap;
+	}
+
+	form {
+		display: none;
+	}
+
+
+</style>
+</head>
+<body>
+	<ol id="tree" class="tree">
+		<li class="parameter">
+			<label for"taskName">Task Name:</label>
+			<textarea id="taskName" style = "width: 179px;"></textarea>
+			<label> Survay: </label>
+			<input class='survay' type="checkbox" id="survay"></input>
+		</li>
+	</ol>
+	<button onclick="addField()">Add Field</button>
+	<button onclick="generate()">Generate</button>
+	<button onclick="submit()">Save</button>
+
+	<pre id="code1"></pre>
+	<pre id="code2"></pre>
+	<pre id="code3"></pre>
+	<pre id="code4"></pre>
+	<pre id="code5"></pre>
+
+<script>
+
+var taskName = "testingName"
+var fields = [{name: "testing1", type: "integer", args:[{name: "default", value: -1}]}, {name: "testing2", type: "character", args:[]}]
+
+var modelString = "";
+var viewArray = "";
+var viewParse = "";
+var viewSave = "";
+var adminString = "";
+
+function addParam(button) {
+	var ol = button.parentElement.parentElement;
+	var addParamSelect = ol.lastElementChild.firstElementChild;
+	if (addParamSelect.options[addParamSelect.selectedIndex].innerHTML != "----------------") {
+		var li = document.createElement('li');
+		li.setAttribute('class', 'parameter');
+
+		var label = document.createElement('label');
+		var textarea = document.createElement('textarea');
+
+		// set up label
+		label.innerHTML = addParamSelect.options[addParamSelect.selectedIndex].innerHTML + ':';
+		label.value = addParamSelect.options[addParamSelect.selectedIndex].value;
+
+		// set up textarea
+
+
+		// Set up li
+		li.appendChild(label);
+		li.appendChild(textarea);
+
+		ol.insertBefore(li, ol.childNodes[ol.childElementCount-1]);
+	}
+}
+
+function addField() {
+	var tree = document.getElementById('tree');
+	var li = document.createElement('li');
+	li.setAttribute('class', "field");
+
+	var label = document.createElement('label');
+	var textarea = document.createElement('textarea');
+	var select = document.createElement('select');
+	var input = document.createElement('input');
+	var ol = document.createElement('ol');
+	var button = document.createElement('button');
+
+	// Set up label
+	label.setAttribute('for', "field"+tree.childElementCount-1);
+	label.innerHTML = "Field Name and Type: "
+
+	// Set up textarea
+
+	// Set up select
+	var optionBlank = document.createElement('option');
+	var optionBigInteger = document.createElement('option');
+	var optionBoolean = document.createElement('option');
+	var optionCharacter = document.createElement('option');
+	var optionDate = document.createElement('option');
+	var optionDateTime = document.createElement('option');
+	var optionDecimal = document.createElement('option');
+	var optionDuration = document.createElement('option');
+	var optionEmail = document.createElement('option');
+	var optionFile = document.createElement('option');
+	var optionFilePath = document.createElement('option');
+	var optionFloat = document.createElement('option');
+	var optionImage = document.createElement('option');
+	var optionInteger = document.createElement('option');
+	var optionIPAddress = document.createElement('option');
+	var optionGenericIPAddress = document.createElement('option');
+	var optionNullBoolean = document.createElement('option');
+	var optionPositiveInteger = document.createElement('option');
+	var optionPositiveSmallInteger = document.createElement('option');
+	var optionSmallInteger = document.createElement('option');
+	var optionText = document.createElement('option');
+	var optionTime = document.createElement('option');
+	var optionURL = document.createElement('option');
+	var optionUUID = document.createElement('option');
+
+	optionBlank.innerHTML = "----------------------------";
+	optionBigInteger.innerHTML = "Big Integer"; // new
+	optionBoolean.innerHTML = "Boolean"; // new
+	optionCharacter.innerHTML = "Character";
+	optionDate.innerHTML = "Date"; // new
+	optionDateTime.innerHTML = "DateTime"; // new
+	optionDecimal.innerHTML = "Decimal"; // new
+	optionDuration.innerHTML = "Duration"; // new
+	optionEmail.innerHTML = "Email"; // new
+	optionFile.innerHTML = "File" // new
+	optionFilePath.innerHTML = "FilePath"; //new
+	optionFloat.innerHTML = "Float"; // new
+	optionImage.innerHTML = "Image"; // new
+	optionInteger.innerHTML = "Integer";
+	optionIPAddress.innerHTML = "IP Address" // new
+	optionGenericIPAddress.innerHTML = "Generic IP Address"; // new
+	optionNullBoolean.innerHTML = "Null Boolean"; // new
+	optionPositiveInteger.innerHTML = "Positive Integer"; // new
+	optionPositiveSmallInteger.innerHTML = "Positive Small Integer"; // new
+	optionSmallInteger.innerHTML = "Small Integer"; // new
+	optionText.innerHTML = "Text"; // new
+	optionTime.innerHTML = "Time"; // new
+	optionURL.innerHTML = "URL"; // new
+	optionUUID.innerHTML = "UUID"; // new
+
+	optionBlank.value = "----------------------------";
+	optionBigInteger.value = "BigIntegerField"; // new
+	optionBoolean.value = "BooleanField"; // new
+	optionCharacter.value = "CharField";
+	optionDate.value = "DateField"; // new
+	optionDateTime.value = "DateTimeField"; // new
+	optionDecimal.value = "DecimalField"; // new
+	optionDuration.value = "DurationField"; // new
+	optionEmail.value = "EmailField"; // new
+	optionFile.value = "FileField" // new
+	optionFilePath.value = "FilePathField"; //new
+	optionFloat.value = "FloatField"; // new
+	optionImage.value = "ImageField"; // new
+	optionInteger.value = "IntegerField";
+	optionIPAddress.value = "IPAddressField" // new
+	optionGenericIPAddress.value = "GenericIPAddressField"; // new
+	optionNullBoolean.value = "NullBooleanField"; // new
+	optionPositiveInteger.value = "PositiveIntegerField"; // new
+	optionPositiveSmallInteger.value = "PositiveSmallIntegerField"; // new
+	optionSmallInteger.value = "SmallIntegerField"; // new
+	optionText.value = "TextField"; // new
+	optionTime.value = "TimeField"; // new
+	optionURL.value = "URLField"; // new
+	optionUUID.value = "UUIDField"; // new
+
+
+	select.appendChild(optionBlank);
+	select.appendChild(optionBigInteger);
+	select.appendChild(optionBoolean);
+	select.appendChild(optionCharacter);
+	select.appendChild(optionDate);
+	select.appendChild(optionDateTime);
+	//select.appendChild(optionDecimal);
+	//select.appendChild(optionDuration);
+	select.appendChild(optionEmail);
+	//select.appendChild(optionFile);
+	//select.appendChild(optionFilePath);
+	select.appendChild(optionFloat);
+	//select.appendChild(optionImage);
+	select.appendChild(optionInteger);
+	//select.appendChild(optionIPAddress);
+	//select.appendChild(optionGenericIPAddress);
+	select.appendChild(optionNullBoolean);
+	select.appendChild(optionPositiveInteger);
+	select.appendChild(optionPositiveSmallInteger);
+	select.appendChild(optionSmallInteger);
+	select.appendChild(optionText);
+	select.appendChild(optionTime);
+	//select.appendChild(optionURL);
+	//select.appendChild(optionUUID);
+
+
+	// Set up input
+	input.setAttribute('type', 'checkbox');
+	input.setAttribute('id', 'field'+tree.childElementCount-1);
+
+	// Set up ol
+	var addParamli = document.createElement('li');
+	var addParamSelect = document.createElement('select');
+	var addParamButton = document.createElement('button');
+
+	var addParamOptionBlank = document.createElement('option');
+	var addParamOptionDefault = document.createElement('option');
+
+	addParamOptionBlank.innerHTML = '----------------';
+	addParamOptionDefault.innerHTML = 'Default';
+	
+	Change = function(passedSelect){
+		innerSelect = passedSelect.parentElement.lastElementChild.firstElementChild.firstElementChild;
+		switch(passedSelect.options[passedSelect.selectedIndex].innerHTML) {
+			case "----------------------------":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				
+				innerSelect.appendChild(option1);
+				break;
+			case "Big Integer":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				break;
+			case "Boolean":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Character":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+				var option4 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Max Length";
+				option4.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "max_length";
+				option4.value = "unique";
+
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				innerSelect.appendChild(option4);
+				break;
+			case "Date":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+				var option4 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Auto Now";
+				option3.innerHTML = "Auto Now Add";
+				option4.innerHTML = "Default";
+
+				option2.value = "auto_now"
+				option3.value = "auto_now_add"
+				option4.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				innerSelect.appendChild(option4);
+				break;
+			case "DateTime":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+				var option4 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Auto Now";
+				option3.innerHTML = "Auto Now Add";
+				option4.innerHTML = "Default";
+
+				option2.value = "auto_now"
+				option3.value = "auto_now_add"
+				option4.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				innerSelect.appendChild(option4);
+				break;
+			case "Decimal":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Duration":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Email":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+				var option4 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Max Length";
+				option4.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "max_length";
+				option4.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				innerSelect.appendChild(option4);
+				break;
+			case "File":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "FilePath":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Float":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				break;
+			case "Image":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Integer":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				break;
+			case "IP Address":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Generic IP Address":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Null Boolean":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "Positive Integer":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				break;
+			case "Positive Small Integer":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				break;
+			case "Small Integer":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				break;
+			case "Text":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+				option3.innerHTML = "Unique";
+
+				option2.value = "default";
+				option3.value = "unique";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				break;
+			case "Time":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+				var option3 = document.createElement('option');
+				var option4 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Auto Now";
+				option3.innerHTML = "Auto Now Add";
+				option4.innerHTML = "Default";
+
+				option2.value = "auto_now"
+				option3.value = "auto_now_add"
+				option4.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				innerSelect.appendChild(option3);
+				innerSelect.appendChild(option4);
+				break;
+			case "URL":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			case "UUID":
+				var num = innerSelect.options.length
+				for(var i=0; i<num; i++){
+					innerSelect.options.remove(0)
+				}
+				var option1 = document.createElement('option');
+				var option2 = document.createElement('option');
+
+				option1.innerHTML = "----------------";
+				option2.innerHTML = "Default";
+
+				option2.value = "default";
+				
+				innerSelect.appendChild(option1);
+				innerSelect.appendChild(option2);
+				break;
+			default:
+				console.log("Implement A new case for " + passedSelect.options[passedSelect.selectedIndex].innerHTML + " dude")
+
+		}
+		console.log(passedSelect);
+	}
+
+	select.setAttribute('onchange' ,'Change(this)');
+
+	addParamSelect.appendChild(addParamOptionBlank);
+	addParamSelect.appendChild(addParamOptionDefault);
+
+	addParamButton.innerHTML = 'Add Parameter';
+	addParamButton.setAttribute('onclick', 'addParam(this)');
+
+	addParamli.setAttribute('class', 'addParam');
+	addParamli.appendChild(addParamSelect);
+	addParamli.appendChild(addParamButton);
+
+	ol.appendChild(addParamli);
+
+	// Set up button
+	button.innerHTML = "Delete Field";
+
+	deleteField = function(passedField){
+		passedField.parentElement.remove();
+	}
+
+	button.setAttribute("onclick", 'deleteField(this)')
+	button.setAttribute("class", 'fieldButton')
+
+	li.appendChild(label);
+	li.appendChild(textarea);
+	li.appendChild(select);
+	li.appendChild(button);
+	li.appendChild(input);
+	li.appendChild(ol);
+
+	tree.appendChild(li);
+}
+
+function generate() {
+	taskName = document.getElementById("taskName").value;
+	survay = document.getElementById('survay').value;
+	var tree = document.getElementById("tree");
+	modelString = "class " + taskName + "(models.Model):";
+
+	if(!survay)
+		viewParse = 'elif info["table"] == "' + taskName + '":\n    ' + taskName +'Array.append(' + taskName + '(';
+	else
+		viewParse = 'if surveyName == "' + taskName + '":\n    ' + '    s = ' +taskName + '(\n            sessionID=sessionID,\n';
+
+	for (var i = 1; i<tree.childElementCount; i++) {
+		var field = tree.children[i];
+		modelString = modelString + "\n    " + field.children[1].value + " = models.";
+		var type = field.children[2].options[field.children[2].selectedIndex].value; // changed innerhtml to value for new code
+		modelString = modelString + type + "(";
+		for (var j=0; j<field.children[5].childElementCount-1; j++) {
+			var name = field.children[5].children[j].firstElementChild.value;
+			// name = name.substring(0, name.length-1).toLowerCase();
+			var value = field.children[5].children[j].lastElementChild.value;
+			modelString = modelString + name + " = " + value + ",";
+		}
+		modelString = modelString + ")";
+		// if (type == "Integer") {
+		// 	modelString = modelString + "IntegerField(";
+		// 	for (var j=0; j<field.children[4].childElementCount-1; j++) {
+		// 		var name = field.children[4].children[j].firstElementChild.innerHTML;
+		// 		name = name.substring(0, name.length-1).toLowerCase();
+		// 		var value = field.children[4].children[j].lastElementChild.value;
+		// 		modelString = modelString + name + " = " + value + ",";
+		// 	}
+		// 	modelString = modelString + ")";
+		// } else if (type == "Character") {
+		// 	modelString = modelString + "CharField(";
+		// 	for (var j=0; j<field.children[4].childElementCount-1; j++) {
+		// 		var name = field.children[4].children[j].firstElementChild.innerHTML;
+		// 		name = name.substring(0, name.length-1).toLowerCase();
+		// 		var value = field.children[4].children[j].lastElementChild.value;
+		// 		modelString = modelString + name + " = " + value + ",";
+		// 	}
+		// 	modelString = modelString + ")";
+		// }
+		if(!survay)
+			viewParse = viewParse + field.children[1].value + ' = info["' + field.children[1].value + '"], ';
+		else{
+			viewParse = viewParse + '            ' + field.children[1].value + ' = data["' + field.children[1].value + '"],';
+		}
+	}
+	adminString = 'admin.site.register(' + taskName + ')';
+
+	viewArray = taskName + 'Array = []';
+	viewSave = taskName + '.objects.bulk_create(' + taskName + 'Array)'
+	if(!survay)
+		viewParse = viewParse + '))';
+	else
+		viewParse = viewParse + ')\n        s.save()'
+
+	console.log(modelString);
+	document.getElementById("code1").innerHTML = modelString;
+	document.getElementById("code2").innerHTML = viewArray;
+	document.getElementById("code3").innerHTML = viewParse;
+	document.getElementById("code4").innerHTML = viewSave;
+	document.getElementById("code5").innerHTML = adminString;
+}
+
+function submit() {
+	document.getElementById('tableName_field').value = document.getElementById('taskName').value;
+	document.getElementById('viewArray_field').value = viewArray;
+	document.getElementById('viewParse_field').value = viewParse;
+	document.getElementById('viewSave_field').value = viewSave;
+	document.getElementById('modelString_field').value = modelString;
+	document.getElementById('adminString_field').value = adminString;
+	document.getElementById('survay_field').value = document.getElementById("survay").value;
+	document.getElementById('submit').click();
+}
+
+</script>
+
+<form action="{% url 'ModME:index' %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="tableName" id="tableName_field"/>
+<input type="hidden" name="survay" id="survay_field"/>
+<input type="hidden" name="viewParse" id="viewParse_field"/>
+<input type="hidden" name="viewSave" id="viewSave_field"/>
+<input type="hidden" name="viewArray" id="viewArray_field"/>
+<input type="hidden" name="modelString" id="modelString_field"/>
+<input type="hidden" name="adminString" id="adminString_field"/>
+<input type="submit" value="submit" id="submit"/>
+</form>
+
+</body>
