@@ -1,8 +1,0 @@
-on
-asdfasf.objects.bulk_create(asdfasfArray)
-asdfasfArray = []
-if surveyName == "asdfasf":
-        s = asdfasf(
-            sessionID=sessionID,
-            qwer = data["qwer"],)
-        s.save()

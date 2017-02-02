@@ -14,7 +14,6 @@ from .models import (
         SurveyFile,
 	Survey,
         NasaTlx,
-    asdfasf,    #asdfasf code uniqureString: NVkEzYQsr0WJ2ZbtqBzOeVFFxhuFDo
 #End of model imports
 )
 from django.http import HttpResponse, HttpResponseRedirect
@@ -97,4 +96,3 @@ admin.site.register(Task, TaskAdmin)
 admin.site.register(TableAdd)
 admin.site.register(Survey, SurveyAdmin)
 admin.site.register(NasaTlx, NasaTlxAdmin)
-admin.site.register(asdfasf)    #asdfasf code uniqureString: NVkEzYQsr0WJ2ZbtqBzOeVFFxhuFDo

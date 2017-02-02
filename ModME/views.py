@@ -11,7 +11,6 @@ from ModME.models import (
     Task,
     TableAdd,
     NasaTlx,
-    asdfasf,    #asdfasf code uniqureString: NVkEzYQsr0WJ2ZbtqBzOeVFFxhuFDo
 #End of model imports
 )
 from django.template import RequestContext, loader
@@ -278,16 +277,7 @@ def survey(request):
            boredom = data['boredom'],
        )
        s.save()
-    if surveyName == "asdfasf":
-            s = asdfasf(
-                sessionID=sessionID,
-                qwer = data["qwer"],)
-            s.save()
-
 ######ParseUniqueString3ds9tu890q345oij09ua0wj34########
-
-
-   
     if ind+1 < len(Condition.objects.get(pk=condId).surveys.all()):
         ind = ind+1;
         requiredFiles = ["d3/d3.v3.min.js","d3/d3.chart.min.js"];

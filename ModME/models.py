@@ -164,5 +164,3 @@ class NasaTlx(models.Model):
         verbose_name = ("Nasa TLX")
         verbose_name_plural = ("Nasa TLX")
 
-class asdfasf(models.Model):    #asdfasf code uniqureString: NVkEzYQsr0WJ2ZbtqBzOeVFFxhuFDo
-    qwer = models.IntegerField()    #asdfasf code uniqureString: NVkEzYQsr0WJ2ZbtqBzOeVFFxhuFDo
