@@ -27,7 +27,7 @@ var resource_param = resource_data.parameters;
             }
         });
 
-if(!resource_data.distractor }}) {
+if(!resource_data.distractor) {
     resource_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "alert", chart: "resource", arg: "", id: args.domID, table: "Event"})});
     resource_chart.when("tick", function(args){
                                             resource_data.tanks.forEach(function(d,i){
@@ -44,7 +44,7 @@ if(!resource_data.distractor }}) {
 resource_chart.draw(resource_data);
 
 keyboard.push(function(e, time){
-    if(!resource_data.distractor }}) {
+    if(!resource_data.distractor) {
         resource_data.switches.forEach(function(d,i){
             if(d.key == e.keyCode){
                 resource_chart.flipSwitch(i, time);
