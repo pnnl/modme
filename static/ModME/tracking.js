@@ -9,6 +9,7 @@ track_svg = get_generic_svg(
     {top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)},
     "track_svg");
 
+// TODO return time difference from events table when we are pulling data from a past run
 var track_chart = track_svg.chart("Tracking").eventFunc(function(){t = eval(track_data.eventFunction); return t;}).startFunc(track_data.startFunction)
                             .refreshRate(track_data.refresh);
 

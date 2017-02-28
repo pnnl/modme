@@ -385,8 +385,8 @@ d3.chart("Tracking", {
         chart.w = chart.base.w;
 
         chart.response = [];
-        chart.alert = [];
-        chart.timeout = [];
+        chart.alert = []; // TODO investigate if this does anything
+        chart.timeout = []; // TODO investigate if we can delete this or if it is used anywhere
         chart.tick = [];
         chart.mouseMove = [];
 
