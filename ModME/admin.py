@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.db import models
 from .models import (
 	Condition,
 	Task,
@@ -16,10 +15,10 @@ from .models import (
         NasaTlx,
 #End of model imports
 )
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 
 #######################
-# Set up display clsses
+# Set up display classes
 #######################
 
 class ConditionAdmin(admin.ModelAdmin):
@@ -40,7 +39,6 @@ class ConditionAdmin(admin.ModelAdmin):
 	fieldsets = [
 				(None,					{'fields': ['Name','experimentDuration','surveys'],}),
 	]
-	# filter_horizontal = ('survays')
 	list_display = ('Name','view_link')
 
 class MetadataAdmin(admin.ModelAdmin):

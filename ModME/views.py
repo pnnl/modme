@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from ModME.models import (
     Condition,
     Metadata,
@@ -13,9 +13,7 @@ from ModME.models import (
     NasaTlx,
 #End of model imports
 )
-from django.template import RequestContext, loader
 import json
-import time
 import string
 import random
 import os
@@ -24,7 +22,6 @@ import os
 # Sends parameter object, Participant ID, session number, and condition to Experiment page
 def index(request):
     if request.POST.get('tableName'):
-        tableName = request.POST.get('tableName')
         survay = request.POST.get('survay')
         uString = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(30))
         os.makedirs("ModME/tableAdditions/"+uString)
@@ -46,15 +43,12 @@ def index(request):
                 applyed = False
             )
         t.save()
-        # f=open("ModME/tableAdditions/" + uniqueString + "/admin.txt","w")
-        # f.write(request.POST.get('modelString'))
-        # f.close()
         
     return render(request, 'ModME/index.html', {'parameters_list':Condition.objects.order_by('Name'), 'meta_list':Metadata.objects.order_by('id')})
 
 # Loads ModME experiment
-# Recives parameter object, Participant ID, session number, and condition from Index page
-# Sends Data at the end of experiment to intermedate Done page
+# Receives parameter object, Participant ID, session number, and condition from Index page
+# Sends Data at the end of experiment to intermediate Done page
 def experiment(request):
     cond = Condition.objects.get(pk=request.POST['parameter_id'])
     taskFiles = [cond.task1, cond.task2, cond.task3, cond.task4];
@@ -86,9 +80,9 @@ def experiment(request):
     sess = request.POST['sessionNumber']
     return render(request, 'ModME/experiment.html',{'parameters': cond,'participant_id': partID,'sessionNumber': sess, 'fileList': requiredFiles, 'taskList': tasks, 'taskNames': taskNames, 'cssList': cssList})
 
-# Loads intermedate page
-# Purpose of intermedate page is to give a visual cue that the experiment is done while saving data incase data save takes a long time
-# Recieves data stringified array from Experiment page
+# Loads intermediate page
+# Purpose of intermediate page is to give a visual cue that the experiment is done while saving data in case data save takes a long time
+# Receives data stringified array from Experiment page
 # Sends unchanged data array to Complete page
 def done(request):
     data = request.POST.get('data')
@@ -98,11 +92,10 @@ def done(request):
 
 
 # Loads single parameter object that can be configured
-# Recieves parameter object
+# Receives parameter object
 # Sends updated object to Save page
 def configuration(request, parameter_id):
     cond = Condition.objects.get(pk=parameter_id)
-    taskFiles = [];
     cssList = [];
     requiredFiles = ["d3/d3.v3.min.js","d3/d3.chart.min.js"];
     for k in Task.objects.order_by('fileName'):
@@ -136,7 +129,7 @@ def configuration(request, parameter_id):
 
 # Loads list of all current parameter objects
 # Purpose updates or creates new object based on passed in information
-# Recieves parameter object
+# Receives parameter object
 # Sends single parameter object to Configuration page
 def save(request):
     p = Condition.objects.get(pk=request.POST.get('parameterId'))
@@ -184,7 +177,7 @@ def new(request):
     return render(request, 'ModME/new.html')
 
 # Loads save complete page
-# Purpose is to give visual que that the users is done with the experiment and survays
+# Purpose is to give visual cue that the users is done with the experiment and surveys
 def complete(request):
     data = json.loads(request.POST.get('data'))
     condId = request.POST.get('id')
