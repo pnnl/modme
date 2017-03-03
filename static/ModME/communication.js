@@ -15,7 +15,7 @@ if(!comm_data.distractor) {
     comm_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "alert", chart: "communication", arg: "target:"+args.target+";current:"+args.current, id: args.domID, table: "Event"})});
     comm_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "timeout", chart: "communication", arg: "target:"+args.target+";current:"+args.current, id: args.domID, table: "Event"})});
     comm_chart.when("response", function(args){data.push({time: args.time-startTime, sessionID: sessionID, eventType: "input", chart: "communication", 
-        arg: (args.correct) ? "currect:"+args.correct+";channel:"+args.channel+";frequency:"+args.frequency : "channel:"+args.channel+";frequency:"+args.frequency,
+        arg: (args.correct) ? "correct:"+args.correct+";channel:"+args.channel+";frequency:"+args.frequency : "channel:"+args.channel+";frequency:"+args.frequency,
         id: args.domID, table: "Event"})});
 }
 

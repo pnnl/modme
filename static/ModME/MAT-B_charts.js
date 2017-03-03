@@ -315,7 +315,7 @@ d3.chart("Communication", {
         chart.draw(chart.data);
     },
 
-    // Increases the frequency of the currectly selected channel
+    // Increases the frequency of the correctly selected channel
     frequencyUp: function(time){
         var chart = this;
         chart.data.channels[chart.select].frequency+=2;
@@ -324,7 +324,7 @@ d3.chart("Communication", {
         chart.draw(chart.data);
     },
 
-    // Increases the frequency of the currectly selected channel
+    // Increases the frequency of the correctly selected channel
     frequencyDown: function(time){
         var chart = this;
         chart.data.channels[chart.select].frequency-=2;

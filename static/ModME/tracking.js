@@ -28,7 +28,7 @@ if(!track_data.distractor) {
                                                 data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, x: (document.getElementById('track_circle_'+i).getBoundingClientRect().left+(document.getElementById('track_circle_'+i).getBoundingClientRect().width/2)), y: (document.getElementById('track_circle_'+i).getBoundingClientRect().top+(document.getElementById('track_circle_'+i).getBoundingClientRect().height/2)), domID:"track_circle_"+i, state: args.state[i], mouseX: (args.event.x), mouseY: (args.event.y), table: "Tracking"});
                                             });
                                         });
-    track_chart.when("response", function(args){data.push({time: args.time-startTime, sessionID: sessionID, eventType: "input", chart: "tracking", arg: "correct: "+args.correct, id: args.domID, table: "Event"})});
+    track_chart.when("response", function(args){data.push({time: args.time-startTime, sessionID: sessionID, eventType: "input", chart: "tracking", arg: "correct:"+args.correct, id: args.domID, table: "Event"})});
     track_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "timeout", chart: "tracking", arg: "", id: args.domID, table: "Event"})});
     track_chart.when("mouseMove", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, x:args.x, y:args.y, domID:args.domID, targetX: args.targetX, targetY: args.targetY, table: "Mouse"})});
 } else {
