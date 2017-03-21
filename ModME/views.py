@@ -152,7 +152,7 @@ def save(request):
         p.save()
 
     else:
-        p=Parameter(
+        p = Condition(
             task1 = int(request.POST.get('task1')),
             task1Data = request.POST.get('task1Data'),
             task1GUI = request.POST.get('task1GUI') == "true",
