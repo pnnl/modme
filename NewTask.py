@@ -2,11 +2,10 @@ import django
 import os
 import sys
 import shutil
+from ModME.models import TableAdd
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'multiTask.settings'
 django.setup()
-
-from ModME.models import TableAdd
 
 changesFlag = False
 tableAdded = False
@@ -61,17 +60,17 @@ for o in TableAdd.objects.filter(applyed=False):
         while(views[i] != "######ArrayUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########\n"):
             i = i + 1
 
-        views[i - 1] = "    " + newViews[2][0:len(newViews[2]) - 1] + comment + "\n\n";
+        views[i - 1] = "    " + newViews[2][0:len(newViews[2]) - 1] + comment + "\n\n"
 
         while(views[i] != "######ParseUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########\n"):
             i = i + 1
 
-        views[i - 1] = '\n        ' + newViews[3][0:len(newViews[3]) - 1] + comment + '\n' + '        ' + newViews[4][0:len(newViews[4]) - 1] + comment + '\n\n';
+        views[i - 1] = '\n        ' + newViews[3][0:len(newViews[3]) - 1] + comment + '\n' + '        ' + newViews[4][0:len(newViews[4]) - 1] + comment + '\n\n'
 
         while(views[i] != "######SaveUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########\n"):
             i = i + 1
 
-        views[i - 1] = "    " + newViews[1][0:len(newViews[1]) - 1] + comment + "\n\n";
+        views[i - 1] = "    " + newViews[1][0:len(newViews[1]) - 1] + comment + "\n\n"
     else:
         while(views[i] != "######ParseUniqueString3ds9tu890q345oij09ua0wj34########\n"):
             i = i + 1

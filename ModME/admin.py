@@ -86,7 +86,7 @@ class SurveyFileInline(admin.StackedInline):
 
 class SurveyAdmin(admin.ModelAdmin):
     list_display = ('name', 'fileName')
-        inlines = [SurveyFileInline]
+    inlines = [SurveyFileInline]
 
 
 class NasaTlxAdmin(admin.ModelAdmin):
