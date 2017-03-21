@@ -1,18 +1,18 @@
 from django.contrib import admin
 from .models import (
-	Condition,
-	Task,
-	Metadata,
-	Event,
-	ResourceTank,
-	ResourceSwitch,
-	Tracking,
-	MouseTracking,
-	File,
-	TableAdd,
-        SurveyFile,
-	Survey,
-        NasaTlx,
+    Condition,
+    Task,
+    Metadata,
+    Event,
+    ResourceTank,
+    ResourceSwitch,
+    Tracking,
+    MouseTracking,
+    File,
+    TableAdd,
+    SurveyFile,
+    Survey,
+    NasaTlx,
 #End of model imports
 )
 from django.http import HttpResponseRedirect
@@ -23,62 +23,62 @@ from django.http import HttpResponseRedirect
 
 class ConditionAdmin(admin.ModelAdmin):
 
- 	# Adds link column that takes user to the configuration page this is a test
- 	def view_link(self, obj):
-		return u"<a href='/ModME/configuration/%d'>Configure</a>" % (obj.id)
+    # Adds link column that takes user to the configuration page this is a test
+    def view_link(self, obj):
+        return u"<a href='/ModME/configuration/%d'>Configure</a>" % (obj.id)
 
-	def response_add(self, request, obj, post_url_continue="../%s/"):
-		if '_continue' in request.POST:
-			return HttpResponseRedirect("/ModME/configuration/%d" % (obj.id))
-		else:
-			return super(ConditionAdmin, self).response_add(request, obj, post_url_continue)
+    def response_add(self, request, obj, post_url_continue="../%s/"):
+        if '_continue' in request.POST:
+            return HttpResponseRedirect("/ModME/configuration/%d" % (obj.id))
+        else:
+            return super(ConditionAdmin, self).response_add(request, obj, post_url_continue)
 
-	view_link.short_description=''
-	view_link.allow_tags = True
+    view_link.short_description=''
+    view_link.allow_tags = True
 
-	fieldsets = [
-				(None,					{'fields': ['Name','experimentDuration','surveys'],}),
-	]
-	list_display = ('Name','view_link')
+    fieldsets = [
+        (None, {'fields': ['Name','experimentDuration','surveys'],}),
+    ]
+    list_display = ('Name','view_link')
 
 class MetadataAdmin(admin.ModelAdmin):
-	list_display = ('startTime', 'sessionID', 'duration', 'participantID', 'condition', 'task1', 'task2',
-					'task3', 'task4',)
+    list_display = ('startTime', 'sessionID', 'duration', 'participantID', 'condition', 'task1', 'task2',
+        'task3', 'task4',)
 
 class EventAdmin(admin.ModelAdmin):
-	list_display = ('time', 'sessionID', 'eventType', 'chart', 'arg', 'domID')
-					
+    list_display = ('time', 'sessionID', 'eventType', 'chart', 'arg', 'domID')
+
 class ResourceTankAdmin(admin.ModelAdmin):
-	list_display = ('time', 'sessionID', 'tankNumber', 'state',)
-					
+    list_display = ('time', 'sessionID', 'tankNumber', 'state',)
+
 class ResourceSwitchAdmin(admin.ModelAdmin):
-	list_display = ('time', 'sessionID', 'switchNumber', 'state',)
-					
+    list_display = ('time', 'sessionID', 'switchNumber', 'state',)
+
 class TrackingAdmin(admin.ModelAdmin):
-	list_display = ('time', 'sessionID', 'x', 'y', 'domID', 'state',
-					'mouseX', 'mouseY',)
+    list_display = ('time', 'sessionID', 'x', 'y', 'domID', 'state',
+        'mouseX', 'mouseY',)
 
 class MouseTrackingAdmin(admin.ModelAdmin):
-	list_display = ('time','sessionID','x','y','domID','targetX','targetY')
+    list_display = ('time','sessionID','x','y','domID','targetX','targetY')
 
 class FileInline(admin.StackedInline):
-	model = File
-	extra = 0
+    model = File
+    extra = 0
 
 class TaskAdmin(admin.ModelAdmin):
-	fields = ['taskName','fileName', 'configurator']
-	inlines = [FileInline]
+    fields = ['taskName','fileName', 'configurator']
+    inlines = [FileInline]
 
 class SurveyFileInline(admin.StackedInline):
-	model = SurveyFile
-	extra = 0
+    model = SurveyFile
+    extra = 0
 
 class SurveyAdmin(admin.ModelAdmin):
-	list_display = ('name', 'fileName')
+    list_display = ('name', 'fileName')
         inlines = [SurveyFileInline]
 
 class NasaTlxAdmin(admin.ModelAdmin):
-	list_display = ('time', 'sessionID','mental','physical','temporal','performance','effort','frustration','fatigue','boredom')
+    list_display = ('time', 'sessionID','mental','physical','temporal','performance','effort','frustration','fatigue','boredom')
 
 ########################
 #  Model Registration  #
