@@ -130,8 +130,8 @@ class ResourceSwitch(models.Model):
         verbose_name = "Resource Switch"
         verbose_name_plural = "Resource Switches"
 
-# Track class get on entry for each satalite in the Tracking task at a rate given by the parameter
-# Each entry gives the state of a satalite at that time
+# Track class get on entry for each satellite in the Tracking task at a rate given by the parameter
+# Each entry gives the state of a satellite at that time
 
 
 class Tracking(models.Model):
