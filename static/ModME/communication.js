@@ -1,7 +1,7 @@
 var comm_data = setup.Communication.data;
 var comm_param = comm_data.parameters;
 
-var comm_svg = get_generic_svg(
+var comm_svg = GUIUtil.getGenericSVG(
         d3.select("#"+setup.Communication.container),
         650, 650,
         JSON.parse(document.getElementById(setup.Communication.container).style.width.substr(0,document.getElementById(setup.Communication.container).style.width.length-2)), 

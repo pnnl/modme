@@ -127,7 +127,7 @@ d3.chart("Tracking", {
 
             insert: function(data){
                 var chart = this.chart();
-
+console.log(chart.w, chart.h);
                 chart.x.range([0,chart.w]);
                 chart.y.range([chart.h,0]);
 
@@ -145,7 +145,8 @@ d3.chart("Tracking", {
                     .y(function(d){return chart.y(d.y)})
                     .interpolate("basis-closed");
 
-                    return this.attr("d", function(d){return lineFunction(d.points);}).attr("id", function(d,i){return "track_path_"+i});
+//  Object { base=[1],  _layers={...},  _attached={...},  more...} 0.357 0.152 [Object { x=0.357,  y=0.152}, Object { x=0.342,  y=0.179}, Object { x=0.643,  y=0.848}, Object { x=0.658,  y=0.821}] MNaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaN
+                    return this.attr("d", function(d){var line = lineFunction(d.points); console.log(chart, d.points[0].x, d.points[0].y, d.points, line); return line;}).attr("id", function(d,i){return "track_path_"+i});
                 },
                 "update": function(){
                     var chart = this.chart();

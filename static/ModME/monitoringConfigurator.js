@@ -435,7 +435,7 @@ var Monitoring = function(){
     }
 	var monitor_param = monitor_data.parameters;
 
-	monitor_svg = get_generic_svg(
+	monitor_svg = GUIUtil.getGenericSVG(
 	    d3.select("#"+setup.Monitoring.container),
 	    650, 650,
 	    JSON.parse(document.getElementById(setup.Monitoring.container).style.width.substr(0,document.getElementById(setup.Monitoring.container).style.width.length-2)), 
