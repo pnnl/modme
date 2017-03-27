@@ -1,7 +1,7 @@
 var resource_data = setup.Resource.data;
 var resource_param = resource_data.parameters;
 
-    var resource_svg = get_generic_svg(
+    var resource_svg = GUIUtil.getGenericSVG(
         d3.select("#"+setup.Resource.container),
         1300, 650,
         JSON.parse(document.getElementById(setup.Resource.container).style.width.substr(0,document.getElementById(setup.Resource.container).style.width.length-2)), 

@@ -521,7 +521,7 @@ var Tracking = function(){
     }
 	var track_param = track_data.parameters;
 
-	track_svg = get_generic_svg(
+	track_svg = GUIUtil.getGenericSVG(
 	    d3.select("#"+setup.Tracking.container),
 	    1300, 650,
 	    JSON.parse(document.getElementById(setup.Tracking.container).style.width.substr(0,document.getElementById(setup.Tracking.container).style.width.length-2)), 
