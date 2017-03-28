@@ -81,7 +81,17 @@ def experiment(request):
     # para = Condition.objects.get(pk=request.POST['parameter_id'])
     partID = request.POST['participant_id']
     sess = request.POST['sessionNumber']
-    return render(request, 'ModME/experiment.html', {'parameters': cond, 'participant_id': partID, 'sessionNumber': sess, 'fileList': requiredFiles, 'taskList': tasks, 'taskNames': taskNames, 'cssList': cssList})
+    context = {
+        'parameters': cond,
+        'participant_id': partID,
+        'sessionNumber': sess,
+        'fileList': requiredFiles,
+        'taskList': tasks,
+        'taskNames': taskNames,
+        'cssList': cssList,
+    }
+    renderedPage = render(request, 'ModME/experiment.html', context)
+    return renderedPage
 
 # Loads intermediate page
 # Purpose of intermediate page is to give a visual cue that the experiment is done while saving data in case data save takes a long time
