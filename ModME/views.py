@@ -54,8 +54,8 @@ def index(request):
 
 
 def experiment(request):
-    cond = Condition.objects.get(pk=request.POST['parameter_id'])
-    taskFiles = [cond.task1, cond.task2, cond.task3, cond.task4]
+    condition = Condition.objects.get(pk=request.POST['parameter_id'])
+    taskFiles = [condition.task1, condition.task2, condition.task3, condition.task4]
     requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
     tasks = []
     taskNames = []
@@ -77,12 +77,10 @@ def experiment(request):
             taskNames.append("placeholder" + str(i))
         else:
             taskNames.append("blank" + str(i))
-
-    # para = Condition.objects.get(pk=request.POST['parameter_id'])
     partID = request.POST['participant_id']
     sess = request.POST['sessionNumber']
     context = {
-        'parameters': cond,
+        'parameters': condition,
         'participant_id': partID,
         'sessionNumber': sess,
         'fileList': requiredFiles,
