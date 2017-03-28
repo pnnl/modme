@@ -79,6 +79,9 @@ class Metadata(models.Model):
     sessionNumber = models.CharField(max_length=500)
     condition = models.CharField(max_length=500)
 
+    def __unicode__(self):
+        return "%s:%s:%s" % (self.participantID, self.sessionNumber, self.condition)
+
     class Meta:
         verbose_name_plural = "Metadata"
 
