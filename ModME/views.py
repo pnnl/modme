@@ -215,23 +215,59 @@ def complete(request):
     for info in data:
 
         if info["table"] == "Event":
-            events.append(Event(time=info["time"], sessionID=info["sessionID"], eventType=info["eventType"],
-                    chart=info["chart"], arg=info["arg"], domID=info["id"]))
+            events.append(
+                Event(
+                    time=info["time"],
+                    sessionID=info["sessionID"],
+                    eventType=info["eventType"],
+                    chart=info["chart"],
+                    arg=info["arg"],
+                    domID=info["id"]
+                )
+            )
         elif info["table"] == "Tracking":
-            tracking.append(Tracking(time=info["time"], sessionID=info["sessionID"], x=info["x"], y=info["y"],
-                    domID=info["domID"], state=info["state"], mouseX=info["mouseX"], mouseY=info["mouseY"]))
-
+            tracking.append(
+                Tracking(
+                    time=info["time"],
+                    sessionID=info["sessionID"],
+                    x=info["x"],
+                    y=info["y"],
+                    domID=info["domID"],
+                    state=info["state"],
+                    mouseX=info["mouseX"],
+                    mouseY=info["mouseY"]
+                )
+            )
         elif info["table"] == "Switch":
-            switches.append(ResourceSwitch(time=info["time"], sessionID=info["sessionID"], switchNumber=info["switchNumber"],
-                    state=info["state"]))
-
+            switches.append(
+                ResourceSwitch(
+                    time=info["time"],
+                    sessionID=info["sessionID"],
+                    switchNumber=info["switchNumber"],
+                    state=info["state"]
+                )
+            )
         elif info["table"] == "Tank":
-            tanks.append(ResourceTank(time=info["time"], sessionID=info["sessionID"], tankNumber=info["tankNumber"],
-                    state=info["state"]))
-
+            tanks.append(
+                ResourceTank(
+                    time=info["time"],
+                    sessionID=info["sessionID"],
+                    tankNumber=info["tankNumber"],
+                    state=info["state"]
+                )
+            )
         elif info["table"] == "Mouse":
-            mouse.append(MouseTracking(time=info["time"], sessionID=info["sessionID"], x=info["x"], y=info["y"],
-                    domID=info["domID"], targetX=info["targetX"], targetY=info["targetY"]))
+            mouse.append(
+                MouseTracking(
+                    time=info["time"],
+                    sessionID=info["sessionID"],
+                    x=info["x"],
+                    y=info["y"],
+                    domID=info["domID"],
+                    targetX=info["targetX"],
+                    targetY=info["targetY"]
+                )
+            )
 
 
 ######ParseUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########
