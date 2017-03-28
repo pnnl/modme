@@ -208,6 +208,7 @@ def new(request):
 def complete(request):
     data = json.loads(request.POST.get('data'))
     conditionID = request.POST.get('id')
+    condition = Condition.objects.get(pk=conditionID)
     metadata = Metadata(
         startTime=data[0]["time"],
         sessionID=data[0]["sessionID"],
@@ -308,17 +309,17 @@ def complete(request):
 
 ######SaveUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########
 
-    print Condition.objects.get(pk=conditionID)
-    print Condition.objects.get(pk=conditionID).surveys.all()[0].fileName
+    print condition
+    print condition.surveys.all()[0].fileName
 
-    if len(Condition.objects.get(pk=conditionID).surveys.all()) == 0:
+    if len(condition.surveys.all()) == 0:
         return render(request, 'ModME/complete.html')
     else:
         requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
-        for j in Condition.objects.get(pk=conditionID).surveys.all()[0].surveyfile_set.all():
+        for j in condition.surveys.all()[0].surveyfile_set.all():
             if j.name not in requiredFiles:
                 requiredFiles.append(j.name)
-        return render(request, 'ModME/survey.html', {'condition': Condition.objects.get(pk=conditionID), 'ind': 0, 'fileList': requiredFiles, "sessionID": data[0]["sessionID"], 'survey': Condition.objects.get(pk=conditionID).surveys.all()[0].fileName})
+        return render(request, 'ModME/survey.html', {'condition': condition, 'ind': 0, 'fileList': requiredFiles, "sessionID": data[0]["sessionID"], 'survey': condition.surveys.all()[0].fileName})
 
 
 def survey(request):
