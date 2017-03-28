@@ -66,12 +66,7 @@ class TableAdd(models.Model):
 
 
 class Metadata(models.Model):
-    """
-    Metadata class has one entry for every run of the experiment
-    Each entry holds information about the participant and the configuration that they ran in
-    Also has the sessionID which is a unique string which is used to connect
-    the other tables to show which entries are from the same experiment
-    """
+    """ Metadata describes the execution of a single condition by a participant """
     startTime = models.IntegerField()
     sessionID = models.CharField(max_length=500)
 
