@@ -108,7 +108,7 @@ def done(request):
 # Receives parameter object
 # Sends updated object to Save page
 def configuration(request, parameter_id):
-    cond = Condition.objects.get(pk=parameter_id)
+    condition = Condition.objects.get(pk=parameter_id)
     cssList = []
     requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
     for k in Task.objects.order_by('fileName'):
@@ -120,7 +120,7 @@ def configuration(request, parameter_id):
                 if j.name not in requiredFiles:
                     requiredFiles.append(j.name)
 
-    ids = [cond.task1, cond.task2, cond.task3, cond.task4]
+    ids = [condition.task1, condition.task2, condition.task3, condition.task4]
     taskNames = []
     for i in range(len(ids)):
         k = ids[i]
@@ -138,7 +138,7 @@ def configuration(request, parameter_id):
             taskNames.append("placeholder" + str(i))
         else:
             taskNames.append("blank" + str(i))
-    return render(request, 'ModME/configuration.html', {'parameters': Condition.objects.get(pk=parameter_id), 'taskList': Task.objects.order_by('fileName'), 'fileList': requiredFiles, 'taskNames': taskNames, 'cssList': cssList})
+    return render(request, 'ModME/configuration.html', {'parameters': condition, 'taskList': Task.objects.order_by('fileName'), 'fileList': requiredFiles, 'taskNames': taskNames, 'cssList': cssList})
 
 # Loads list of all current parameter objects
 # Purpose updates or creates new object based on passed in information
