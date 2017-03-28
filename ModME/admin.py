@@ -61,7 +61,7 @@ class ResourceSwitchAdmin(admin.ModelAdmin):
 
 
 class TrackingAdmin(admin.ModelAdmin):
-    list_display = ('time', 'sessionID', 'x', 'y', 'domID', 'state',
+    list_display = ('time', 'metadata', 'x', 'y', 'domID', 'state',
         'mouseX', 'mouseY',)
 
 

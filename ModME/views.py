@@ -202,7 +202,7 @@ def new(request):
 def complete(request):
     data = json.loads(request.POST.get('data'))
     condId = request.POST.get('id')
-    entry = Metadata(
+    metadata = Metadata(
         startTime=data[0]["time"],
         sessionID=data[0]["sessionID"],
         duration=data[0]["duration"],
@@ -215,7 +215,7 @@ def complete(request):
         condition=data[0]["condition"],
     )
 
-    entry.save()
+    metadata.save()
 
     #################
     #  Array Setup  #
@@ -248,7 +248,7 @@ def complete(request):
             tracking.append(
                 Tracking(
                     time=info["time"],
-                    sessionID=info["sessionID"],
+                    metadata=metadata,
                     x=info["x"],
                     y=info["y"],
                     domID=info["domID"],

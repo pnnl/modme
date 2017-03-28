@@ -135,7 +135,7 @@ class Tracking(models.Model):
     Each entry gives the state of a satellite at that time
     """
     time = models.IntegerField()
-    sessionID = models.CharField(max_length=500)
+    metadata = models.ForeignKey('Metadata')
 
     x = models.FloatField()
     y = models.FloatField()
