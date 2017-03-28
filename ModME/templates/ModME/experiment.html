@@ -308,10 +308,19 @@
 
     var sessionID = "{{ participant_id }}_session:{{ sessionNumber }}_condition:{{ parameters.Name }}";
 
-    data.push({time: startTime, sessionID: sessionID, duration: {{ parameters.experimentDuration }},
-                 task1: "{{ taskNames.0 }}", task2: "{{ taskNames.1 }}",
-                 task3: "{{ taskNames.2 }}", task4: "{{ taskNames.3 }}",
-                 participantID:"{{ participant_id }}", sessionNumber: "{{ sessionNumber }}", condition: "{{ parameters.Name }}", table:"Meta"});
+    data.push({
+        time: startTime,
+        sessionID: sessionID,
+        duration: {{ parameters.experimentDuration }},
+        task1: "{{ taskNames.0 }}",
+        task2: "{{ taskNames.1 }}",
+        task3: "{{ taskNames.2 }}",
+        task4: "{{ taskNames.3 }}",
+        participantID:"{{ participant_id }}",
+        sessionNumber: "{{ sessionNumber }}",
+        condition: "{{ parameters.Name }}",
+        table:"Meta"
+    });
     
     var setup = {
             {{ taskNames.0 }}: {
