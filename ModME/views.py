@@ -312,14 +312,23 @@ def complete(request):
     print condition
     print condition.surveys.all()[0].fileName
 
-    if len(condition.surveys.all()) == 0:
-        return render(request, 'ModME/complete.html')
-    else:
+    template = 'ModME/complete.html'
+    context = None
+    if not condition.surveys.all():
         requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
         for j in condition.surveys.all()[0].surveyfile_set.all():
             if j.name not in requiredFiles:
                 requiredFiles.append(j.name)
-        return render(request, 'ModME/survey.html', {'condition': condition, 'ind': 0, 'fileList': requiredFiles, "sessionID": data[0]["sessionID"], 'survey': condition.surveys.all()[0].fileName})
+        template = 'ModME/survey.html'
+        context = {
+            'condition': condition,
+            'ind': 0,
+            'fileList': requiredFiles,
+            "sessionID": data[0]["sessionID"],
+            'survey': condition.surveys.all()[0].fileName
+        }
+    renderedPage = render(request, template, context)
+    return renderedPage
 
 
 def survey(request):
