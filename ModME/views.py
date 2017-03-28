@@ -138,7 +138,15 @@ def configuration(request, parameter_id):
             taskNames.append("placeholder" + str(i))
         else:
             taskNames.append("blank" + str(i))
-    return render(request, 'ModME/configuration.html', {'parameters': condition, 'taskList': Task.objects.order_by('fileName'), 'fileList': requiredFiles, 'taskNames': taskNames, 'cssList': cssList})
+    context = {
+        'parameters': condition,
+        'taskList': Task.objects.order_by('fileName'),
+        'fileList': requiredFiles,
+        'taskNames': taskNames,
+        'cssList': cssList,
+    }
+    renderedPage = render(request, 'ModME/configuration.html', context)
+    return renderedPage
 
 # Loads list of all current parameter objects
 # Purpose updates or creates new object based on passed in information
