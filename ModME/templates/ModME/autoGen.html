@@ -33,7 +33,7 @@
 		vertical-align: 60%;
 	}
 	
-	li input:not(.survay) {
+	li input:not(.survey) {
 		
 		position: absolute;
 		left: 0;
@@ -46,7 +46,7 @@
 		top: 9px;
 	}
 
-	li input:not(.survay) + ol {
+	li input:not(.survey) + ol {
 		width: 210;
 		background: url(/static/TableAdd/toggle-small-expand.png) 40px 0px no-repeat;
 		margin: -0.938em 0 0 -44px;
@@ -69,7 +69,7 @@
 	}
 
 
-	li input:not(.survay):checked + ol {
+	li input:not(.survey):checked + ol {
 		width: 210;
 		background: url(/static/TableAdd/toggle-small.png) 40px 5px no-repeat;
 		margin: -1.25em 0 0 -44px;  
@@ -78,8 +78,8 @@
 		position: relative;
 		top: -10px;
 	}
-	li input:not(.survay):checked + ol > li { display: block; margin: 0 0 0.125em;}
-	li input:not(.survay):checked + ol > li:last-child { margin: 0 0 0.063em;}
+	li input:not(.survey):checked + ol > li { display: block; margin: 0 0 0.125em;}
+	li input:not(.survey):checked + ol > li:last-child { margin: 0 0 0.063em;}
 
 	li.field select {
 		vertical-align: 60%;
@@ -128,8 +128,8 @@
 		<li class="parameter">
 			<label for"taskName">Task Name:</label>
 			<textarea id="taskName" style = "width: 179px;"></textarea>
-			<label> Survay: </label>
-			<input class='survay' type="checkbox" id="survay"></input>
+			<label> Survey: </label>
+			<input class='survey' type="checkbox" id="survey"></input>
 		</li>
 	</ol>
 	<button onclick="addField()">Add Field</button>
@@ -807,11 +807,11 @@ function addField() {
 
 function generate() {
 	taskName = document.getElementById("taskName").value;
-	survay = document.getElementById('survay').value;
+	survey = document.getElementById('survey').value;
 	var tree = document.getElementById("tree");
 	modelString = "class " + taskName + "(models.Model):";
 
-	if(!survay)
+	if(!survey)
 		viewParse = 'elif info["table"] == "' + taskName + '":\n    ' + taskName +'Array.append(' + taskName + '(';
 	else
 		viewParse = 'if surveyName == "' + taskName + '":\n    ' + '    s = ' +taskName + '(\n            sessionID=sessionID,\n';
@@ -847,7 +847,7 @@ function generate() {
 		// 	}
 		// 	modelString = modelString + ")";
 		// }
-		if(!survay)
+		if(!survey)
 			viewParse = viewParse + field.children[1].value + ' = info["' + field.children[1].value + '"], ';
 		else{
 			viewParse = viewParse + '            ' + field.children[1].value + ' = data["' + field.children[1].value + '"],';
@@ -857,7 +857,7 @@ function generate() {
 
 	viewArray = taskName + 'Array = []';
 	viewSave = taskName + '.objects.bulk_create(' + taskName + 'Array)'
-	if(!survay)
+	if(!survey)
 		viewParse = viewParse + '))';
 	else
 		viewParse = viewParse + ')\n        s.save()'
@@ -877,7 +877,7 @@ function submit() {
 	document.getElementById('viewSave_field').value = viewSave;
 	document.getElementById('modelString_field').value = modelString;
 	document.getElementById('adminString_field').value = adminString;
-	document.getElementById('survay_field').value = document.getElementById("survay").value;
+	document.getElementById('survey_field').value = document.getElementById("survey").value;
 	document.getElementById('submit').click();
 }
 
@@ -886,7 +886,7 @@ function submit() {
 <form action="{% url 'ModME:index' %}" method="post">
 {% csrf_token %}
 <input type="hidden" name="tableName" id="tableName_field"/>
-<input type="hidden" name="survay" id="survay_field"/>
+<input type="hidden" name="survey" id="survey_field"/>
 <input type="hidden" name="viewParse" id="viewParse_field"/>
 <input type="hidden" name="viewSave" id="viewSave_field"/>
 <input type="hidden" name="viewArray" id="viewArray_field"/>

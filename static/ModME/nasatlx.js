@@ -1,5 +1,5 @@
 var div = document.createElement("div");
-div.setAttribute("id", "survay")
+div.setAttribute("id", "survey")
 document.body.appendChild(div);
 div = document.createElement("div");
 div.style.width = "90%";
@@ -19,7 +19,7 @@ var dash = 21;
 var width=window.innerWidth*.95;
 var height=window.innerHeight*.95;
 
-var svg = d3.select("#survay").append("svg")
+var svg = d3.select("#survey").append("svg")
 					       .attr("width", width)
 					  	   .attr("height", height);
 

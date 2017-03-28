@@ -24,7 +24,7 @@ import os
 
 def index(request):
     if request.POST.get('tableName'):
-        survay = request.POST.get('survay')
+        survey = request.POST.get('survey')
         uString = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(30))
         os.makedirs("ModME/tableAdditions/" + uString)
         f = open("ModME/tableAdditions/" + uString + "/models.txt", "w")
@@ -34,7 +34,7 @@ def index(request):
         f.write(request.POST.get('adminString') + '\n')
         f.close()
         f = open("ModME/tableAdditions/" + uString + "/views.txt", "w")
-        f.write(survay + '\n')
+        f.write(survey + '\n')
         f.write(request.POST.get('viewSave') + '\n')
         f.write(request.POST.get('viewArray') + '\n')
         f.write(request.POST.get('viewParse') + '\n')
