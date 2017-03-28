@@ -40,6 +40,9 @@ class Condition(models.Model):
 
     surveys = models.ManyToManyField(Survey)
 
+    def __unicode__(self):
+        return self.Name
+
     class Meta:
         verbose_name = "Condition"
         verbose_name_plural = "Conditions"
@@ -77,7 +80,7 @@ class Metadata(models.Model):
     task4 = models.CharField(max_length=500)
     participantID = models.CharField(max_length=500)
     sessionNumber = models.CharField(max_length=500)
-    condition = models.CharField(max_length=500)
+    condition = models.ForeignKey('Condition')
 
     def __unicode__(self):
         return "%s:%s:%s" % (self.participantID, self.sessionNumber, self.condition)

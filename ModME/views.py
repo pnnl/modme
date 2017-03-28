@@ -219,7 +219,7 @@ def complete(request):
         task4=data[0]["task4"],
         participantID=data[0]["participantID"],
         sessionNumber=data[0]["sessionNumber"],
-        condition=data[0]["condition"],
+        condition=condition,
     )
 
     metadata.save()

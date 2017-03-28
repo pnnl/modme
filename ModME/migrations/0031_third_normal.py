@@ -31,4 +31,9 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(default=1, to='ModME.Metadata'),
             preserve_default=False,
         ),
+        migrations.AlterField(
+            model_name='metadata',
+            name='condition',
+            field=models.ForeignKey(to='ModME.Condition'),
+        ),
     ]
