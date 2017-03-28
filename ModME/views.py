@@ -237,7 +237,7 @@ def complete(request):
             events.append(
                 Event(
                     time=info["time"],
-                    sessionID=info["sessionID"],
+                    metadata=metadata,
                     eventType=info["eventType"],
                     chart=info["chart"],
                     arg=info["arg"],

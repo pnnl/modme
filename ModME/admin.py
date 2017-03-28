@@ -49,7 +49,7 @@ class MetadataAdmin(admin.ModelAdmin):
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('time', 'sessionID', 'eventType', 'chart', 'arg', 'domID')
+    list_display = ('time', 'metadata', 'eventType', 'chart', 'arg', 'domID')
 
 
 class ResourceTankAdmin(admin.ModelAdmin):

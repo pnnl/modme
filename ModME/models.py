@@ -89,8 +89,7 @@ class Event(models.Model):
     Event types include input, alert, and timeout
     """
     time = models.IntegerField()
-    sessionID = models.CharField(max_length=500)
-
+    metadata = models.ForeignKey('Metadata')
     eventType = models.CharField(max_length=200)
     chart = models.CharField(max_length=200)
     arg = models.CharField(max_length=200)

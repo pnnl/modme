@@ -15,8 +15,18 @@ class Migration(migrations.Migration):
             model_name='tracking',
             name='sessionID',
         ),
+        migrations.RemoveField(
+            model_name='event',
+            name='sessionID',
+        ),
         migrations.AddField(
             model_name='tracking',
+            name='metadata',
+            field=models.ForeignKey(default=1, to='ModME.Metadata'),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='event',
             name='metadata',
             field=models.ForeignKey(default=1, to='ModME.Metadata'),
             preserve_default=False,
