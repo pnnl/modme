@@ -111,33 +111,33 @@ def configuration(request, parameter_id):
     condition = Condition.objects.get(pk=parameter_id)
     cssList = []
     requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
-    for k in Task.objects.order_by('fileName'):
-        for j in k.file_set.all():
-            if j.name[-3:] == "css":
-                if j.name not in cssList:
-                    cssList.append(j.name)
+    for taskID in Task.objects.order_by('fileName'): # TODO refactor down to (two?) lines of code after model changes
+        for resourceFile in taskID.file_set.all():
+            if resourceFile.name[-3:] == "css":
+                if resourceFile.name not in cssList:
+                    cssList.append(resourceFile.name)
             else:
-                if j.name not in requiredFiles:
-                    requiredFiles.append(j.name)
+                if resourceFile.name not in requiredFiles:
+                    requiredFiles.append(resourceFile.name)
 
     ids = [condition.task1, condition.task2, condition.task3, condition.task4]
     taskNames = []
-    for i in range(len(ids)):
-        k = ids[i]
-        if k != -1 and k != -2:
-            tempTask = Task.objects.get(pk=k)
-            taskNames.append(tempTask.taskName)
-            for j in tempTask.file_set.all():
-                if j.name[-3:] == "css":
-                    if j.name not in cssList:
-                        cssList.append(j.name)
+    for index in range(len(ids)):
+        taskID = ids[index]
+        if taskID != -1 and taskID != -2:
+            currentTask = Task.objects.get(pk=taskID)
+            taskNames.append(currentTask.taskName)
+            for resourceFile in currentTask.file_set.all():
+                if resourceFile.name[-3:] == "css":
+                    if resourceFile.name not in cssList:
+                        cssList.append(resourceFile.name)
                 else:
-                    if j.name not in requiredFiles:
-                        requiredFiles.append(j.name)
-        elif k != -1:
-            taskNames.append("placeholder" + str(i))
+                    if resourceFile.name not in requiredFiles:
+                        requiredFiles.append(resourceFile.name)
+        elif taskID != -1:
+            taskNames.append("placeholder" + str(index))
         else:
-            taskNames.append("blank" + str(i))
+            taskNames.append("blank" + str(index))
     context = {
         'parameters': condition,
         'taskList': Task.objects.order_by('fileName'),
