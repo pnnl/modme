@@ -335,7 +335,8 @@ def survey(request):
     data = json.loads(request.POST.get('data'))
     surveyIndex = int(request.POST.get('surveyIndex'))
     condId = request.POST.get('condId')
-    surveyName = Condition.objects.get(pk=condId).surveys.all()[surveyIndex].name
+    relatedSurveys = Condition.objects.get(pk=condId).surveys.all()
+    surveyName = relatedSurveys[surveyIndex].name
     sessionID = request.POST.get('sessionID')
 
     if surveyName == "NasaTlx" or surveyName == "NasaTlx2":
@@ -354,10 +355,10 @@ def survey(request):
         s.save()
     context = None
     template = 'ModME/complete.html'
-    if surveyIndex + 1 < len(Condition.objects.get(pk=condId).surveys.all()):
+    if surveyIndex + 1 < len(relatedSurveys):
         surveyIndex = surveyIndex + 1
         requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
-        for j in Condition.objects.get(pk=condId).surveys.all()[0].surveyfile_set.all():
+        for j in relatedSurveys[0].surveyfile_set.all():
             if j.name not in requiredFiles:
                 requiredFiles.append(j.name)
         context = {
@@ -365,7 +366,7 @@ def survey(request):
             'surveyIndex': surveyIndex,
             'fileList': requiredFiles,
             'sessionID': sessionID,
-            'survey': Condition.objects.get(pk=condId).surveys.all()[surveyIndex].fileName
+            'survey': relatedSurveys[surveyIndex].fileName
         }
         template = 'ModME/survey.html'
     renderedPage = render(request, template, context)
