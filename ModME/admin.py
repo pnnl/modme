@@ -44,8 +44,17 @@ class ConditionAdmin(admin.ModelAdmin):
 
 
 class MetadataAdmin(admin.ModelAdmin):
-    list_display = ('startTime', 'sessionID', 'duration', 'participantID', 'condition', 'task1', 'task2',
-        'task3', 'task4',)
+    list_display = (
+        'startTime',
+        'sessionID',
+        'duration',
+        'participantID',
+        'condition',
+        'task1',
+        'task2',
+        'task3',
+        'task4',
+    )
 
 
 class EventAdmin(admin.ModelAdmin):
