@@ -99,7 +99,7 @@ class SurveyAdmin(admin.ModelAdmin):
 
 
 class NasaTlxAdmin(admin.ModelAdmin):
-    list_display = ('time', 'sessionID', 'mental', 'physical', 'temporal', 'performance', 'effort', 'frustration', 'fatigue', 'boredom')
+    list_display = ('time', 'metadata', 'mental', 'physical', 'temporal', 'performance', 'effort', 'frustration', 'fatigue', 'boredom')
 
 ########################
 #  Model Registration  #

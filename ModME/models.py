@@ -174,7 +174,7 @@ class NasaTlx(models.Model):
     Survey class gets one entry for every task in the experiment and one for the experiment as a whole
     Holds values that were given by the participant at the end of the experiment
     """
-    sessionID = models.CharField(max_length=500, default=" ")
+    metadata = models.ForeignKey('Metadata')
     time = models.IntegerField()
 
     mental = models.IntegerField(default=-1)

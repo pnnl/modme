@@ -321,10 +321,9 @@ def complete(request):
                 requiredFiles.append(j.name)
         template = 'ModME/survey.html'
         context = {
-            'condition': condition,
             'surveyIndex': 0,
             'fileList': requiredFiles,
-            "sessionID": data[0]["sessionID"],
+            'metadata': metadata,
             'survey': condition.surveys.all()[0].fileName
         }
     renderedPage = render(request, template, context)
@@ -334,14 +333,14 @@ def complete(request):
 def survey(request):
     data = json.loads(request.POST.get('data'))
     surveyIndex = int(request.POST.get('surveyIndex'))
-    condId = request.POST.get('condId')
-    relatedSurveys = Condition.objects.get(pk=condId).surveys.all()
+    metadataId = int(request.POST.get('metadataID'))
+    metadata = Metadata.objects.get(pk=metadataId)
+    relatedSurveys = metadata.condition.surveys.all()
     surveyName = relatedSurveys[surveyIndex].name
-    sessionID = request.POST.get('sessionID')
 
     if surveyName == "NasaTlx" or surveyName == "NasaTlx2":
         s = NasaTlx(
-            sessionID=sessionID,
+            metadata=metadata,
             time=12,
             mental=data['mental'],
             physical=data['physical'],
@@ -362,10 +361,9 @@ def survey(request):
             if j.name not in requiredFiles:
                 requiredFiles.append(j.name)
         context = {
-            'condition': Condition.objects.get(pk=condId),
             'surveyIndex': surveyIndex,
             'fileList': requiredFiles,
-            'sessionID': sessionID,
+            'metadata': metadata,
             'survey': relatedSurveys[surveyIndex].fileName
         }
         template = 'ModME/survey.html'

@@ -15,8 +15,7 @@
 {% csrf_token %}
 <input type="hidden" name="data" id="data"/>
 <input type="hidden" name="surveyIndex" id="surveyIndex" value="{{ surveyIndex }}"/>
-<input type="hidden" name="condId" id="condId" value="{{ condition.id }}"/>
-<input type="hidden" name="sessionID" id="sessionID" value="{{ sessionID }}"/>
+<input type="hidden" name="metadataID" id="metadataID" value="{{ metadata.id }}"/>
 <input type="submit" value="submit" id="submit" style="visibility:hidden"/>
 </form>
 

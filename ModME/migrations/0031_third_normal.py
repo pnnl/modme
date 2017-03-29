@@ -19,6 +19,16 @@ class Migration(migrations.Migration):
             model_name='event',
             name='sessionID',
         ),
+        migrations.RemoveField(
+            model_name='nasatlx',
+            name='sessionID',
+        ),
+        migrations.AddField(
+            model_name='nasatlx',
+            name='metadata',
+            field=models.ForeignKey(default=1, to='ModME.Metadata'),
+            preserve_default=False,
+        ),
         migrations.AddField(
             model_name='tracking',
             name='metadata',
