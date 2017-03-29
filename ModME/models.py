@@ -108,7 +108,7 @@ class ResourceTank(models.Model):
     Each entry gives state of a tank at that time
     """
     time = models.IntegerField()
-    sessionID = models.CharField(max_length=500)
+    metadata = models.ForeignKey('Metadata')
 
     tankNumber = models.IntegerField()
     state = models.FloatField()
@@ -124,7 +124,7 @@ class ResourceSwitch(models.Model):
     Each entry gives the state of a switch at that time
     """
     time = models.IntegerField()
-    sessionID = models.CharField(max_length=500)
+    metadata = models.ForeignKey('Metadata')
 
     switchNumber = models.IntegerField()
     state = models.CharField(max_length=200)
@@ -156,7 +156,7 @@ class MouseTracking(models.Model):
     Each entry give location of mouse and location of target
     """
     time = models.IntegerField()
-    sessionID = models.CharField(max_length=500)
+    metadata = models.ForeignKey('Metadata')
 
     x = models.FloatField()
     y = models.FloatField()

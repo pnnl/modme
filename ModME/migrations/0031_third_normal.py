@@ -23,6 +23,36 @@ class Migration(migrations.Migration):
             model_name='nasatlx',
             name='sessionID',
         ),
+        migrations.RemoveField(
+            model_name='mousetracking',
+            name='sessionID',
+        ),
+        migrations.RemoveField(
+            model_name='resourceswitch',
+            name='sessionID',
+        ),
+        migrations.RemoveField(
+            model_name='resourcetank',
+            name='sessionID',
+        ),
+        migrations.AddField(
+            model_name='mousetracking',
+            name='metadata',
+            field=models.ForeignKey(default=1, to='ModME.Metadata'),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='resourceswitch',
+            name='metadata',
+            field=models.ForeignKey(default=1, to='ModME.Metadata'),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='resourcetank',
+            name='metadata',
+            field=models.ForeignKey(default=1, to='ModME.Metadata'),
+            preserve_default=False,
+        ),
         migrations.AddField(
             model_name='nasatlx',
             name='metadata',

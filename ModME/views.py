@@ -268,7 +268,7 @@ def complete(request):
             switches.append(
                 ResourceSwitch(
                     time=info["time"],
-                    sessionID=info["sessionID"],
+                    metadata=metadata,
                     switchNumber=info["switchNumber"],
                     state=info["state"]
                 )
@@ -277,7 +277,7 @@ def complete(request):
             tanks.append(
                 ResourceTank(
                     time=info["time"],
-                    sessionID=info["sessionID"],
+                    metadata=metadata,
                     tankNumber=info["tankNumber"],
                     state=info["state"]
                 )
@@ -286,7 +286,7 @@ def complete(request):
             mouse.append(
                 MouseTracking(
                     time=info["time"],
-                    sessionID=info["sessionID"],
+                    metadata=metadata,
                     x=info["x"],
                     y=info["y"],
                     domID=info["domID"],

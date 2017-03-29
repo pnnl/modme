@@ -62,11 +62,11 @@ class EventAdmin(admin.ModelAdmin):
 
 
 class ResourceTankAdmin(admin.ModelAdmin):
-    list_display = ('time', 'sessionID', 'tankNumber', 'state',)
+    list_display = ('time', 'metadata', 'tankNumber', 'state',)
 
 
 class ResourceSwitchAdmin(admin.ModelAdmin):
-    list_display = ('time', 'sessionID', 'switchNumber', 'state',)
+    list_display = ('time', 'metadata', 'switchNumber', 'state',)
 
 
 class TrackingAdmin(admin.ModelAdmin):
@@ -75,7 +75,7 @@ class TrackingAdmin(admin.ModelAdmin):
 
 
 class MouseTrackingAdmin(admin.ModelAdmin):
-    list_display = ('time', 'sessionID', 'x', 'y', 'domID', 'targetX', 'targetY')
+    list_display = ('time', 'metadata', 'x', 'y', 'domID', 'targetX', 'targetY')
 
 
 class FileInline(admin.StackedInline):
