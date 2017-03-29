@@ -73,7 +73,7 @@ class Metadata(models.Model):
     startTime = models.IntegerField()
     sessionID = models.CharField(max_length=500)
 
-    duration = models.CharField(max_length=500)
+    duration = models.IntegerField()
     task1 = models.CharField(max_length=500)
     task2 = models.CharField(max_length=500)
     task3 = models.CharField(max_length=500)

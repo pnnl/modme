@@ -36,4 +36,9 @@ class Migration(migrations.Migration):
             name='condition',
             field=models.ForeignKey(to='ModME.Condition'),
         ),
+        migrations.AlterField(
+            model_name='metadata',
+            name='duration',
+            field=models.IntegerField(),
+        ),
     ]
