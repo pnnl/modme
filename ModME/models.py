@@ -80,10 +80,6 @@ class Metadata(models.Model):
     """ Metadata describes the execution of a single condition by a participant """
     startTime = models.IntegerField()
     duration = models.IntegerField()
-    task1 = models.CharField(max_length=500)
-    task2 = models.CharField(max_length=500)
-    task3 = models.CharField(max_length=500)
-    task4 = models.CharField(max_length=500)
     participantID = models.CharField(max_length=500)
     session = models.ForeignKey('Session')
     condition = models.ForeignKey('Condition')

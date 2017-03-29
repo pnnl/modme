@@ -216,10 +216,6 @@ def complete(request):
         startTime=data[0]["time"],
         session=session,
         duration=data[0]["duration"],
-        task1=data[0]["task1"],
-        task2=data[0]["task2"],
-        task3=data[0]["task3"],
-        task4=data[0]["task4"],
         participantID=data[0]["participantID"],
         condition=condition,
     )

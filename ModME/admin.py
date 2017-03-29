@@ -50,10 +50,6 @@ class MetadataAdmin(admin.ModelAdmin):
         'duration',
         'participantID',
         'condition',
-        'task1',
-        'task2',
-        'task3',
-        'task4',
     )
 
 

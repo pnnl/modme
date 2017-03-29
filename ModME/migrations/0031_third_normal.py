@@ -102,4 +102,21 @@ class Migration(migrations.Migration):
             name='duration',
             field=models.IntegerField(),
         ),
+        # Remove fields duplicating data in other tables
+        migrations.RemoveField(
+            model_name='metadata',
+            name='task1',
+        ),
+        migrations.RemoveField(
+            model_name='metadata',
+            name='task2',
+        ),
+        migrations.RemoveField(
+            model_name='metadata',
+            name='task3',
+        ),
+        migrations.RemoveField(
+            model_name='metadata',
+            name='task4',
+        ),
     ]
