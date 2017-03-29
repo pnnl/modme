@@ -22,18 +22,18 @@ track_svg.insert("circle", "g")
         .style("fill", "none");
 
 if(!track_data.distractor) {
-    track_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "alert", chart: "tracking", arg: "", id: args.domID, table: "Event"} )});
+    track_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "alert", chart: "tracking", arg: "", id: args.domID, table: "Event"} )});
     track_chart.when("tick", function(args){
                                             track_data.orbits.forEach(function(d,i){
-                                                data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, x: (document.getElementById('track_circle_'+i).getBoundingClientRect().left+(document.getElementById('track_circle_'+i).getBoundingClientRect().width/2)), y: (document.getElementById('track_circle_'+i).getBoundingClientRect().top+(document.getElementById('track_circle_'+i).getBoundingClientRect().height/2)), domID:"track_circle_"+i, state: args.state[i], mouseX: (args.event.x), mouseY: (args.event.y), table: "Tracking"});
+                                                data.push({time: (new Date()).getTime()-startTime, x: (document.getElementById('track_circle_'+i).getBoundingClientRect().left+(document.getElementById('track_circle_'+i).getBoundingClientRect().width/2)), y: (document.getElementById('track_circle_'+i).getBoundingClientRect().top+(document.getElementById('track_circle_'+i).getBoundingClientRect().height/2)), domID:"track_circle_"+i, state: args.state[i], mouseX: (args.event.x), mouseY: (args.event.y), table: "Tracking"});
                                             });
                                         });
-    track_chart.when("response", function(args){data.push({time: args.time-startTime, sessionID: sessionID, eventType: "input", chart: "tracking", arg: "correct:"+args.correct, id: args.domID, table: "Event"})});
-    track_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "timeout", chart: "tracking", arg: "", id: args.domID, table: "Event"})});
-    track_chart.when("mouseMove", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, x:args.x, y:args.y, domID:args.domID, targetX: args.targetX, targetY: args.targetY, table: "Mouse"})});
+    track_chart.when("response", function(args){data.push({time: args.time-startTime, eventType: "input", chart: "tracking", arg: "correct:"+args.correct, id: args.domID, table: "Event"})});
+    track_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "timeout", chart: "tracking", arg: "", id: args.domID, table: "Event"})});
+    track_chart.when("mouseMove", function(args){data.push({time: (new Date()).getTime()-startTime, x:args.x, y:args.y, domID:args.domID, targetX: args.targetX, targetY: args.targetY, table: "Mouse"})});
 } else {
-    track_chart.when("response", function(args){data.push({time: args.time-startTime, sessionID: sessionID, eventType: "input", chart: "tracking", arg: "invalid", id: args.domID, table: "Event"})});
-    track_chart.when("mouseMove", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, x:args.x, y:args.y, domID:args.domID, targetX: args.targetX, targetY: args.targetY, table: "Mouse"})});
+    track_chart.when("response", function(args){data.push({time: args.time-startTime, eventType: "input", chart: "tracking", arg: "invalid", id: args.domID, table: "Event"})});
+    track_chart.when("mouseMove", function(args){data.push({time: (new Date()).getTime()-startTime, x:args.x, y:args.y, domID:args.domID, targetX: args.targetX, targetY: args.targetY, table: "Mouse"})});
 }
 
 track_chart.draw(track_data);

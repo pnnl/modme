@@ -13,9 +13,9 @@ var monitor_chart = monitor_svg.chart("Monitoring").eventFunc(function(){t = eva
 						.range(monitor_data.range).tick(monitor_data.ticks);
 
 if(!monitor_data.distractor) {
-    monitor_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "alert", chart: "monitoring", arg: args.args, id: args.domID, table: "Event"})});
-    monitor_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "timeout", chart: "monitoring", arg: "", id: args.domID, table: "Event"})});
-    monitor_chart.when("response", function(args){data.push({time: args.time-startTime, sessionID: sessionID, eventType: "input", chart: "monitoring", arg: "correct:"+args.correct+",ascii: "+args.ascii, id: args.domID, table: "Event"})});
+    monitor_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "alert", chart: "monitoring", arg: args.args, id: args.domID, table: "Event"})});
+    monitor_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "timeout", chart: "monitoring", arg: "", id: args.domID, table: "Event"})});
+    monitor_chart.when("response", function(args){data.push({time: args.time-startTime, eventType: "input", chart: "monitoring", arg: "correct:"+args.correct+",ascii: "+args.ascii, id: args.domID, table: "Event"})});
 }
 
 monitor_chart.draw(monitor_data);

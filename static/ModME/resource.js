@@ -28,16 +28,16 @@ var resource_param = resource_data.parameters;
         });
 
 if(!resource_data.distractor) {
-    resource_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, eventType: "alert", chart: "resource", arg: "", id: args.domID, table: "Event"})});
+    resource_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "alert", chart: "resource", arg: "", id: args.domID, table: "Event"})});
     resource_chart.when("tick", function(args){
                                             resource_data.tanks.forEach(function(d,i){
-                                                data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, tankNumber: i+1, state: args.tanks[i].resource, table: "Tank"});
+                                                data.push({time: (new Date()).getTime()-startTime, tankNumber: i+1, state: args.tanks[i].resource, table: "Tank"});
                                             })
                                             resource_data.switches.forEach(function(d,i){
-                                                data.push({time: (new Date()).getTime()-startTime, sessionID: sessionID, switchNumber: i+1, state: args.state[i], table: "Switch"});
+                                                data.push({time: (new Date()).getTime()-startTime, switchNumber: i+1, state: args.state[i], table: "Switch"});
                                             })
                                         });
-    resource_chart.when("response", function(args){data.push({time: args.time-startTime, sessionID: sessionID, eventType: "input", chart: "resource", arg: args.ascii, id: args.domID, table: "Event"})});
+    resource_chart.when("response", function(args){data.push({time: args.time-startTime, eventType: "input", chart: "resource", arg: args.ascii, id: args.domID, table: "Event"})});
     resource_chart.when("timeout", function(args){});
 }
 
