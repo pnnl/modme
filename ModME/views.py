@@ -155,27 +155,27 @@ def configuration(request, parameter_id):
 
 
 def save(request):
-    p = Condition.objects.get(pk=request.POST.get('parameterId'))
+    condition = Condition.objects.get(pk=request.POST.get('parameterId'))
 
-    if p.Name == request.POST.get('name'):
-        p.task1 = int(request.POST.get('task1'))
-        p.task1Data = request.POST.get('task1Data')
-        p.task1GUI = request.POST.get('task1GUI') == "true"
-        p.task2 = int(request.POST.get('task2'))
-        p.task2Data = request.POST.get('task2Data')
-        p.task2GUI = request.POST.get('task2GUI') == "true"
-        p.task3 = int(request.POST.get('task3'))
-        p.task3Data = request.POST.get('task3Data')
-        p.task3GUI = request.POST.get('task3GUI') == "true"
-        p.task4 = int(request.POST.get('task4'))
-        p.task4Data = request.POST.get('task4Data')
-        p.task4GUI = request.POST.get('task4GUI') == "true"
+    if condition.Name == request.POST.get('name'):
+        condition.task1 = int(request.POST.get('task1'))
+        condition.task1Data = request.POST.get('task1Data')
+        condition.task1GUI = request.POST.get('task1GUI') == "true"
+        condition.task2 = int(request.POST.get('task2'))
+        condition.task2Data = request.POST.get('task2Data')
+        condition.task2GUI = request.POST.get('task2GUI') == "true"
+        condition.task3 = int(request.POST.get('task3'))
+        condition.task3Data = request.POST.get('task3Data')
+        condition.task3GUI = request.POST.get('task3GUI') == "true"
+        condition.task4 = int(request.POST.get('task4'))
+        condition.task4Data = request.POST.get('task4Data')
+        condition.task4GUI = request.POST.get('task4GUI') == "true"
 
-        p.experiment_duration = request.POST.get('duration')
-        p.save()
+        condition.experiment_duration = request.POST.get('duration')
+        condition.save()
 
     else:
-        p = Condition(
+        condition = Condition(
             task1=int(request.POST.get('task1')),
             task1Data=request.POST.get('task1Data'),
             task1GUI=request.POST.get('task1GUI') == "true",
@@ -191,7 +191,7 @@ def save(request):
             experiment_duration=request.POST.get('duration'),
             param_name=request.POST.get('name')
         )
-        p.save()
+        condition.save()
     return HttpResponseRedirect("/admin/ModME/condition/")
 
 # Loads default parameter object that can be configured
