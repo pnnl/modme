@@ -189,7 +189,7 @@ def save(request):
             task4Data=request.POST.get('task4Data'),
             task4GUI=request.POST.get('task1GUI') == "true",
             experiment_duration=request.POST.get('duration'),
-            param_name=request.POST.get('name')
+            Name=request.POST.get('name')
         )
         condition.save()
     return HttpResponseRedirect("/admin/ModME/condition/")
