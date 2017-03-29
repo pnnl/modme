@@ -39,7 +39,7 @@ p.fullScreenCenteredText {
     function start(){
         document.getElementById("participant_id_field").value="{{ participant_id }}";
         document.getElementById("parameters_field").value={{ parameters }};
-        document.getElementById("sessionNumber_field").value="{{ sessionNumber }}";
+        document.getElementById("sessionName").value="{{ sessionName }}";
     }
 
     setTimeout(start,1);
@@ -58,6 +58,6 @@ p.fullScreenCenteredText {
     {% csrf_token %}
     <input type="hidden" name="parameter_id" id="parameters_field"/>
     <input type="hidden" name="participant_id" id="participant_id_field"/>
-    <input type="hidden" name="sessionNumber" id="sessionNumber_field"/>
+    <input type="hidden" name="sessionName" id="sessionName"/>
     <input type="submit" value="Complete" id="complete" style="visibility:hidden"/>
 </form>

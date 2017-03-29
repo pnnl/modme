@@ -23,7 +23,7 @@
             {% endfor %}
         </select><br>
         <p>Participant id: <input id="participant_id" type="text" name="participant_id"/></p>
-        <p>Session id: <input id="sessionNumber" type="text" name="sessionNumber"/></p>
+        <p>Session id: <input id="sessionName" type="text" name="sessionName"/></p>
         <input id="submit" type="submit" value="Begin" style="display:none"/>
     </form>
         <button id="begin" onclick="check()"> Begin </button>
@@ -38,20 +38,8 @@ var array = [{% for meta in meta_list %}
 function check() {
     var select = document.getElementById("Parameters");
     var condition = select.options[select.selectedIndex].innerHTML;
-    newArray = array.filter(function(d){
-        //var select = document.getElementById("parameter_id")
-        return d.sessionID == (document.getElementById("participant_id").value + "_session:" + document.getElementById("sessionNumber").value) + "_condition:" + condition;
-    });
-    console.log(condition);
-    if(newArray.length==0) {
-        document.getElementById("submit").click();
-    } else {
-        if(confirm("The ID " + document.getElementById("participant_id").value +
-            " is already in use for condition " + condition + " and session " + document.getElementById("sessionNumber").value
-            + ". Do you wish to continue?")){
-            document.getElementById("submit").click();
-        }
-    }
+    // TODO if the user has already completed the condition in this session, confirm with user before submitting.  Discuss this with Leslie first.  It's not clear if the old code was trying to prevent id confusion because of poor database design.  It could be that the we just don't want users to repeat conditions.
+    document.getElementById("submit").click();
 }
 
 function stopRKey(evt) {

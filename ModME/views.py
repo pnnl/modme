@@ -78,11 +78,11 @@ def experiment(request):
         else:
             taskNames.append("blank" + str(i))
     partID = request.POST['participant_id']
-    sess = request.POST['sessionNumber']
+    sess = request.POST['sessionName']
     context = {
         'parameters': condition,
         'participant_id': partID,
-        'sessionNumber': sess,
+        'sessionName': sess,
         'fileList': requiredFiles,
         'taskList': tasks,
         'taskNames': taskNames,
@@ -218,7 +218,7 @@ def complete(request):
         task3=data[0]["task3"],
         task4=data[0]["task4"],
         participantID=data[0]["participantID"],
-        sessionNumber=data[0]["sessionNumber"],
+        sessionName=data[0]["sessionName"],
         condition=condition,
     )
 
@@ -374,8 +374,8 @@ def survey(request):
 def begin(request):
     para = request.POST['parameter_id']
     partID = request.POST['participant_id']
-    sess = request.POST['sessionNumber']
-    return render(request, 'ModME/begin.html', {'parameters': para, 'participant_id': partID, 'sessionNumber': sess})
+    sessionName = request.POST['sessionName']
+    return render(request, 'ModME/begin.html', {'parameters': para, 'participant_id': partID, 'sessionName': sessionName})
 
 
 def explanation(request):

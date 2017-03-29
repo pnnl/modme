@@ -79,11 +79,11 @@ class Metadata(models.Model):
     task3 = models.CharField(max_length=500)
     task4 = models.CharField(max_length=500)
     participantID = models.CharField(max_length=500)
-    sessionNumber = models.CharField(max_length=500)
+    sessionName = models.CharField(max_length=500)
     condition = models.ForeignKey('Condition')
 
     def __unicode__(self):
-        return "%s:%s:%s" % (self.participantID, self.sessionNumber, self.condition)
+        return "%s:%s:%s" % (self.participantID, self.sessionName, self.condition)
 
     class Meta:
         verbose_name_plural = "Metadata"
