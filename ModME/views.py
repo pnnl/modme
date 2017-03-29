@@ -314,7 +314,7 @@ def complete(request):
 
     template = 'ModME/complete.html'
     context = None
-    if not condition.surveys.all():
+    if condition.surveys.all():
         requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
         for j in condition.surveys.all()[0].surveyfile_set.all():
             if j.name not in requiredFiles:
