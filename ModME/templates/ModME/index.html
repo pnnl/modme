@@ -31,10 +31,6 @@
 
 <script type="text/javascript">
 
-var array = [{% for meta in meta_list %}
-            {sessionID: "{{ meta.sessionID }}"},
-        {% endfor %}];
-
 function check() {
     var select = document.getElementById("Parameters");
     var condition = select.options[select.selectedIndex].innerHTML;
