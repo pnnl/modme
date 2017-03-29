@@ -83,6 +83,7 @@ class Metadata(models.Model):
     participantID = models.CharField(max_length=500)
     session = models.ForeignKey('Session')
     condition = models.ForeignKey('Condition')
+    allowEventReuse = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s:%s:%s" % (self.participantID, self.session.name, self.condition)
