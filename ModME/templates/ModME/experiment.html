@@ -44,7 +44,6 @@
 
     var scale = d3.scale.linear();
     if(!{{ parameters.task2GUI }} && !{{ parameters.task3GUI }} && !{{ parameters.task4GUI }}) {
-    //if("{{ taskNames.1 }}".slice(0,5) == "blank" && "{{ taskNames.2 }}".slice(0,5) == "blank" && "{{ taskNames.3 }}".slice(0,5) == "blank") { // Top Left Only
     
         if((window.innerWidth)/(window.innerHeight-5)<=1){
             scale.range([0,window.innerWidth]);
@@ -73,7 +72,6 @@
         row2.style("height", 0);
     
     }else if(!{{ parameters.task1GUI }} && !{{ parameters.task3GUI }} && !{{ parameters.task4GUI }}) {
-    //if("{{ taskNames.0 }}".slice(0,5) == "blank" && "{{ taskNames.2 }}".slice(0,5) == "blank" && "{{ taskNames.3 }}".slice(0,5) == "blank") { // Top Right only
         
         if((window.innerWidth)/(window.innerHeight-5)<=2){
             scale.range([0,window.innerWidth]);
@@ -102,7 +100,6 @@
         row2.style("height", 0);
 
     }else if(!{{ parameters.task1GUI }} && !{{ parameters.task2GUI }} && !{{ parameters.task4GUI }}) {
-    //if("{{ taskNames.0 }}".slice(0,5) == "blank" && "{{ taskNames.1 }}".slice(0,5) == "blank" && "{{ taskNames.3 }}".slice(0,5) == "blank") { // Bottom Left only
     
         if((window.innerWidth)/(window.innerHeight-5)<=1){
             scale.range([0,window.innerWidth]);
@@ -131,7 +128,6 @@
         row2.style("height", scale(1));
 
     }else if(!{{ parameters.task1GUI }} && !{{ parameters.task2GUI }} && !{{ parameters.task3GUI }}) {
-    //if("{{ taskNames.0 }}".slice(0,5) == "blank" && "{{ taskNames.1 }}".slice(0,5) == "blank" && "{{ taskNames.2 }}".slice(0,5) == "blank") { // Bottom Right only
 
         if((window.innerWidth)/(window.innerHeight-5)<=2){
             scale.range([0,window.innerWidth]);
@@ -160,7 +156,6 @@
         row2.style("height", scale(1));
 
     }else if(!{{ parameters.task3GUI }} && !{{ parameters.task4GUI }}) {
-    //if("{{ taskNames.2 }}".slice(0,5) == "blank" && "{{ taskNames.3 }}".slice(0,5) == "blank") { // Top Only
     
         if((window.innerWidth)/(window.innerHeight-5)<=3){
             scale.range([0,window.innerWidth]);
@@ -189,7 +184,6 @@
         row2.style("height", 0);
 
     }else if(!{{ parameters.task1GUI }} && !{{ parameters.task2GUI }}) {
-    //if("{{ taskNames.0 }}".slice(0,5) == "blank" && "{{ taskNames.1 }}".slice(0,5) == "blank") { // Bottom Only
     
         if((window.innerWidth)/(window.innerHeight-5)<=3){
             scale.range([0,window.innerWidth]);
@@ -218,7 +212,6 @@
 
 
     }else if(!{{ parameters.task2GUI }} && !{{ parameters.task4GUI }}) {
-    //if("{{ taskNames.1 }}".slice(0,5) == "blank" && "{{ taskNames.3 }}".slice(0,5) == "blank") { // Left Side only
     
         if((window.innerWidth)/(window.innerHeight-5)<=.5){
             scale.range([0,window.innerWidth]);
@@ -247,7 +240,6 @@
         row2.style("height", scale(1));
 
     }else if(!{{ parameters.task1GUI }} && !{{ parameters.task3GUI }}) {
-    //if("{{ taskNames.0 }}".slice(0,5) == "blank" && "{{ taskNames.2 }}".slice(0,5) == "blank") { // Right Side only
         
         if((window.innerWidth)/(window.innerHeight-5)<=1){
             scale.range([0,window.innerWidth]);
