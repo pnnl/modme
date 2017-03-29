@@ -814,7 +814,7 @@ function generate() {
 	if(!survey)
 		viewParse = 'elif info["table"] == "' + taskName + '":\n    ' + taskName +'Array.append(' + taskName + '(';
 	else
-		viewParse = 'if surveyName == "' + taskName + '":\n    ' + '    s = ' +taskName + '(\n            sessionID=sessionID,\n';
+		viewParse = 'if surveyName == "' + taskName + '":\n    ' + '    s = ' +taskName + '(\n            ';
 
 	for (var i = 1; i<tree.childElementCount; i++) {
 		var field = tree.children[i];

@@ -306,11 +306,8 @@
 
     var startTime = (new Date()).getTime();
 
-    var sessionID = "{{ participant_id }}_session:{{ sessionNumber }}_condition:{{ parameters.Name }}";
-
     data.push({
         time: startTime,
-        sessionID: sessionID,
         duration: {{ parameters.experimentDuration }},
         task1: "{{ taskNames.0 }}",
         task2: "{{ taskNames.1 }}",

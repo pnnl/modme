@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from ModME.models import (
     Condition,
+    Session,
     Metadata,
     Event,
     ResourceTank,
@@ -209,16 +210,17 @@ def complete(request):
     data = json.loads(request.POST.get('data'))
     conditionID = request.POST.get('id')
     condition = Condition.objects.get(pk=conditionID)
+    sessionName = data[0]["sessionName"]
+    (session, sessionIsNew) = Session.objects.get_or_create(name=sessionName)
     metadata = Metadata(
         startTime=data[0]["time"],
-        sessionID=data[0]["sessionID"],
+        session=session,
         duration=data[0]["duration"],
         task1=data[0]["task1"],
         task2=data[0]["task2"],
         task3=data[0]["task3"],
         task4=data[0]["task4"],
         participantID=data[0]["participantID"],
-        sessionName=data[0]["sessionName"],
         condition=condition,
     )
 

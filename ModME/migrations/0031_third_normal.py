@@ -11,6 +11,21 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='Session',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=500)),
+            ],
+        ),
+        migrations.RemoveField(
+            model_name='metadata',
+            name='sessionID',
+        ),
+        migrations.RemoveField(
+            model_name='metadata',
+            name='sessionNumber',
+        ),
         migrations.RemoveField(
             model_name='tracking',
             name='sessionID',
@@ -69,6 +84,12 @@ class Migration(migrations.Migration):
             model_name='event',
             name='metadata',
             field=models.ForeignKey(default=1, to='ModME.Metadata'),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='metadata',
+            name='session',
+            field=models.ForeignKey(default=1, to='ModME.Session'),
             preserve_default=False,
         ),
         migrations.AlterField(

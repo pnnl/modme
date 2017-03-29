@@ -68,22 +68,28 @@ class TableAdd(models.Model):
     applyed = models.BooleanField()
 
 
+class Session(models.Model):
+    """ A session may comprise multiple runs of one or more conditions """
+    name = models.CharField(max_length=500, unique=True)
+
+    def __unicode(self):
+        return self.name
+
+
 class Metadata(models.Model):
     """ Metadata describes the execution of a single condition by a participant """
     startTime = models.IntegerField()
-    sessionID = models.CharField(max_length=500)
-
     duration = models.IntegerField()
     task1 = models.CharField(max_length=500)
     task2 = models.CharField(max_length=500)
     task3 = models.CharField(max_length=500)
     task4 = models.CharField(max_length=500)
     participantID = models.CharField(max_length=500)
-    sessionName = models.CharField(max_length=500)
+    session = models.ForeignKey('Session')
     condition = models.ForeignKey('Condition')
 
     def __unicode__(self):
-        return "%s:%s:%s" % (self.participantID, self.sessionName, self.condition)
+        return "%s:%s:%s" % (self.participantID, self.session.name, self.condition)
 
     class Meta:
         verbose_name_plural = "Metadata"
