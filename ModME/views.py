@@ -352,16 +352,24 @@ def survey(request):
             boredom=data['boredom'],
         )
         s.save()
-######ParseUniqueString3ds9tu890q345oij09ua0wj34########
+    context = None
+    template = 'ModME/complete.html'
     if ind + 1 < len(Condition.objects.get(pk=condId).surveys.all()):
         ind = ind + 1
         requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
         for j in Condition.objects.get(pk=condId).surveys.all()[0].surveyfile_set.all():
             if j.name not in requiredFiles:
                 requiredFiles.append(j.name)
-        return render(request, 'ModME/survey.html', {'condition': Condition.objects.get(pk=condId), 'ind': ind, 'fileList': requiredFiles, 'sessionID': sessionID, 'survey': Condition.objects.get(pk=condId).surveys.all()[ind].fileName})
-    else:
-        return render(request, 'ModME/complete.html')
+        context = {
+            'condition': Condition.objects.get(pk=condId),
+            'ind': ind,
+            'fileList': requiredFiles,
+            'sessionID': sessionID,
+            'survey': Condition.objects.get(pk=condId).surveys.all()[ind].fileName
+        }
+        template = 'ModME/survey.html'
+    renderedPage = render(request, template, context)
+    return renderedPage
 
 
 def begin(request):
