@@ -216,7 +216,7 @@ def complete(request):
         startTime=data[0]["time"],
         session=session,
         duration=data[0]["duration"],
-        participantID=data[0]["participantID"],
+        participantID=data[0]["participantAlias"],
         condition=condition,
     )
 
