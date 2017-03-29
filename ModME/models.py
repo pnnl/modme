@@ -68,6 +68,14 @@ class TableAdd(models.Model):
     applyed = models.BooleanField()
 
 
+class Participant(models.Model):
+    """ Protect a participant's confidentiality and privacy """
+    alias = models.CharField(max_length=500, unique=True)
+
+    def __unicode(self):
+        return self.alias
+
+
 class Session(models.Model):
     """ A session may comprise multiple runs of one or more conditions """
     name = models.CharField(max_length=500, unique=True)
@@ -80,13 +88,13 @@ class Metadata(models.Model):
     """ Metadata describes the execution of a single condition by a participant """
     startTime = models.IntegerField()
     duration = models.IntegerField()
-    participantID = models.CharField(max_length=500)
     session = models.ForeignKey('Session')
     condition = models.ForeignKey('Condition')
+    participant = models.ForeignKey('Participant')
     allowEventReuse = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return "%s:%s:%s" % (self.participantID, self.session.name, self.condition)
+        return "%s:%s:%s" % (self.participant.alias, self.session.name, self.condition)
 
     class Meta:
         verbose_name_plural = "Metadata"

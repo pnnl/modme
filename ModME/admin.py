@@ -48,7 +48,7 @@ class MetadataAdmin(admin.ModelAdmin):
         'startTime',
         'session',
         'duration',
-        'participantID',
+        'participant',
         'condition',
     )
 

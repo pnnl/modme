@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from ModME.models import (
     Condition,
     Session,
+    Participant,
     Metadata,
     Event,
     ResourceTank,
@@ -78,11 +79,11 @@ def experiment(request):
             taskNames.append("placeholder" + str(i))
         else:
             taskNames.append("blank" + str(i))
-    partID = request.POST['participant_id']
+    participantAlias = request.POST['participantAlias']
     sess = request.POST['sessionName']
     context = {
         'parameters': condition,
-        'participant_id': partID,
+        'participantAlias': participantAlias,
         'sessionName': sess,
         'fileList': requiredFiles,
         'taskList': tasks,
@@ -212,11 +213,13 @@ def complete(request):
     condition = Condition.objects.get(pk=conditionID)
     sessionName = data[0]["sessionName"]
     (session, sessionIsNew) = Session.objects.get_or_create(name=sessionName)
+    participantAlias = data[0]["participantAlias"]
+    (participant, participantIsNew) = Participant.objects.get_or_create(alias=participantAlias)
     metadata = Metadata(
         startTime=data[0]["time"],
         session=session,
         duration=data[0]["duration"],
-        participantID=data[0]["participantAlias"],
+        participant=participant,
         condition=condition,
     )
 
@@ -371,9 +374,9 @@ def survey(request):
 
 def begin(request):
     para = request.POST['parameter_id']
-    partID = request.POST['participant_id']
+    participantAlias = request.POST['participantAlias']
     sessionName = request.POST['sessionName']
-    return render(request, 'ModME/begin.html', {'parameters': para, 'participant_id': partID, 'sessionName': sessionName})
+    return render(request, 'ModME/begin.html', {'parameters': para, 'participantAlias': participantAlias, 'sessionName': sessionName})
 
 
 def explanation(request):
