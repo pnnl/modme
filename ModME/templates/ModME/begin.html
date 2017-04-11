@@ -24,25 +24,8 @@ p.fullScreenCenteredText {
     font-family: Arial;
 }
 </style>
-</head>
-
-<body>
-<div class="fullscreenDiv">
-    <div class="center">
-        <p class="fullScreenCenteredText" align="center">
-            Press space bar or tap screen to start experiment
-        </p>
-    </div>
-</div>
 <script src="/static/d3/d3.v3.min.js"></script>
 <script>
-    function start(){
-        document.getElementById("participantAlias").value="{{ participantAlias }}";
-        document.getElementById("parameters_field").value={{ parameters }};
-        document.getElementById("sessionName").value="{{ sessionName }}";
-    }
-
-    setTimeout(start,1);
     d3.select(window).on("keydown",function(){
         var keyCode = d3.event.keyCode;
         if(keyCode == 32){
@@ -53,11 +36,21 @@ p.fullScreenCenteredText {
         document.getElementById("complete").click();
     });
 </script>
+</head>
+
+<body>
+<div class="fullscreenDiv">
+    <div class="center">
+        <p class="fullScreenCenteredText" align="center">
+            Press space bar or tap screen to start experiment
+        </p>
+    </div>
+</div>
 
 <form action="{% url 'ModME:experiment' %}" style="display:none" method="post">
     {% csrf_token %}
-    <input type="hidden" name="parameter_id" id="parameters_field"/>
-    <input type="hidden" name="participantAlias" id="participantAlias"/>
-    <input type="hidden" name="sessionName" id="sessionName"/>
+    <input type="hidden" name="parameter_id" id="parameters_field" value="{{parameters}}"/>
+    <input type="hidden" name="participantAlias" id="participantAlias" value="{{participantAlias}}"/>
+    <input type="hidden" name="sessionName" id="sessionName" value="{{sessionName}}"/>
     <input type="submit" value="Complete" id="complete" style="visibility:hidden"/>
 </form>
