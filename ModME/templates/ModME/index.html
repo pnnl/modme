@@ -80,7 +80,6 @@ function fetchMetdata() {
         if (xhr.readyState === 4 && xhr.status === 200) {
 
             metadata.innerHTML = JSON.parse(xhr.responseText).reduce(function(last, entry) {
-console.log(entry);
                 return last + "<option value='" + escape(entry.id) + "'>" + escape(entry.session.name + " - " + formatDate(entry.startTime)) + "</option>";
             }, []);
         }
