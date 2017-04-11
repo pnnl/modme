@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 
 from ModME import views
+from ModME import services
 
 urlpatterns = patterns(' ',
     url(r'^$', views.index, name='index'),
@@ -13,4 +14,6 @@ urlpatterns = patterns(' ',
     url(r'^begin/$', views.begin, name='begin'),
     url(r'^tableAdd/$', views.tableAdd, name='tableAdd'),
     url(r'^survey/$', views.survey, name='survey'),
+    url(r'^get-reusable-sessions/$', services.getReusableSessions, name='getReusableSessions'),
+    url(r'^get-events-for-metadata/$', services.getEventsForMetadata, name='getEventsForMetadata')
 )

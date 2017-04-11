@@ -24,6 +24,8 @@
         </select><br>
         <p>Participant id: <input id="participantAlias" type="text" name="participantAlias"/></p>
         <p>Session id: <input id="sessionName" type="text" name="sessionName"/></p>
+        <label>Reuse Session Data: <input id="reuse" type="checkbox"></label>
+        <select id="metadata" name="metadata_id"></select>
         <input id="submit" type="submit" value="Begin" style="display:none"/>
     </form>
         <button id="begin" onclick="check()"> Begin </button>
@@ -47,4 +49,72 @@ function stopRKey(evt) {
 }
 document.onkeypress = stopRKey;
 
+function escape (value) {
+    return (value + "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function dateLeftZero (value)
+{
+    return (value < 10 ? "0" + value : value);
+}
+
+function formatDate (value) {
+    var date = new Date(value);
+    var output = date.getFullYear() + "-" + dateLeftZero(date.getMonth() + 1) + "-" + dateLeftZero(date.getDay());
+    var hour = date.getHours();
+    var part = "am";
+
+    if (hour > 12)
+    {
+        hour -= 12;
+        part = "pm";
+    }
+    return output + " " + hour + ":" + dateLeftZero(date.getMinutes()) + part + " " + date.toString().match(/\(([^)]+)\)$/)[1];
+}
+
+function fetchMetdata() {
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+
+        if (xhr.readyState === 4 && xhr.status === 200) {
+
+            metadata.innerHTML = JSON.parse(xhr.responseText).reduce(function(last, entry) {
+console.log(entry);
+                return last + "<option value='" + escape(entry.id) + "'>" + escape(entry.session.name + " - " + formatDate(entry.startTime)) + "</option>";
+            }, []);
+        }
+    };
+    xhr.open("GET", (location + "") + "get-reusable-sessions?condition=" + encodeURIComponent(Parameters.value));
+    xhr.send();
+}
+
+Parameters.addEventListener("change", function() {
+
+    reuse.disabled = Parameters.value === "%";
+
+    if (reuse.disabled)
+    {
+        metadata.innerHTML = "";
+    }
+    else
+    {
+        fetchMetdata();
+    }
+});
+
+reuse.disabled = Parameters.value === "%";
+reuse.checked = false;
+reuse.addEventListener("change", function() {
+
+    metadata.disabled = !reuse.checked;
+});
+
+if (!reuse.disabled)
+{
+    fetchMetdata();
+}
+
+begin.disabled = false;
+metadata.disabled = true;
 </script>
