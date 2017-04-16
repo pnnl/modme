@@ -376,7 +376,16 @@ def begin(request):
     para = request.POST['parameter_id']
     participantAlias = request.POST['participantAlias']
     sessionName = request.POST['sessionName']
-    return render(request, 'ModME/begin.html', {'parameters': para, 'participantAlias': participantAlias, 'sessionName': sessionName})
+    metadataId = None
+    if ('metadata_id' in request.POST):
+        metadataId = request.POST['metadata_id']
+    parameters = {
+        'parameters': para,
+        'participantAlias': participantAlias,
+        'sessionName': sessionName,
+        'metadataId': metadataId,
+    }
+    return render(request, 'ModME/begin.html', parameters)
 
 
 def explanation(request):
