@@ -44,7 +44,7 @@ def getReusableSessions(request):
 
 def getEventsForMetadata(request):
     events = '[]'
-    metadata = request.GET.get('metadata')
+    metadata = request.GET.get('metadataId')
 
     if metadata:
         events = Event.objects.filter(metadata=metadata)
