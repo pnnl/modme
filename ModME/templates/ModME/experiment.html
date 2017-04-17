@@ -366,7 +366,8 @@
         document.getElementById("data_field").value=JSON.stringify(data);
         document.getElementById("complete").click();
     }
-    setTimeout(complete, (60000*{{ parameters.experimentDuration }}));
+    var experimentDurationInMinutes = {{ parameters.experimentDuration }};
+    setTimeout(complete, (60 * 1000 * experimentDurationInMinutes));
 
     
 </script>
