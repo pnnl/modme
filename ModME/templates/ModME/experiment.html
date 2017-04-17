@@ -2,12 +2,12 @@
 {% for file in cssList %}
     <link href = "/static/{{ file }}" rel="stylesheet" type="text/css">
 {% endfor %}
-</head>
-
-<body>
 {% for file in fileList %}
     <script src="/static/{{ file }}"></script>
 {% endfor %}
+</head>
+
+<body>
 <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
 <div id="row1">
     <div id="slot1" style="display:inline-block; position: relative;"></div>
