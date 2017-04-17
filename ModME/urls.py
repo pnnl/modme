@@ -1,9 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from ModME import views
 from ModME import services
 
-urlpatterns = patterns(' ',
+urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^complete/$', views.complete, name='complete'),
     url(r'^done/$', views.done, name='done'),
@@ -16,4 +16,4 @@ urlpatterns = patterns(' ',
     url(r'^survey/$', views.survey, name='survey'),
     url(r'^get-reusable-sessions/$', services.getReusableSessions, name='getReusableSessions'),
     url(r'^get-events-for-metadata/$', services.getEventsForMetadata, name='getEventsForMetadata')
-)
+]

@@ -18,7 +18,7 @@ from django.contrib import admin
 from home import views
 
 urlpatterns = [
-    url(r'^$', 'home.views.index'),
+    url(r'^$', views.index),
     url(r'^ModME/', include('ModME.urls', namespace="ModME")),
     url(r'^admin/', include(admin.site.urls)),
 ]
