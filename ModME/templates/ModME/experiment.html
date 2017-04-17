@@ -378,5 +378,8 @@
 {% csrf_token %}
 <input type="hidden" name="data" id="data_field"/>
 <input type="hidden" name="id" id="id_field" value="{{ parameters.id }}"/>
+{% if parameters.eventReuseMetadataId %}
+    <input type="hidden" name="eventReuseMetadataId" id="eventReuseMetadataId" value="{{ parameters.eventReuseMetadataId }}"/>
+{% endif %}
 <input type="submit" value="Complete" id="complete" style="visibility:hidden"/>
 </form>
