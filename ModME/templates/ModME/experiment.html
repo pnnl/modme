@@ -356,6 +356,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     var experimentDurationInMinutes = {{ parameters.experimentDuration }};
     setTimeout(complete, (60 * 1000 * experimentDurationInMinutes));
+    
+    var eventReuseMetadataInput = document.getElementById("eventReuseMetadataId");
+    if (eventReuseMetadataInput) {
+        eventReuseMetadataId = eventReuseMetadataInput.value;
+    }
 }, false);    
 </script>
 {% for task in taskList %}
@@ -379,8 +384,8 @@ document.addEventListener("DOMContentLoaded", function() {
 {% csrf_token %}
 <input type="hidden" name="data" id="data_field"/>
 <input type="hidden" name="id" id="id_field" value="{{ parameters.id }}"/>
-{% if parameters.eventReuseMetadataId %}
-    <input type="hidden" name="eventReuseMetadataId" id="eventReuseMetadataId" value="{{ parameters.eventReuseMetadataId }}"/>
+{% if eventReuseMetadataId %}
+    <input type="hidden" name="eventReuseMetadataId" id="eventReuseMetadataId" value="{{ eventReuseMetadataId }}"/>
 {% endif %}
 <input type="submit" value="Complete" id="complete" style="visibility:hidden"/>
 </form>
