@@ -84,7 +84,7 @@ def experiment(request):
         'taskList': tasks,
         'taskNames': taskNames,
         'cssList': cssFiles,
-        'eventReuseMetadataId': request.POST['metadataId'],
+        'eventReuseMetadataId': request.POST.get('metadataId'),
     }
     renderedPage = render(request, 'ModME/experiment.html', context)
     return renderedPage
