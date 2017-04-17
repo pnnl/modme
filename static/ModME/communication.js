@@ -21,16 +21,14 @@
     );
 
     var comm_chart = comm_svg.chart("Communication")
-        .eventFunc(
-            function() {
-                t = eval(comm_data.eventFunction);
-                return t;
-            }
-        )
-        .startFunc(comm_data.startFunction)
-        .responseTime(comm_data.response)
-    ;
-
+    comm_chart.eventFunc(
+        function() {
+            t = eval(comm_data.eventFunction);
+            return t;
+        }
+    );
+    comm_chart.startFunc(comm_data.startFunction);
+    comm_chart.responseTime(comm_data.response);
 
     if(!comm_data.distractor) {
         // record events for eventual submission to the database
