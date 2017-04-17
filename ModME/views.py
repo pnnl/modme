@@ -19,6 +19,7 @@ import json
 import string
 import random
 import os
+from collections import OrderedDict
 
 # Loads ModME experimentation setup page
 # Sends parameter object, Participant ID, session number, and condition to Experiment page
@@ -57,38 +58,32 @@ def index(request):
 
 def experiment(request):
     condition = Condition.objects.get(pk=request.POST['parameter_id'])
-    taskFiles = [condition.task1, condition.task2, condition.task3, condition.task4]
-    requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
-    tasks = []
+    nominalTaskIds = [condition.task1, condition.task2, condition.task3, condition.task4]
+    tasks = list(Task.objects.filter(pk__in=nominalTaskIds))
+    taskFiles = set([taskFile.name for task in tasks for taskFile in task.file_set.all()])
+    cssFiles = filter(lambda filename: filename.endswith(".css"), taskFiles)
+    baseFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
+    jsTaskFiles = filter(lambda filename: not filename.endswith(".css"), taskFiles)
+    requiredFiles = OrderedDict.fromkeys(baseFiles + jsTaskFiles)  # no duplicates
     taskNames = []
-    cssList = []
-    for i in range(len(taskFiles)):
-        k = taskFiles[i]
-        if k != -1 and k != -2:
-            tempTask = Task.objects.get(pk=k)
-            tasks.append(tempTask)
-            taskNames.append(tempTask.taskName)
-            for j in tempTask.file_set.all():
-                if j.name[-3:] == "css":
-                    if j.name not in cssList:
-                        cssList.append(j.name)
-                else:
-                    if j.name not in requiredFiles:
-                        requiredFiles.append(j.name)
-        elif k != -1:
-            taskNames.append("placeholder" + str(i))
+    for (index, nominalTaskId) in enumerate(nominalTaskIds):
+        if nominalTaskId == -1:
+            taskNames.append("blank" + str(index))
+        elif nominalTaskId == -2:
+            # TODO placeholder should be a task in the database
+            taskNames.append("placeholder" + str(index))
         else:
-            taskNames.append("blank" + str(i))
+            taskNames.append(Task.objects.get(pk=nominalTaskId))
     participantAlias = request.POST['participantAlias']
-    sess = request.POST['sessionName']
+    sessionName = request.POST['sessionName']
     context = {
         'parameters': condition,
         'participantAlias': participantAlias,
-        'sessionName': sess,
+        'sessionName': sessionName,
         'fileList': requiredFiles,
         'taskList': tasks,
         'taskNames': taskNames,
-        'cssList': cssList,
+        'cssList': cssFiles,
     }
     renderedPage = render(request, 'ModME/experiment.html', context)
     return renderedPage
