@@ -5,21 +5,9 @@
 {% for file in fileList %}
     <script src="/static/{{ file }}"></script>
 {% endfor %}
-</head>
-
-<body>
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
-<div id="row1">
-    <div id="slot1" style="display:inline-block; position: relative;"></div>
-    <div id="slot2" style="display:inline-block; position: absolute;"></div>
-</div>
-<div id="row2">
-    <div id="slot3" style="display:inline-block; position: relative;"></div>
-    <div id="slot4" style="display:inline-block; position: absolute;"></div>
-</div>
-</div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("contextmenu", function(event){
         if(event.button == 2) {
             event.preventDefault();
@@ -29,7 +17,7 @@
     var False = false;
     var True = true;
 
-    var data = [];
+    window.data = [];
 
     var body = d3.select("body");
     var row1 = d3.select("#row1");
@@ -39,7 +27,7 @@
         .style("margin", "0px")
         .style("background-color", "#e8e8e8");
 
-    var scale = d3.scale.linear();
+    window.scale = d3.scale.linear();
     if(!{{ parameters.task2GUI }} && !{{ parameters.task3GUI }} && !{{ parameters.task4GUI }}) {
     
         if((window.innerWidth)/(window.innerHeight-5)<=1){
@@ -293,7 +281,7 @@
 
     }
 
-    var startTime = (new Date()).getTime();
+    window.startTime = (new Date()).getTime();
 
     data.push({
         time: startTime,
@@ -304,7 +292,7 @@
         table:"Meta"
     });
     
-    var setup = {
+    window.setup = {
             {{ taskNames.0 }}: {
                 data: JSON.parse(("{{ parameters.task1Data }}").replace(/&(l|g|quo)t;/g,
                     function(a,b){
@@ -368,12 +356,24 @@
     }
     var experimentDurationInMinutes = {{ parameters.experimentDuration }};
     setTimeout(complete, (60 * 1000 * experimentDurationInMinutes));
-
-    
+}, false);    
 </script>
 {% for task in taskList %}
     <script src="/static/{{ task.fileName }}"></script>
 {% endfor %}
+</head>
+
+<body>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
+<div id="row1">
+    <div id="slot1" style="display:inline-block; position: relative;"></div>
+    <div id="slot2" style="display:inline-block; position: absolute;"></div>
+</div>
+<div id="row2">
+    <div id="slot3" style="display:inline-block; position: relative;"></div>
+    <div id="slot4" style="display:inline-block; position: absolute;"></div>
+</div>
+</div>
 
 <form action="{% url 'ModME:done' %}" method="post" style="display:none">
 {% csrf_token %}

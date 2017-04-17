@@ -1,4 +1,4 @@
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
     var track_data = setup.Tracking.data;
     var track_param = track_data.parameters;
     
@@ -38,4 +38,4 @@
     }
     
     track_chart.draw(track_data);
-})();
+}, false);

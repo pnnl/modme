@@ -1,4 +1,4 @@
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
     var monitor_data = setup.Monitoring.data;
     
     var monitor_param = monitor_data.parameters;
@@ -37,4 +37,4 @@
             });
         }
     });
-})();
+}, false);

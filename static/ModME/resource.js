@@ -1,4 +1,4 @@
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
     var resource_data = setup.Resource.data;
 
     var resource_param = resource_data.parameters;
@@ -54,4 +54,4 @@
             });
         }
     });
-})();
+}, false);

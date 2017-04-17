@@ -1,4 +1,4 @@
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
     var comm_data = setup.Communication.data;
     var comm_param = comm_data.parameters;
 
@@ -62,4 +62,4 @@
             }
         }
     });
-})();
+}, false);
