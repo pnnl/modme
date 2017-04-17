@@ -1,20 +1,39 @@
 (function() {
     var comm_data = setup.Communication.data;
-
     var comm_param = comm_data.parameters;
 
+    var parent = d3.select("#"+setup.Communication.container);
+    var width = 650;
+    var height = 650;
+    var parentDimensions = parent.node().getBoundingClientRect();
+    var scaledWidth = parentDimensions.width;
+    var scaledHeight = parentDimensions.height;
+    var margin = {top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)};
+    var id = "comm_svg";
     var comm_svg = GUIUtil.getGenericSVG(
-            d3.select("#"+setup.Communication.container),
-            650, 650,
-            JSON.parse(document.getElementById(setup.Communication.container).style.width.substr(0,document.getElementById(setup.Communication.container).style.width.length-2)),
-            JSON.parse(document.getElementById(setup.Communication.container).style.height.substr(0,document.getElementById(setup.Communication.container).style.height.length-2)),
-            {top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)},
-            "comm_svg");
+            parent,
+            width,
+            height,
+            scaledWidth,
+            scaledHeight,
+            margin,
+            id
+    );
 
-    var comm_chart = comm_svg.chart("Communication").eventFunc(function(){t = eval(comm_data.eventFunction); return t;}).startFunc(comm_data.startFunction).responseTime(comm_data.response);
+    var comm_chart = comm_svg.chart("Communication")
+        .eventFunc(
+            function() {
+                t = eval(comm_data.eventFunction);
+                return t;
+            }
+        )
+        .startFunc(comm_data.startFunction)
+        .responseTime(comm_data.response)
+    ;
 
 
     if(!comm_data.distractor) {
+        // record events for eventual submission to the database
         comm_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "alert", chart: "communication", arg: "target:"+args.target+";current:"+args.current, id: args.domID, table: "Event"})});
         comm_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "timeout", chart: "communication", arg: "target:"+args.target+";current:"+args.current, id: args.domID, table: "Event"})});
         comm_chart.when("response", function(args){data.push({time: args.time-startTime, eventType: "input", chart: "communication",
