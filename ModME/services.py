@@ -42,12 +42,12 @@ def getReusableSessions(request):
     return HttpResponse(metadata, content_type='application/json')
 
 
-def getEventsForMetadata(request):
-    events = '[]'
-    metadata = request.GET.get('metadataId')
+def getAlertsForMetadata(request):
+    serializedAlerts = '[]'
+    metadataId = request.GET.get('metadataId')
 
-    if metadata:
-        events = Event.objects.filter(metadata=metadata)
-        events = serializers.serialize('json', events)
+    if metadataId:
+        alertList = Event.objects.filter(metadata=metadataId, eventType='alert')
+        serializedAlerts = serializers.serialize('json', alertList)
 
-    return HttpResponse(events, content_type='application/json')
+    return HttpResponse(serializedAlerts, content_type='application/json')

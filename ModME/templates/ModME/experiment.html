@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	            response = JSON.parse(xhr.responseText);
 	        }
 	    };
-	    xhr.open("GET", "/ModME/get-events-for-metadata?metadataId=" + encodeURIComponent(eventReuseMetadataId));
+	    xhr.open("GET", "/ModME/get-alerts-for-metadata?metadataId=" + encodeURIComponent(eventReuseMetadataId));
 	    xhr.send();
     }
 }, false);    
