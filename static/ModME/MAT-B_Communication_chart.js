@@ -3,7 +3,7 @@
 // Channel field should be an array where length of the array is the number of channels in the task
 // Each element in the array should be an object of structure {name:"", frequency:#, differential:#}
 d3.chart("Communication", {
-    initialize: function(){
+    initialize: function(options){
         var chart = this;
 
         chart.h = chart.base.h;
@@ -43,7 +43,7 @@ d3.chart("Communication", {
             .attr("id", "comm_target_frequency")
             .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
 
-        chart.alertEvent = function(){
+        chart.generateAlert = function() {
             // Choose new Channel for alert event
             chart.totalProb = 0;                                                // Initialize totalProb to 0
             chart.data.channels.forEach(function(d){                            // Start forEach loop over channels
@@ -67,33 +67,44 @@ d3.chart("Communication", {
                 var max = chart.data.absoluteMax < (chart.data.channels[newChannel].frequency + chart.data.channels[newChannel].differential) ? chart.data.absoluteMax : (chart.data.channels[newChannel].frequency + chart.data.channels[newChannel].differential);
                 var newFrequency = Math.floor(Math.random()*(max-min))+min;
                 newFrequency = newFrequency%2==0 ? newFrequency+1 : newFrequency;
-
-                chart.alert.forEach(function(d){d({domID: "comm_channel_" + newChannel + "_name", target:newFrequency,current:chart.data.channels[newChannel].frequency});});
-
-                chart.data.target.name = chart.data.channels[newChannel].name;
-                chart.data.target.frequency = newFrequency;
-                chart.target_name.text(chart.data.target.name);
-                chart.target_frequency.text(chart.data.target.frequency/10);
-                chart.target_name.classed("alert",true);
-                chart.target_frequency.classed("alert",true);
-
-
-
-                setTimeout(function(){
-                    if(chart.target_name.classed("alert")){
-                        chart.timeout.forEach(function(d){d({domID: "comm_channel_" + newChannel + "_name", args:{target:newFrequency,current:chart.data.channels[newChannel].frequency}});});
-                    }
-                    chart.target_name.classed("alert",false);
-                    chart.target_frequency.classed("alert",false);
-                }, chart.rt);
+                var alert = {
+                    domID: "comm_channel_" + newChannel + "_name",
+                    channel: newChannel,
+                    target: newFrequency,
+                    current: chart.data.channels[newChannel].frequency
+                };
+                return alert;
+            }
+            return null;
+        };
+        chart.endCurrentAlert = function() {
+            if(chart.target_name.classed("alert")){
+                chart.timeout.forEach(function(d){d(chart.data.currentAlert)});
+            }
+            chart.target_name.classed("alert",false);
+            chart.target_frequency.classed("alert",false);
+            chart.data.currentAlert = null;
+        };
+        chart.beginAlert = function(alert) {
+            chart.data.currentAlert = alert;
+            chart.data.target.name = chart.data.channels[alert.channel].name;
+            chart.data.target.frequency = alert.target;
+            chart.target_name.text(chart.data.target.name);
+            chart.target_frequency.text(chart.data.target.frequency/10);
+            chart.target_name.classed("alert",true);
+            chart.target_frequency.classed("alert",true);
+            chart.alert.forEach(function(d){d(alert);});
+            setTimeout(chart.endCurrentAlert, chart.rt);
+        }
+        chart.alertEvent = function() {
+            alert = chart.generateAlert();
+            if (alert) {
+                chart.beginAlert(alert);
             }
             setTimeout(chart.alertEvent, chart.eventFunction());
         };
 
-
         setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction)}, 1);
-
-
 
         this.layer("communication", rectBase, {
             dataBind: function(data){
