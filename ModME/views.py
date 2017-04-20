@@ -244,7 +244,7 @@ def complete(request):
                     metadata=metadata,
                     eventType=info["eventType"],
                     chart=info["chart"],
-                    arg=info["arg"],
+                    arg=json.dumps(info["arg"]),
                     domID=info["id"]
                 )
             )

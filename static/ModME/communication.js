@@ -37,7 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 time: (new Date()).getTime()-startTime,
                 eventType: "alert",
                 chart: "communication",
-                arg: "target:"+args.target+";current:"+args.current,
+                arg: {
+                    target: args.target,
+                    current: args.current,
+                },
                 id: args.domID,
                 table: "Event"
             })
@@ -47,19 +50,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 time: (new Date()).getTime()-startTime,
                 eventType: "timeout",
                 chart: "communication",
-                arg: "target:"+args.target+";current:"+args.current,
+                arg: {
+                    target: args.target,
+                    current: args.current,
+                },
                 id: args.domID,
                 table: "Event"
             });
         });
         comm_chart.when("response", function(args) {
+            var arg = {
+                channel: args.channel,
+                frequency: args.frequency,
+            };
+            if (args.correct) args.correct = args.correct;
             data.push({
                 time: args.time-startTime,
                 eventType: "input",
                 chart: "communication",
-                arg: (args.correct) ?
-                    "correct:"+args.correct+";channel:"+args.channel+";frequency:"+args.frequency
-                    : "channel:"+args.channel+";frequency:"+args.frequency,
+                arg: arg,
                 id: args.domID,
                 table: "Event"
             })

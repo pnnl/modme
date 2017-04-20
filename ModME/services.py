@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from django.core import serializers
 from ModME.models import (
     Metadata,
     Event,
@@ -47,7 +46,15 @@ def getAlertsForMetadata(request):
     metadataId = request.GET.get('metadataId')
 
     if metadataId:
-        alertList = Event.objects.filter(metadata=metadataId, eventType='alert')
-        serializedAlerts = serializers.serialize('json', alertList)
+        alertList = list(Event.objects.filter(metadata=metadataId, eventType='alert'))
+        flatAlertList = [{
+            'arg': json.loads(alert.arg),
+            'time': alert.time,
+            'eventType': alert.eventType,
+            'chart': alert.chart,
+            'id': alert.domID,
+            'table': "Event",
+        } for alert in alertList]
+        serializedAlerts = json.dumps(flatAlertList, indent=2)
 
     return HttpResponse(serializedAlerts, content_type='application/json')
