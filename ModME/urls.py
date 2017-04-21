@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^begin/$', views.begin, name='begin'),
     url(r'^tableAdd/$', views.tableAdd, name='tableAdd'),
     url(r'^survey/$', views.survey, name='survey'),
-    url(r'^get-reusable-sessions/$', services.getReusableSessions, name='getReusableSessions'),
-    url(r'^get-alerts-for-metadata/$', services.getAlertsForMetadata, name='getAlertsForMetadata')
+    url(r'^get-reusable-sessions$', services.getReusableSessions, name='getReusableSessions'),
+    url(r'^get-alerts-for-metadata$', services.getAlertsForMetadata, name='getAlertsForMetadata')
 ]
