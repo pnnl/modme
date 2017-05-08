@@ -7,7 +7,7 @@ var Monitoring = function(){
 
                 var chart = this.chart();
 
-                this.on("click", function(d,i){
+                return this.on("click", function(d,i){
                     document.getElementById("object_name").style.display = "inline";
                     document.getElementById("object_name").innerHTML = "Button "+(i+1);
 
@@ -164,12 +164,12 @@ var Monitoring = function(){
 
                     document.getElementById("applyButton").onclick = function(){
                         objectName = document.getElementById("object_name").innerHTML.split(" ");
-    	            	monitor_param = JSON.parse(document.getElementById("task_textarea3").value);
+    	            	monitor_param = JSON.parse(document.getElementById("task_textarea4").value);
     		            for(i in monitor_param) {
     		                monitor_param[i] = monitor_param[i]*1000;
     		            }
-    		            monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea1").value*1000));
-    		            if(document.getElementById("task_select2").selectedIndex==0){
+    		            monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea2").value*1000));
+    		            if(document.getElementById("task_select3").selectedIndex==0){
     		                monitor_chart.eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;});
     		            }
     		            else{
@@ -178,7 +178,7 @@ var Monitoring = function(){
 
                         monitor_data.startFunction = monitor_chart.startFunc();
 
-    		            monitor_data.ticks = JSON.parse(document.getElementById("task_textarea4").value);
+    		            monitor_data.ticks = JSON.parse(document.getElementById("task_textarea5").value);
     		            monitor_data.range = JSON.parse(document.getElementById("task_textarea5").value);
 
                         monitor_data.distractor = document.getElementById("task_checkbox1").checked;
@@ -205,7 +205,6 @@ var Monitoring = function(){
                         setup.Monitoring.data = monitor_data;
     				};
                 }); // end of click function
-                return this;
             }); // end of button layer
 
             this.layer("scale").on("enter", function() {
@@ -364,12 +363,12 @@ var Monitoring = function(){
 
                     document.getElementById("applyButton").onclick = function(){
                         objectName = document.getElementById("object_name").innerHTML.split(" ");
-                        monitor_param = JSON.parse(document.getElementById("task_textarea3").value);
+                        monitor_param = JSON.parse(document.getElementById("task_textarea4").value);
                         for(i in monitor_param) {
                             monitor_param[i] = monitor_param[i]*1000;
                         }
-                        monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea1").value*1000));
-                        if(document.getElementById("task_select2").selectedIndex==0){
+                        monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea2").value*1000));
+                        if(document.getElementById("task_select3").selectedIndex==0){
                             monitor_chart.eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;});
                         }
                         else{
@@ -378,8 +377,8 @@ var Monitoring = function(){
 
                         monitor_data.startFunction = monitor_chart.startFunc();
 
-                        monitor_data.ticks = JSON.parse(document.getElementById("task_textarea4").value);
-                        monitor_data.range = JSON.parse(document.getElementById("task_textarea5").value);
+                        monitor_data.ticks = JSON.parse(document.getElementById("task_textarea5").value);
+                        monitor_data.range = JSON.parse(document.getElementById("task_textarea6").value);
 
                         monitor_data.distractor = document.getElementById("task_checkbox1").checked;
 
@@ -405,7 +404,6 @@ var Monitoring = function(){
                         setup.Monitoring.data = monitor_data;
                     };
                 }); //end of click function
-                return this;
             }); // end of slider layer
         } // end of initialize
     }); // end of extention
