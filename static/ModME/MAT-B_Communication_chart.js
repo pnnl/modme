@@ -43,7 +43,8 @@ d3.chart("Communication", {
             .attr("id", "comm_target_frequency")
             .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
 
-        chart.generateAlert = function() {
+        chart.defaults = {};
+        chart.defaults.generateAlert = function() {
             // Choose new Channel for alert event
             chart.totalProb = 0;                                                // Initialize totalProb to 0
             chart.data.channels.forEach(function(d){                            // Start forEach loop over channels
@@ -76,7 +77,8 @@ d3.chart("Communication", {
                 return alert;
             }
             return null;
-        };
+        }
+        chart.alertGenerator(options.generateAlert || chart.defaults.generateAlert);
         chart.endCurrentAlert = function() {
             if(chart.target_name.classed("alert")){
                 chart.timeout.forEach(function(d){d(chart.data.currentAlert)});
@@ -101,9 +103,13 @@ d3.chart("Communication", {
             if (alert) {
                 chart.beginAlert(alert);
             }
+            var timeInMillisecondsToNextAlert = chart.eventFunction();
+            if (null === timeInMillisecondsToNextAlert)
+                return; // no more events
             setTimeout(chart.alertEvent, chart.eventFunction());
         };
 
+        // startFunction is currently a misnomer.  It is used here as a number, not a function.
         setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction)}, 1);
 
         this.layer("communication", rectBase, {
@@ -315,11 +321,19 @@ d3.chart("Communication", {
 
     // If no arguments are passed returns the start function
     // Other wise sets the start function to the value passed in
-    // The start function is the time until the first event happens
+    // The start function is the time in milliseconds until the first event happens
+    // The start function is an integer value, not a function.
     startFunc: function(d){
         if(!arguments.length)
             return this.startFunction;
         this.startFunction = d;
+        return this;
+    },
+    
+    alertGenerator: function(generateAlert) {
+        if (!arguments.length)
+            return this.generateAlert;
+        this.generateAlert = generateAlert;
         return this;
     },
 

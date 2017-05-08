@@ -19,15 +19,43 @@ document.addEventListener('DOMContentLoaded', function() {
             margin,
             id
     );
-
-    var comm_chart = comm_svg.chart("Communication")
-    comm_chart.eventFunc(
-        function() {
-            t = eval(comm_data.eventFunction);
-            return t;
+    var communicationChartOptions = {};
+    var comm_chart = comm_svg.chart("Communication", communicationChartOptions)
+    if (window.preprogrammedAlerts) {
+        var preprogrammedCommunicationAlerts = window.preprogrammedAlerts.filter(function(alert) { return alert.chart == "communication"; });
+        preprogrammedCommunicationAlerts.forEach(function(alert) {
+            alert.channel = Number(alert.id.match(/\d+/));
+            alert.target = alert.arg.target;
+        });
+        var nextAlertIndex = 0;
+        var generateAlert = function() {
+            var alert = preprogrammedCommunicationAlerts[nextAlertIndex++];
+            var deltaFrequency = alert.arg.current - alert.arg.target;
+            alert.target = this.data.channels[alert.channel].frequency - deltaFrequency;
+            if (alert.target > this.data.absoluteMax || alert.target < this.data.absoluteMin)
+                alert.target = this.data.channels[alert.channel].frequency + deltaFrequency;
+            return alert;
+        };
+        var getTimeToNextAlert = function() {
+            if (nextAlertIndex == preprogrammedCommunicationAlerts.length)
+                return null; // signal no more events
+            var lastAlert = preprogrammedCommunicationAlerts[nextAlertIndex-1];
+            var nextAlert = preprogrammedCommunicationAlerts[nextAlertIndex];
+            return nextAlert.time - lastAlert.time;
         }
-    );
-    comm_chart.startFunc(comm_data.startFunction);
+        var timeToFirstAlertInMilliseconds = preprogrammedCommunicationAlerts[0].time
+        comm_chart.alertGenerator(generateAlert);
+        comm_chart.eventFunc(getTimeToNextAlert);
+        comm_chart.startFunc(timeToFirstAlertInMilliseconds);
+    } else {
+        comm_chart.eventFunc(
+            function() {
+                t = eval(comm_data.eventFunction);
+                return t;
+            }
+        );
+        comm_chart.startFunc(comm_data.startFunction);
+    }
     comm_chart.responseTime(comm_data.response);
 
     if(!comm_data.distractor) {

@@ -363,10 +363,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	    var xhr = new XMLHttpRequest();
 	    xhr.onreadystatechange = function() {
 	        if (xhr.readyState === 4 && xhr.status === 200) {
-	            response = JSON.parse(xhr.responseText);
+	            window.preprogrammedAlerts = JSON.parse(xhr.responseText);
 	        }
 	    };
-	    xhr.open("GET", "/ModME/get-alerts-for-metadata?metadataId=" + encodeURIComponent(eventReuseMetadataId));
+	    // synchronous because we can't initialize the tasks until receiving data and initialization doesn't yet allow us to delay for an arbitrary promise
+	    xhr.open("GET", "/ModME/get-alerts-for-metadata?metadataId=" + encodeURIComponent(eventReuseMetadataId), false);
 	    xhr.send();
     }
 }, false);    
