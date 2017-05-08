@@ -3,7 +3,7 @@
 // Channel field should be an array where length of the array is the number of channels in the task
 // Each element in the array should be an object of structure {name:"", frequency:#, differential:#}
 d3.chart("Communication", {
-    initialize: function(options){
+    initialize: function(options = {}){
         var chart = this;
 
         chart.h = chart.base.h;
