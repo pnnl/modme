@@ -64,8 +64,8 @@ d3.chart("Communication", {
                 });                                                             // end forEach loop
 
                 // Choose new frequency for alert event based on current frequency and frequency differential
-                var min = chart.data.absoluteMin > (chart.data.channels[newChannel].frequency - chart.data.channels[newChannel].differential) ? chart.data.absoluteMin : (chart.data.channels[newChannel].frequency - chart.data.channels[newChannel].differential);
-                var max = chart.data.absoluteMax < (chart.data.channels[newChannel].frequency + chart.data.channels[newChannel].differential) ? chart.data.absoluteMax : (chart.data.channels[newChannel].frequency + chart.data.channels[newChannel].differential);
+                var min = Math.max(chart.data.absoluteMin, chart.data.channels[newChannel].frequency - chart.data.channels[newChannel].differential);
+                var max = Math.min(chart.data.absoluteMax, chart.data.channels[newChannel].frequency + chart.data.channels[newChannel].differential);
                 var newFrequency = Math.floor(Math.random()*(max-min))+min;
                 newFrequency = newFrequency%2==0 ? newFrequency+1 : newFrequency;
                 var alert = {
