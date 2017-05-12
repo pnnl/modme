@@ -11,9 +11,11 @@ document.addEventListener('DOMContentLoaded', function() {
         "track_svg");
     
     // TODO return time difference from events table when we are pulling data from a past run
-    var track_chart = track_svg.chart("Tracking").eventFunc(function(){t = eval(track_data.eventFunction); return t;}).startFunc(track_data.startFunction)
-                                .refreshRate(track_data.refresh);
-    
+    var track_chart = track_svg.chart("Tracking");
+    track_chart.eventFunc(function(){t = eval(track_data.eventFunction); return t;})
+    track_chart.startFunc(track_data.startFunction)
+    track_chart.refreshRate(track_data.refresh)
+
     track_svg.insert("circle", "g")
             .attr("r", track_svg.h/4)
             .attr("cx", track_svg.w/2)
@@ -25,10 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if(!track_data.distractor) {
         track_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "alert", chart: "tracking", arg: "", id: args.domID, table: "Event"} )});
         track_chart.when("tick", function(args){
-                                                track_data.orbits.forEach(function(d,i){
-                                                    data.push({time: (new Date()).getTime()-startTime, x: (document.getElementById('track_circle_'+i).getBoundingClientRect().left+(document.getElementById('track_circle_'+i).getBoundingClientRect().width/2)), y: (document.getElementById('track_circle_'+i).getBoundingClientRect().top+(document.getElementById('track_circle_'+i).getBoundingClientRect().height/2)), domID:"track_circle_"+i, state: args.state[i], mouseX: (args.event.x), mouseY: (args.event.y), table: "Tracking"});
-                                                });
-                                            });
+            track_data.orbits.forEach(function(d,i){
+                data.push({
+                    time: (new Date()).getTime()-startTime,
+                    x: (document.getElementById('track_circle_'+i).getBoundingClientRect().left+(document.getElementById('track_circle_'+i).getBoundingClientRect().width/2)),
+                    y: (document.getElementById('track_circle_'+i).getBoundingClientRect().top+(document.getElementById('track_circle_'+i).getBoundingClientRect().height/2)),
+                    domID:"track_circle_"+i, state: args.state[i],
+                    mouseX: (args.event.x),
+                    mouseY: (args.event.y),
+                    table: "Tracking",
+                });
+            });
+        });
         track_chart.when("response", function(args){data.push({time: args.time-startTime, eventType: "input", chart: "tracking", arg: "correct:"+args.correct, id: args.domID, table: "Event"})});
         track_chart.when("timeout", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "timeout", chart: "tracking", arg: "", id: args.domID, table: "Event"})});
         track_chart.when("mouseMove", function(args){data.push({time: (new Date()).getTime()-startTime, x:args.x, y:args.y, domID:args.domID, targetX: args.targetX, targetY: args.targetY, table: "Mouse"})});
