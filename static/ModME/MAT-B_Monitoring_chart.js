@@ -39,7 +39,7 @@ d3.chart("Monitoring", {
             .attr("width", this.w);
 
         chart.alertEvent = function(){
-
+            // sum the distribution so we can choose a random sample
             chart.totalProb=0;
             chart.data.buttons.forEach(function(d){
                 chart.totalProb += d.prob;
@@ -48,10 +48,11 @@ d3.chart("Monitoring", {
                 chart.totalProb += d.prob;
             });
             if(chart.totalProb>0){
-                prob = Math.random()*chart.totalProb;
-                temp = 0;
+                // choose a random sample from the distribution
+                var prob = Math.random()*chart.totalProb;
+                var temp = 0;
                 chart.index = 0;
-
+                // find the index of the chosen sample
                 chart.data.buttons.forEach(function(d){
                     temp += d.prob;
                     if(temp>prob){
@@ -69,12 +70,14 @@ d3.chart("Monitoring", {
                     });
                 }
                 if(chart.index<chart.data.buttons.length){
+                    // the chosen sample is a button - alert it and notify listeners
                     chart.alert.forEach(function(d){d({domID: "monitor_button_"+chart.index, args:"button"});});
                     chart.data.buttons[chart.index].alert = true;
                      buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
                      setTimeout(chart.buttonTimeout, chart.data.buttons[chart.index].autoCorrect);
                 }
                 else{
+                    // the chosen sample is a slider - alert it and notify listeners
                     chart.data.scales[chart.index-chart.data.buttons.length].event=true;
                     rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
 
@@ -83,7 +86,6 @@ d3.chart("Monitoring", {
                  }
              }
              setTimeout(chart.alertEvent, chart.eventFunction());
-             temp=0;
         }
 
         setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction);}, 1);
