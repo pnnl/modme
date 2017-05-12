@@ -324,7 +324,8 @@ console.log(chart.w, chart.h);
 
     // If no arguments are passed returns the start function
     // Other wise sets the start function to the value passed in
-    // The start function is the time until the first event happens
+    // The start function is the time in milliseconds until the first event happens
+    // The start function is an integer value, not a function.
     startFunc: function(d){
         if(!arguments.length)
             return this.startFunction;
@@ -334,7 +335,7 @@ console.log(chart.w, chart.h);
 
     // If no arguments are passed returns the event function
     // Other wise sets the event function to the value passed in
-    // The event function is the time until the first event happens
+    // The event function is the time until the next event happens
     eventFunc: function(d){
         if(!arguments.length)
             return this.eventFunction;
