@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.preprogrammedAlerts) {
         var preprogrammedCommunicationAlerts = window.preprogrammedAlerts.filter(function(alert) { return alert.chart == "communication"; });
         preprogrammedCommunicationAlerts.forEach(function(alert) {
-            alert.channel = Number(alert.id.match(/\d+/));
+            alert.channel = Number(alert.domID.match(/\d+/));
             alert.target = alert.arg.target;
         });
         var nextAlertIndex = 0;

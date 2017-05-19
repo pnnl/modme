@@ -52,7 +52,7 @@ def getAlertsForMetadata(request):
             'time': alert.time,
             'eventType': alert.eventType,
             'chart': alert.chart,
-            'id': alert.domID,
+            'domID': alert.domID,
             'table': "Event",
         } for alert in alertList]
         serializedAlerts = json.dumps(flatAlertList, indent=2)
