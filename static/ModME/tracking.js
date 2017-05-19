@@ -12,8 +12,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // TODO return time difference from events table when we are pulling data from a past run
     var track_chart = track_svg.chart("Tracking");
-    track_chart.eventFunc(function(){t = eval(track_data.eventFunction); return t;})
-    track_chart.startFunc(track_data.startFunction)
+    if (window.preprogrammedAlerts) {
+        var preprogrammedTrackingAlerts = window.preprogrammedAlerts.filter(function(alert) { return alert.chart == "tracking"; });
+        var nextAlertIndex = 0;
+        var generateAlert = function() {
+            var alert = preprogrammedTrackingAlerts[nextAlertIndex++];
+            return alert;
+        };
+        var getTimeToNextAlert = function() {
+            if (nextAlertIndex == preprogrammedTrackingAlerts.length)
+                return null; // signal no more events
+            var lastAlert = preprogrammedTrackingAlerts[nextAlertIndex-1];
+            var nextAlert = preprogrammedTrackingAlerts[nextAlertIndex];
+            return nextAlert.time - lastAlert.time;
+        }
+        var timeToFirstAlertInMilliseconds = preprogrammedTrackingAlerts[0].time
+        track_chart.alertGenerator(generateAlert);
+        track_chart.eventFunc(getTimeToNextAlert);
+        track_chart.startFunc(timeToFirstAlertInMilliseconds);
+    } else {
+        track_chart.eventFunc(function(){t = eval(track_data.eventFunction); return t;})
+        track_chart.startFunc(track_data.startFunction)
+    }
     track_chart.refreshRate(track_data.refresh)
 
     track_svg.insert("circle", "g")

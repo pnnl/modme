@@ -3,7 +3,7 @@
 // Orbits field should be an array where length of the array is the number of orbits in the task
 // Each element in the array should be an object of structure {points:[], interval:#, radius:#}
 d3.chart("Tracking", {
-    initialize: function(){
+    initialize: function(options = {}){
         var chart = this;
 
         chart.h = chart.base.h;
@@ -19,8 +19,6 @@ d3.chart("Tracking", {
 
         chart.x = d3.scale.linear().domain([0,1]);
         chart.y = d3.scale.linear().domain([0,1]);
-
-        chart.index = 0;
 
         chart.translateAlong = function(path){
             var l = path.getTotalLength();
@@ -38,7 +36,6 @@ d3.chart("Tracking", {
                 .ease("linear")
                 .attrTween("transform", chart.translateAlong(d3.select(this).select("path").node()))
                 .each("end", chart.translate);
-
         };
 
         var pathBase = chart.base.append("g")
@@ -67,13 +64,8 @@ d3.chart("Tracking", {
         chart.refresh=100;
         chart.distract=false;
 
-        chart.alertEvent = function(){
-            if(d3.select("#track_circle_"+chart.index).classed("alert")){
-                chart.timeout.forEach(function(d){d({domID: d3.select("#track_circle_"+chart.index).attr("id")});});
-            }
-
-            d3.select("#track_circle_"+chart.index).classed("active", false).classed("alert",false);                        // Deactivate current circle
-
+        chart.defaults = {};
+        chart.defaults.generateAlert = function() {
             chart.totalProb = 0;                                                                                            // Initialize totalProb to 0
             chart.data.forEach(function(d){                                                                                 // Start forEach loop over data
                 chart.totalProb += d.prob;                                                                                  // Sum probs to calculate totalProb
@@ -81,22 +73,49 @@ d3.chart("Tracking", {
             if(chart.totalProb>0){
                 var prob = Math.random()*chart.totalProb;                                                                   // Calculate random probablility
                 var temp = 0;                                                                                               // Declare and initialize temp variable
-                chart.index = 0;                                                                                            // initialize index variable for orbit
-
+                var activeOrbitIndex = 0;
                 chart.data.forEach(function(d){                                                                             // Start forEach loop over channels
                     temp += d.prob;                                                                                         // Add prob of current data to temp
                     if(temp > prob){                                                                                        // Check for break condition
                         return false;                                                                                       // break loop
                     }                                                                                                       // End if statement
-                    chart.index++;                                                                                          // increment index
+                    activeOrbitIndex++;
                 });                                                                                                         // end forEach loop over data
-
-                chart.alert.forEach(function(d){d({domID: d3.select("#track_circle_"+chart.index).attr("id")});});          // Call alert functions
-                d3.select("#track_circle_"+chart.index).classed("alert",true).classed("active",true);                       // Set circle to active and alert
+                var alert = {
+                    domID: "track_circle_" + activeOrbitIndex
+                };
+                return alert;
             }
-            setTimeout(chart.alertEvent, chart.eventFunction());                                                            // Start timer for call of next alert event
+            return null;
+        };
+        chart.alertGenerator(options.generateAlert || chart.defaults.generateAlert);
+        chart.endCurrentAlert = function() {
+            if (!chart.data.currentAlert)
+                return;
+            if(d3.select("#" + chart.data.currentAlert.domID).classed("alert")){
+                chart.timeout.forEach(function(d){d(chart.data.currentAlert);});
+            }
+            d3.select("#" + chart.data.currentAlert.domID).classed("active", false).classed("alert",false);
+            chart.data.currentAlert = null;
+        };
+        chart.beginAlert = function(alert) {
+            chart.endCurrentAlert();
+            chart.alert.forEach(function(d){d(alert);});
+            d3.select("#" + alert.domID).classed("alert",true).classed("active",true);
+            chart.data.currentAlert = alert;
+        }
+        chart.alertEvent = function() {
+            alert = chart.generateAlert();
+            if (alert) {
+                chart.beginAlert(alert);
+            }
+            var timeInMillisecondsToNextAlert = chart.eventFunction();
+            if (null === timeInMillisecondsToNextAlert)
+                return; // no more events
+            setTimeout(chart.alertEvent, chart.eventFunction());
         };
 
+        // startFunction is currently a misnomer.  It is used here as a number, not a function.
         setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction);}, 1);
 
         setInterval(function(){
@@ -295,7 +314,7 @@ console.log(chart.w, chart.h);
     activate: function(circle, time){
         var chart = this;
         this.response.forEach(function(d){d({correct: "true", domID: circle, time: time});});
-        d3.select("#"+circle).classed("alert", chart.distract ? d3.select("#"+circle).classed("alert") : false);
+        d3.select("#"+circle).classed("alert", chart.distract ? d3.select("#"+circle).classed("alert") : false); // TODO the hash on this selector looks very wrong.  Investigate.
     },
 
     // If no arguments are passed returns the mouse location
@@ -330,6 +349,13 @@ console.log(chart.w, chart.h);
         if(!arguments.length)
             return this.startFunction;
         this.startFunction = d;
+        return this;
+    },
+
+    alertGenerator: function(generateAlert) {
+        if (!arguments.length)
+            return this.generateAlert;
+        this.generateAlert = generateAlert;
         return this;
     },
 
