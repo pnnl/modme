@@ -99,7 +99,7 @@ d3.chart("Communication", {
             setTimeout(chart.endCurrentAlert, chart.rt);
         }
         chart.alertEvent = function() {
-            alert = chart.generateAlert();
+            var alert = chart.generateAlert();
             if (alert) {
                 chart.beginAlert(alert);
             }

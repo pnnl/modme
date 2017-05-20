@@ -105,7 +105,7 @@ d3.chart("Tracking", {
             chart.data.currentAlert = alert;
         }
         chart.alertEvent = function() {
-            alert = chart.generateAlert();
+            var alert = chart.generateAlert();
             if (alert) {
                 chart.beginAlert(alert);
             }
