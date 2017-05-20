@@ -1,7 +1,7 @@
 // Resource task chart
 // Takes in an object with a tanks field, generators field, and switchs field
 d3.chart("Resource", {
-    initialize: function(){
+    initialize: function(options = {}){
         var chart = this;
 
         chart.h = chart.base.h;
@@ -86,15 +86,16 @@ d3.chart("Resource", {
 
         setTimeout(step, chart.refresh);
 
-        chart.alertEvent = function(){
+        chart.defaults = {};
+        
+        chart.defaults.generateAlert = function(){
             chart.totalProb = 0;                                                                                        // Initialize totalProb to 0
             chart.data.switches.forEach(function(d){                                                                    // Start forEach loop over switches
                 chart.totalProb += d.prob;                                                                              // Sum probs to calculate totalProb
             });                                                                                                         // End forEach loop over switches
-
             var prob = Math.random()*chart.totalProb;                                                                   // Calculate random probablility
             var temp = 0;                                                                                               // Declare and initialize temp variable
-            index = 0;                                                                                                  // initialize index variable for switches
+            var index = 0;                                                                                                  // initialize index variable for switches
             if(chart.totalProb > 0){
                 chart.data.switches.forEach(function(d){                                                                    // Start forEach loop over channels
                     temp += d.prob;                                                                                         // Add prob of current switch to temp
@@ -103,17 +104,34 @@ d3.chart("Resource", {
                     }                                                                                                       // End if statement
                     index++;                                                                                                // increment index
                 });                                                                                                         // end forEach loop over switches
-
-                chart.data.switches[index].on=false;
-                chart.data.switches[index].alert=true;
-                chart.data.switches[index].count=0;
-                chart.alert.forEach(function(d){d({domID: "resource_switch_"+index});});
-                switchBase.selectAll("path").classed("on", function(d,i){return d.on;})
-                            .classed("alert", function(d,i){return d.alert});
+                var alert = { domID: "resource_switch_"+index };
+                return alert;
             }
-
-            setTimeout(chart.alertEvent, chart.eventFunction());
+            return null;
         }
+        chart.alertGenerator(options.generateAlert || chart.defaults.generateAlert);
+        chart.beginAlert = function(alert) {
+            chart.data.currentAlert = alert;
+            var alertingSwitch = d3.select("#" + alert.domID);
+            var switchIndex = alert.channel = Number(alert.domID.match(/\d+/));
+            chart.data.switches[switchIndex].on=false;
+            chart.data.switches[switchIndex].alert=true;
+            chart.data.switches[switchIndex].count=0;
+            var paths = switchBase.selectAll("path");
+            paths.classed("on", function(d,i){return d.on;});
+            paths.classed("alert", function(d,i){return d.alert});
+            chart.alert.forEach(function(d){d(alert);});
+        }
+        chart.alertEvent = function() {
+            var alert = chart.generateAlert();
+            if (alert) {
+                chart.beginAlert(alert);
+            }
+            var timeInMillisecondsToNextAlert = chart.eventFunction();
+            if (null === timeInMillisecondsToNextAlert)
+                return; // no more events
+            setTimeout(chart.alertEvent, chart.eventFunction());
+        };
 
         setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction);}, 1);
 
@@ -362,6 +380,13 @@ d3.chart("Resource", {
         if(!arguments.length)
             return this.startFunction;
         this.startFunction = d;
+        return this;
+    },
+
+    alertGenerator: function(generateAlert) {
+        if (!arguments.length)
+            return this.generateAlert;
+        this.generateAlert = generateAlert;
         return this;
     },
 

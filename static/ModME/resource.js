@@ -11,8 +11,31 @@ document.addEventListener('DOMContentLoaded', function() {
             {top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)},
             "resource_svg");
     
-        resource_chart = resource_svg.chart("Resource").eventFunc(function(){t = eval(resource_data.eventFunction); return t;})
-            .refreshRate(resource_data.refresh).startFunc(resource_data.startFunction);
+        var resource_chart = resource_svg.chart("Resource");
+        resource_chart.refreshRate(resource_data.refresh);
+        if (window.preprogrammedAlerts) {
+            var preprogrammedResourceAlerts = window.preprogrammedAlerts.filter(function(alert) { return alert.chart == "resource"; });
+            var nextAlertIndex = 0;
+            var generateAlert = function() {
+                var alert = preprogrammedResourceAlerts[nextAlertIndex++];
+                return alert;
+            };
+            var getTimeToNextAlert = function() {
+                if (nextAlertIndex == preprogrammedResourceAlerts.length)
+                    return null; // signal no more events
+                    var lastAlert = preprogrammedResourceAlerts[nextAlertIndex-1];
+                    var nextAlert = preprogrammedResourceAlerts[nextAlertIndex];
+                    return nextAlert.time - lastAlert.time;
+            }
+            var timeToFirstAlertInMilliseconds = preprogrammedResourceAlerts[0].time
+            resource_chart.alertGenerator(generateAlert);
+            resource_chart.eventFunc(getTimeToNextAlert);
+            resource_chart.startFunc(timeToFirstAlertInMilliseconds);
+        } else {
+            resource_chart.eventFunc(function(){t = eval(resource_data.eventFunction); return t;})
+            resource_chart.startFunc(resource_data.startFunction);
+        }
+
     
         resource_data.switches.forEach(function(d){
                 if(d.source < 100){
