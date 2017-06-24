@@ -76,10 +76,12 @@ def experiment(request):
             taskNames.append(Task.objects.get(pk=nominalTaskId))
     participantAlias = request.POST['participantAlias']
     sessionName = request.POST['sessionName']
+    studyName = request.POST['studyName']
     context = {
         'parameters': condition,
         'participantAlias': participantAlias,
         'sessionName': sessionName,
+        'studyName': studyName,
         'fileList': requiredFiles,
         'taskList': tasks,
         'taskNames': taskNames,
@@ -208,7 +210,8 @@ def complete(request):
     conditionID = request.POST.get('id')
     condition = Condition.objects.get(pk=conditionID)
     sessionName = data[0]["sessionName"]
-    (session, sessionIsNew) = Session.objects.get_or_create(name=sessionName)
+    studyName = data[0]["studyName"]
+    (session, sessionIsNew) = Session.objects.get_or_create(name=sessionName, study=studyName)
     participantAlias = data[0]["participantAlias"]
     (participant, participantIsNew) = Participant.objects.get_or_create(alias=participantAlias)
     metadata = Metadata(
@@ -372,6 +375,7 @@ def begin(request):
     para = request.POST['parameter_id']
     participantAlias = request.POST['participantAlias']
     sessionName = request.POST['sessionName']
+    studyName = request.POST['studyName']
     metadataId = None
     if ('metadata_id' in request.POST):
         metadataId = request.POST['metadata_id']
@@ -379,6 +383,7 @@ def begin(request):
         'parameters': para,
         'participantAlias': participantAlias,
         'sessionName': sessionName,
+        'studyName': studyName,
         'metadataId': metadataId,
     }
     return render(request, 'ModME/begin.html', parameters)
