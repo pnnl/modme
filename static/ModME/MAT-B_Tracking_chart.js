@@ -112,7 +112,7 @@ d3.chart("Tracking", {
             var timeInMillisecondsToNextAlert = chart.eventFunction();
             if (null === timeInMillisecondsToNextAlert)
                 return; // no more events
-            setTimeout(chart.alertEvent, chart.eventFunction());
+            setTimeout(chart.alertEvent, timeInMillisecondsToNextAlert);
         };
 
         // startFunction is currently a misnomer.  It is used here as a number, not a function.

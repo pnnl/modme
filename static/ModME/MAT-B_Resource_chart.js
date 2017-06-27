@@ -130,7 +130,7 @@ d3.chart("Resource", {
             var timeInMillisecondsToNextAlert = chart.eventFunction();
             if (null === timeInMillisecondsToNextAlert)
                 return; // no more events
-            setTimeout(chart.alertEvent, chart.eventFunction());
+            setTimeout(chart.alertEvent, timeInMillisecondsToNextAlert);
         };
 
         setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction);}, 1);
