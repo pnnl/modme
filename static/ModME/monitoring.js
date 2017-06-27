@@ -11,8 +11,41 @@ document.addEventListener('DOMContentLoaded', function() {
         {top: scale(.03), right: scale(.03), bottom: scale(.03), left: scale(.03)},
         "monitor_svg");
     
-    var monitor_chart = monitor_svg.chart("Monitoring").eventFunc(function(){t = eval(monitor_data.eventFunction); return t;}).startFunc(monitor_data.startFunction)
-    						.range(monitor_data.range).tick(monitor_data.ticks);
+    var monitor_chart = monitor_svg.chart("Monitoring");
+    monitor_chart.range(monitor_data.range);
+    monitor_chart.tick(monitor_data.ticks);
+    if (window.preprogrammedAlerts) {
+        var preprogrammedMonitorEvents = window.preprogrammedAlerts.filter(function(event) { return event.chart == "monitoring"; });
+        preprogrammedMonitorEvents.forEach(function(event) {
+            event.index = Number(event.domID.match(/\d+/));
+            if (event.arg == "slider")
+                event.index += monitor_data.buttons.length;
+        });
+        var nextEventIndex = 0;
+        var generateEvent = function() {
+            var eventData = preprogrammedMonitorEvents[nextEventIndex++];
+            var event = function() { monitor_chart.beginButtonAlert(eventData.index); };
+            if (eventData.arg == "slider") {
+                event = function() {};
+            }
+            return event;
+        };
+        var getTimeToNextEvent = function() {
+            if (nextEventIndex == preprogrammedMonitorEvents.length)
+                return null; // signal no more events
+            var lastEvent = preprogrammedMonitorEvents[nextEventIndex-1];
+            var nextEvent = preprogrammedMonitorEvents[nextEventIndex];
+            return nextEvent.time - lastEvent.time; // TODO account for drift
+        }
+        var timeToFirstEventInMilliseconds = preprogrammedMonitorEvents[0].time;
+        monitor_chart.eventGenerator(generateEvent);
+        monitor_chart.eventFunc(getTimeToNextEvent);
+        monitor_chart.startFunc(timeToFirstEventInMilliseconds);
+    } else {
+        monitor_chart.eventFunc(function(){t = eval(monitor_data.eventFunction); return t;});
+        monitor_chart.startFunc(monitor_data.startFunction);
+    }
+    
     
     if(!monitor_data.distractor) {
         monitor_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "alert", chart: "monitoring", arg: args.args, id: args.domID, table: "Event"})});

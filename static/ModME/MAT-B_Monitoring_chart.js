@@ -5,7 +5,7 @@
 // sliders field should be an array where length of the array is the number of sliders in the task
 // Each element in the array should be an object of structure {button:#, key:"", slider_interval:#, prob:#}
 d3.chart("Monitoring", {
-    initialize: function(){
+    initialize: function(options = {}){
         var chart = this;
 
         chart.h = chart.base.h;
@@ -38,7 +38,8 @@ d3.chart("Monitoring", {
             .attr("height", this.h)
             .attr("width", this.w);
 
-        chart.alertEvent = function(){
+        chart.defaults = {};
+        chart.defaults.generateEvent = function(){
             // sum the distribution so we can choose a random sample
             chart.totalProb=0;
             chart.data.buttons.forEach(function(d){
@@ -51,14 +52,14 @@ d3.chart("Monitoring", {
                 // choose a random sample from the distribution
                 var prob = Math.random()*chart.totalProb;
                 var temp = 0;
-                chart.index = 0;
+                var index = 0;
                 // find the index of the chosen sample
                 chart.data.buttons.forEach(function(d){
                     temp += d.prob;
                     if(temp>prob){
                         return false;
                     }
-                    chart.index++;
+                    index++;
                 });
                 if(temp<prob){
                     chart.data.scales.forEach(function(d){
@@ -66,29 +67,56 @@ d3.chart("Monitoring", {
                         if(temp>prob){
                             return false;
                         }
-                        chart.index++;
+                        index++;
                     });
                 }
                 if(chart.index<chart.data.buttons.length){
-                    // the chosen sample is a button - alert it and notify listeners
-                    chart.alert.forEach(function(d){d({domID: "monitor_button_"+chart.index, args:"button"});});
-                    chart.data.buttons[chart.index].alert = true;
-                     buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
-                     setTimeout(chart.buttonTimeout, chart.data.buttons[chart.index].autoCorrect);
+                     var event = function() { this.beginButtonAlert(index); };
+                     return event;
                 }
                 else{
-                    // the chosen sample is a slider - alert it and notify listeners
-                    chart.data.scales[chart.index-chart.data.buttons.length].event=true;
-                    rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
-
-                    chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
-                    chart.data.scales[chart.index-chart.data.buttons.length].i--;
+                    var event = function() { this.increaseSliderRange(index); }
+                    return event;
                  }
              }
-             setTimeout(chart.alertEvent, chart.eventFunction());
+             return null;
         }
+        chart.eventGenerator(options.generateEvent || chart.defaults.generateEvent);
+        chart.beginButtonAlert = function(index) {
+            // the chosen sample is a button - alert it and notify listeners
+            chart.index = index;
+            chart.alert.forEach(function(d){d({domID: "monitor_button_"+index, args:"button"});});
+            chart.data.buttons[index].alert = true;
+            buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
+            setTimeout(chart.buttonTimeout, chart.data.buttons[index].autoCorrect);
+        }
+        chart.increaseSliderRange = function(index) {
+            // the chosen sample is a slider - alert it and notify listeners
+            var sliderIndex = index - chart.data.buttons.length;
+            chart.index = index;
+            chart.data.scales[sliderIndex].event=true;
+            rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
+            chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
+            chart.data.scales[sliderIndex].i--;
+            var event = {
+                rangeMin: chart.data.event_range[0],
+                rangeMax: chart.data.event_range[1],
+                index: index,
+            }
+            // TODO notify listeners
+        }
+        chart.raiseEvent = function() {
+            var event = chart.generateEvent();
+            if (event) {
+                event();
+            }
+            var timeInMillisecondsToNextEvent = chart.eventFunction();
+            if (null === timeInMillisecondsToNextEvent)
+                return; // no more events
+            setTimeout(chart.raiseEvent, timeInMillisecondsToNextEvent);
+        };
 
-        setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction);}, 1);
+        setTimeout(function(){setTimeout(chart.raiseEvent, chart.startFunction);}, 1);
 
         chart.buttonTimeout = function(){
             if(chart.data.buttons[chart.index].alert){
@@ -97,8 +125,6 @@ d3.chart("Monitoring", {
                 buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
             }
         }
-
-
 
         chart.translate = function(d){
 
@@ -485,6 +511,13 @@ d3.chart("Monitoring", {
         if(!arguments.length)
             return this.startFunction;
         this.startFunction = d;
+        return this;
+    },
+
+    eventGenerator: function(generateEvent) {
+        if (!arguments.length)
+            return this.generateEvent;
+        this.generateEvent = generateEvent;
         return this;
     },
 
