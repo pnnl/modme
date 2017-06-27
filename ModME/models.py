@@ -79,6 +79,7 @@ class Participant(models.Model):
 class Session(models.Model):
     """ A session may comprise multiple runs of one or more conditions """
     name = models.CharField(max_length=500, unique=True)
+    study = models.CharField(max_length=500, default='')
 
     def __unicode(self):
         return self.name
