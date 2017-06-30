@@ -22,6 +22,7 @@ d3.chart("Monitoring", {
         chart.responseListeners = [];
         chart.alertListeners = [];
         chart.timeoutListeners = [];
+        chart.rangeChangeListeners = [];
 
         var scalesBase = this.base.append("g")
             .classed("monitoring", true)
@@ -70,12 +71,12 @@ d3.chart("Monitoring", {
                         index++;
                     });
                 }
-                if(chart.index<chart.data.buttons.length){
-                     var event = function() { this.beginButtonAlert(index); };
+                if(index<chart.data.buttons.length){
+                     var event = function() { chart.beginButtonAlert(index); };
                      return event;
                 }
                 else{
-                    var event = function() { this.increaseSliderRange(index); }
+                    var event = function() { chart.increaseSliderRange(index); }
                     return event;
                  }
              }
@@ -99,11 +100,15 @@ d3.chart("Monitoring", {
             chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
             chart.data.scales[sliderIndex].i--;
             var event = {
-                rangeMin: chart.data.event_range[0],
-                rangeMax: chart.data.event_range[1],
-                index: index,
+                type: "sliderRange",
+                domID: "monitor_slider_" + sliderIndex,
+                args: {
+                    index: index,
+                    change: rangeIncrease,
+                    newRange: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
+                },
             }
-            // TODO notify listeners
+            chart.rangeChangeListeners.forEach(function(listener){listener(event);});
         }
         chart.raiseEvent = function() {
             var event = chart.generateEvent();
@@ -126,8 +131,24 @@ d3.chart("Monitoring", {
             }
         }
 
+        /**
+         * @typedef {Object} Scale
+         * @property {integer} button          - key code which resets the slider when it is in alert
+         * @property {string}  key             - key name related to the key code
+         * @property {integer} slider_interval - # of milliseconds for slider to transition one tick
+         * @property {number}  prob            - chance of slider event; will be normalized with other monitoring elements for a total probability across all elements of 1
+         * @property {integer} i               - direction; even for up, odd for down
+         * @property {number}  x               - horizontal position of scale on canvas
+         * @property {number}  y               - vertical position of slider
+         * @property {integer} alert           - timeout counter - 3 if the alert has timed out, 0-2 or 4 otherwise.  The third reverse after a range increase event triggers a timeout.
+         * @property {integer} correct         - unused?
+         * @property {boolean} event           - whether the slider range has been increased due to an event
+         * { button: 112, key: "F1", slider_interval: 2000, prob: 1, i: 78, y: 3, x: 1.5, alert: 4, correct: 0, event: false }
+         */
+        /**
+         * @param {Scale} d
+         */
         chart.translate = function(d){
-
             d.i++;
             var deltaY = chart.slider_range[d.i%chart.slider_range.length]-d.y;
             if(d.event){
@@ -137,7 +158,6 @@ d3.chart("Monitoring", {
             if(d.alert<=2){
                 d.alert++;
             }
-
 
             d.y += deltaY;
             d3.select(this).transition()
