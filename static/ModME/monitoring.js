@@ -18,15 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
         var preprogrammedMonitorEvents = window.preprogrammedAlerts.filter(function(event) { return event.chart == "monitoring"; });
         preprogrammedMonitorEvents.forEach(function(event) {
             event.index = Number(event.domID.match(/\d+/));
-            if (event.arg == "slider")
-                event.index += monitor_data.buttons.length;
         });
         var nextEventIndex = 0;
         var generateEvent = function() {
             var eventData = preprogrammedMonitorEvents[nextEventIndex++];
             var event = function() { monitor_chart.beginButtonAlert(eventData.index); };
-            if (eventData.arg == "slider") {
-                event = function() {};
+            if (eventData.arg && eventData.arg.widget == "slider") {
+                event = function() {
+                    monitor_chart.increaseSliderRange(eventData.arg.index);
+                };
             }
             return event;
         };
