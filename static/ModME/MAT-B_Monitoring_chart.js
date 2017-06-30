@@ -173,7 +173,7 @@ d3.chart("Monitoring", {
                     domID: slider.attr("id"),
                     args: {
                         widget: "slider",
-                        index: chart.index,
+                        index: d.index,
                         direction: direction,
                         change: Math.abs(chart.data.event_range[direction] - chart.slider_range[direction]),
                         range: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
@@ -341,6 +341,7 @@ d3.chart("Monitoring", {
                         d.alert=4;
                         d.correct=0;
                         d.event=false;
+                        d.index = i + chart.data.buttons.length;
                         if(!d.hasOwnProperty("prob")){
                             d.prob = 1;
                         }
