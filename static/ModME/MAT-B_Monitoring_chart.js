@@ -91,14 +91,20 @@ d3.chart("Monitoring", {
             buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
             setTimeout(chart.buttonTimeout, chart.data.buttons[index].autoCorrect);
         }
-        chart.increaseSliderRange = function(index) {
+        chart.increaseSliderRange = function(index, range) {
             // the chosen sample is a slider - alert it and notify listeners
             var sliderIndex = index - chart.data.buttons.length;
             chart.index = index;
             chart.data.scales[sliderIndex].event=true;
-            var rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
-            chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
-            chart.data.scales[sliderIndex].i--;
+            var rangeIncrease;
+            if (range) {
+                rangeIncrease = range.max - chart.slider_range[1];
+                chart.data.event_range = [range.min, range.max];
+            } else {
+                rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
+                chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
+            }
+            chart.data.scales[sliderIndex].i--; // keeps it going in the same direction once it hits the original range limit
             var event = {
                 type: "sliderRange",
                 domID: "monitor_slider_" + sliderIndex,

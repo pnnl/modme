@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var event = function() { monitor_chart.beginButtonAlert(eventData.index); };
             if (eventData.arg && eventData.arg.widget == "slider") {
                 event = function() {
-                    monitor_chart.increaseSliderRange(eventData.arg.index);
+                    monitor_chart.increaseSliderRange(eventData.arg.index, eventData.arg.range);
                 };
             }
             return event;
