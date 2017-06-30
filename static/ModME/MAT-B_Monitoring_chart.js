@@ -96,7 +96,7 @@ d3.chart("Monitoring", {
             var sliderIndex = index - chart.data.buttons.length;
             chart.index = index;
             chart.data.scales[sliderIndex].event=true;
-            rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
+            var rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
             chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
             chart.data.scales[sliderIndex].i--;
             var event = {
@@ -150,9 +150,10 @@ d3.chart("Monitoring", {
          */
         chart.translate = function(d){
             d.i++;
-            var deltaY = chart.slider_range[d.i%chart.slider_range.length]-d.y;
+            var direction = d.i%chart.slider_range.length;
+            var deltaY = chart.slider_range[direction]-d.y;
             if(d.event){
-                deltaY = chart.data.event_range[d.i%chart.slider_range.length]-d.y;
+                deltaY = chart.data.event_range[direction]-d.y;
                 d.alert = 0;
             }
             if(d.alert<=2){
@@ -168,7 +169,17 @@ d3.chart("Monitoring", {
 
             if(d.event){
                 slider = d3.select(this);
-                chart.alertListeners.forEach(function(d){d({domID: slider.attr("id"), direction: d.i%chart.slider_range.length, args: "slider"});});
+                var alert = {
+                    domID: slider.attr("id"),
+                    args: {
+                        widget: "slider",
+                        index: chart.index,
+                        direction: direction,
+                        change: Math.abs(chart.data.event_range[direction] - chart.slider_range[direction]),
+                        range: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
+                    }
+                }
+                chart.alertListeners.forEach(function(d){d(alert);});
                 d.event=false;
                 d.i++;
             }
