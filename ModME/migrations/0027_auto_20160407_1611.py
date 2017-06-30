@@ -19,6 +19,11 @@ class Migration(migrations.Migration):
             name='survey',
             options={'verbose_name': 'Survey', 'verbose_name_plural': 'Surveys'},
         ),
+        migrations.AlterField(
+            model_name='condition',
+            name='survays',
+            field=models.ManyToManyField(to='ModME.Survey'),
+        ),
         migrations.RenameField(
             model_name='condition',
             old_name='survays',
