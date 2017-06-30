@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var getTimeToNextEvent = function() {
             if (nextEventIndex == preprogrammedMonitorEvents.length)
                 return null; // signal no more events
-            var lastEvent = preprogrammedMonitorEvents[nextEventIndex-1];
             var nextEvent = preprogrammedMonitorEvents[nextEventIndex];
-            return nextEvent.time - lastEvent.time; // TODO account for drift
+            var elapsedTime = (new Date()).getTime()-startTime;
+            return nextEvent.time - elapsedTime;
         }
-        var timeToFirstEventInMilliseconds = preprogrammedMonitorEvents[0].time;
+        var timeToFirstEventInMilliseconds = getTimeToNextEvent();
         monitor_chart.eventGenerator(generateEvent);
         monitor_chart.eventFunc(getTimeToNextEvent);
         monitor_chart.startFunc(timeToFirstEventInMilliseconds);

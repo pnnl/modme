@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var getTimeToNextAlert = function() {
             if (nextAlertIndex == preprogrammedTrackingAlerts.length)
                 return null; // signal no more events
-            var lastAlert = preprogrammedTrackingAlerts[nextAlertIndex-1];
             var nextAlert = preprogrammedTrackingAlerts[nextAlertIndex];
-            return nextAlert.time - lastAlert.time;
+            var elapsedTime = (new Date()).getTime()-startTime;
+            return nextAlert.time - elapsedTime;
         }
-        var timeToFirstAlertInMilliseconds = preprogrammedTrackingAlerts[0].time
+        var timeToFirstAlertInMilliseconds = getTimeToNextAlert();
         track_chart.alertGenerator(generateAlert);
         track_chart.eventFunc(getTimeToNextAlert);
         track_chart.startFunc(timeToFirstAlertInMilliseconds);
