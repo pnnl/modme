@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
             var getTimeToNextAlert = function() {
                 if (nextAlertIndex == preprogrammedResourceAlerts.length)
                     return null; // signal no more events
-                    var lastAlert = preprogrammedResourceAlerts[nextAlertIndex-1];
                     var nextAlert = preprogrammedResourceAlerts[nextAlertIndex];
-                    return nextAlert.time - lastAlert.time;
+                    var elapsedTime = (new Date()).getTime()-startTime;
+                    return nextAlert.time - elapsedTime;
             }
-            var timeToFirstAlertInMilliseconds = preprogrammedResourceAlerts[0].time
+            var timeToFirstAlertInMilliseconds = getTimeToNextAlert();
             resource_chart.alertGenerator(generateAlert);
             resource_chart.eventFunc(getTimeToNextAlert);
             resource_chart.startFunc(timeToFirstAlertInMilliseconds);

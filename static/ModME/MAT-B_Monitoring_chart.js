@@ -5,7 +5,7 @@
 // sliders field should be an array where length of the array is the number of sliders in the task
 // Each element in the array should be an object of structure {button:#, key:"", slider_interval:#, prob:#}
 d3.chart("Monitoring", {
-    initialize: function(){
+    initialize: function(options = {}){
         var chart = this;
 
         chart.h = chart.base.h;
@@ -19,9 +19,10 @@ d3.chart("Monitoring", {
 
         chart.totalProb = 0;
 
-        chart.response = [];
-        chart.alert = [];
-        chart.timeout = [];
+        chart.responseListeners = [];
+        chart.alertListeners = [];
+        chart.timeoutListeners = [];
+        chart.rangeChangeListeners = [];
 
         var scalesBase = this.base.append("g")
             .classed("monitoring", true)
@@ -38,7 +39,8 @@ d3.chart("Monitoring", {
             .attr("height", this.h)
             .attr("width", this.w);
 
-        chart.alertEvent = function(){
+        chart.defaults = {};
+        chart.defaults.generateEvent = function(){
             // sum the distribution so we can choose a random sample
             chart.totalProb=0;
             chart.data.buttons.forEach(function(d){
@@ -51,14 +53,14 @@ d3.chart("Monitoring", {
                 // choose a random sample from the distribution
                 var prob = Math.random()*chart.totalProb;
                 var temp = 0;
-                chart.index = 0;
+                var index = 0;
                 // find the index of the chosen sample
                 chart.data.buttons.forEach(function(d){
                     temp += d.prob;
                     if(temp>prob){
                         return false;
                     }
-                    chart.index++;
+                    index++;
                 });
                 if(temp<prob){
                     chart.data.scales.forEach(function(d){
@@ -66,52 +68,103 @@ d3.chart("Monitoring", {
                         if(temp>prob){
                             return false;
                         }
-                        chart.index++;
+                        index++;
                     });
                 }
-                if(chart.index<chart.data.buttons.length){
-                    // the chosen sample is a button - alert it and notify listeners
-                    chart.alert.forEach(function(d){d({domID: "monitor_button_"+chart.index, args:"button"});});
-                    chart.data.buttons[chart.index].alert = true;
-                     buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
-                     setTimeout(chart.buttonTimeout, chart.data.buttons[chart.index].autoCorrect);
+                if(index<chart.data.buttons.length){
+                     var event = function() { chart.beginButtonAlert(index); };
+                     return event;
                 }
                 else{
-                    // the chosen sample is a slider - alert it and notify listeners
-                    chart.data.scales[chart.index-chart.data.buttons.length].event=true;
-                    rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
-
-                    chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
-                    chart.data.scales[chart.index-chart.data.buttons.length].i--;
+                    var event = function() { chart.increaseSliderRange(index); }
+                    return event;
                  }
              }
-             setTimeout(chart.alertEvent, chart.eventFunction());
+             return null;
         }
+        chart.eventGenerator(options.generateEvent || chart.defaults.generateEvent);
+        chart.beginButtonAlert = function(index) {
+            // the chosen sample is a button - alert it and notify listeners
+            chart.index = index;
+            chart.alertListeners.forEach(function(d){d({domID: "monitor_button_"+index, args:"button"});});
+            chart.data.buttons[index].alert = true;
+            buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
+            setTimeout(chart.buttonTimeout, chart.data.buttons[index].autoCorrect);
+        }
+        chart.increaseSliderRange = function(index, range) {
+            // the chosen sample is a slider - alert it and notify listeners
+            var sliderIndex = index - chart.data.buttons.length;
+            chart.index = index;
+            chart.data.scales[sliderIndex].event=true;
+            var rangeIncrease;
+            if (range) {
+                rangeIncrease = range.max - chart.slider_range[1];
+                chart.data.event_range = [range.min, range.max];
+            } else {
+                rangeIncrease = Math.floor(Math.random()*((chart.ticks-chart.slider_range[1]+chart.slider_range[0]-1)/2)+1);
+                chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
+            }
+            chart.data.scales[sliderIndex].i--; // keeps it going in the same direction once it hits the original range limit
+            var event = {
+                type: "sliderRange",
+                domID: "monitor_slider_" + sliderIndex,
+                args: {
+                    index: index,
+                    change: rangeIncrease,
+                    newRange: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
+                },
+            }
+            chart.rangeChangeListeners.forEach(function(listener){listener(event);});
+        }
+        chart.raiseEvent = function() {
+            var event = chart.generateEvent();
+            if (event) {
+                event();
+            }
+            var timeInMillisecondsToNextEvent = chart.eventFunction();
+            if (null === timeInMillisecondsToNextEvent)
+                return; // no more events
+            setTimeout(chart.raiseEvent, timeInMillisecondsToNextEvent);
+        };
 
-        setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction);}, 1);
+        setTimeout(function(){setTimeout(chart.raiseEvent, chart.startFunction);}, 1);
 
         chart.buttonTimeout = function(){
             if(chart.data.buttons[chart.index].alert){
-                chart.timeout.forEach(function(d){d({domID: "monitor_button_"+chart.index});});
+                chart.timeoutListeners.forEach(function(d){d({domID: "monitor_button_"+chart.index});});
                 chart.data.buttons[chart.index].alert = false;
                 buttonsBase.selectAll("rect").style("fill",function(d,i){return d.alert ? d.alert_color : d.color});
             }
         }
 
-
-
+        /**
+         * @typedef {Object} Scale
+         * @property {integer} button          - key code which resets the slider when it is in alert
+         * @property {string}  key             - key name related to the key code
+         * @property {integer} slider_interval - # of milliseconds for slider to transition one tick
+         * @property {number}  prob            - chance of slider event; will be normalized with other monitoring elements for a total probability across all elements of 1
+         * @property {integer} i               - direction; even for up, odd for down
+         * @property {number}  x               - horizontal position of scale on canvas
+         * @property {number}  y               - vertical position of slider
+         * @property {integer} alert           - timeout counter - 3 if the alert has timed out, 0-2 or 4 otherwise.  The third reverse after a range increase event triggers a timeout.
+         * @property {integer} correct         - unused?
+         * @property {boolean} event           - whether the slider range has been increased due to an event
+         * { button: 112, key: "F1", slider_interval: 2000, prob: 1, i: 78, y: 3, x: 1.5, alert: 4, correct: 0, event: false }
+         */
+        /**
+         * @param {Scale} d
+         */
         chart.translate = function(d){
-
             d.i++;
-            var deltaY = chart.slider_range[d.i%chart.slider_range.length]-d.y;
+            var direction = d.i%chart.slider_range.length;
+            var deltaY = chart.slider_range[direction]-d.y;
             if(d.event){
-                deltaY = chart.data.event_range[d.i%chart.slider_range.length]-d.y;
+                deltaY = chart.data.event_range[direction]-d.y;
                 d.alert = 0;
             }
             if(d.alert<=2){
                 d.alert++;
             }
-
 
             d.y += deltaY;
             d3.select(this).transition()
@@ -122,13 +175,23 @@ d3.chart("Monitoring", {
 
             if(d.event){
                 slider = d3.select(this);
-                chart.alert.forEach(function(d){d({domID: slider.attr("id"), direction: d.i%chart.slider_range.length, args: "slider"});});
+                var alert = {
+                    domID: slider.attr("id"),
+                    args: {
+                        widget: "slider",
+                        index: d.index,
+                        direction: direction,
+                        change: Math.abs(chart.data.event_range[direction] - chart.slider_range[direction]),
+                        range: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
+                    }
+                }
+                chart.alertListeners.forEach(function(d){d(alert);});
                 d.event=false;
                 d.i++;
             }
             else if(d.alert==3){
                 slider = d3.select(this);
-                chart.timeout.forEach(function(d){d({domID: slider.attr("id")});});
+                chart.timeoutListeners.forEach(function(d){d({domID: slider.attr("id")});});
                 d.alert++;
             }
         }
@@ -284,6 +347,7 @@ d3.chart("Monitoring", {
                         d.alert=4;
                         d.correct=0;
                         d.event=false;
+                        d.index = i + chart.data.buttons.length;
                         if(!d.hasOwnProperty("prob")){
                             d.prob = 1;
                         }
@@ -431,7 +495,7 @@ d3.chart("Monitoring", {
         var sliderCenter = Math.round(chart.ticks/2);
         var currentPosition = chart.y.invert(d3.select("#monitor_slider_"+sliderNum).attr("transform").split(",")[1].split(")")[0]);
         if((currentPosition>sliderCenter+3.75 || currentPosition<sliderCenter+1.75)){
-            chart.response.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: chart.data.scales[sliderNum].i, ascii:chart.data.scales[sliderNum].button, time:time});});
+            chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: chart.data.scales[sliderNum].i, ascii:chart.data.scales[sliderNum].button, time:time});});
             chart.data.scales[sliderNum].alert=4;
             chart.data.scales[sliderNum].y = Math.round(chart.ticks/2);
             d3.select("#monitor_slider_"+sliderNum)
@@ -441,7 +505,7 @@ d3.chart("Monitoring", {
                     .each("end", chart.translate);
         }
         else{
-            chart.response.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:"false", ascii:chart.data.scales[sliderNum].button, time:time});});
+            chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:"false", ascii:chart.data.scales[sliderNum].button, time:time});});
         }
     },
 
@@ -449,12 +513,12 @@ d3.chart("Monitoring", {
     resetButtons: function(buttonNum, time){
         var chart = this;
         if(chart.data.buttons[buttonNum].alert){
-            chart.response.forEach(function(d){d({domID:"monitor_button_"+buttonNum, correct:"true", ascii:chart.data.buttons[buttonNum].button, time:time});});
+            chart.responseListeners.forEach(function(d){d({domID:"monitor_button_"+buttonNum, correct:"true", ascii:chart.data.buttons[buttonNum].button, time:time});});
             chart.data.buttons[buttonNum].alert = false;
             d3.select("#monitor_button_"+buttonNum).style("fill", chart.data.buttons[buttonNum].color);
         }
         else{
-            chart.response.forEach(function(d){d({domID:"monitor_button_"+buttonNum, correct:"false", ascii:chart.data.buttons[buttonNum].button, time:time});});
+            chart.responseListeners.forEach(function(d){d({domID:"monitor_button_"+buttonNum, correct:"false", ascii:chart.data.buttons[buttonNum].button, time:time});});
         }
     },
 
@@ -488,6 +552,13 @@ d3.chart("Monitoring", {
         return this;
     },
 
+    eventGenerator: function(generateEvent) {
+        if (!arguments.length)
+            return this.generateEvent;
+        this.generateEvent = generateEvent;
+        return this;
+    },
+
     // If no arguments are passed returns the event function
     // Other wise sets the event function to the value passed in
     // The event function is the time until the first event happens
@@ -499,7 +570,8 @@ d3.chart("Monitoring", {
     },
 
     // Binds a passed in function "f" to a passed in event name "name"
-    when: function(name, f){
+    when: function(eventType, f){
+        var name = eventType + "Listeners";
         if(!this[name]){
             this[name] = [];
         }

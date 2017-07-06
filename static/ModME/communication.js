@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var getTimeToNextAlert = function() {
             if (nextAlertIndex == preprogrammedCommunicationAlerts.length)
                 return null; // signal no more events
-            var lastAlert = preprogrammedCommunicationAlerts[nextAlertIndex-1];
             var nextAlert = preprogrammedCommunicationAlerts[nextAlertIndex];
-            return nextAlert.time - lastAlert.time;
+            var elapsedTime = (new Date()).getTime()-startTime;
+            return nextAlert.time - elapsedTime;
         }
-        var timeToFirstAlertInMilliseconds = preprogrammedCommunicationAlerts[0].time
+        var timeToFirstAlertInMilliseconds = getTimeToNextAlert();
         comm_chart.alertGenerator(generateAlert);
         comm_chart.eventFunc(getTimeToNextAlert);
         comm_chart.startFunc(timeToFirstAlertInMilliseconds);

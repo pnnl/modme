@@ -346,10 +346,6 @@ document.addEventListener("DOMContentLoaded", function() {
         var time = (new Date()).getTime();
         keyboard.forEach(function(d){d(d3.event, time)})
     });
-    {% for thing in parameters.surveys.all %}
-        console.log("{{ thing.fileName }}")
-    {% endfor %}
-    console.log("{{ parameters.surveys.all.0.fileName }}")
 
     function complete(){
         document.getElementById("data_field").value=JSON.stringify(data);
