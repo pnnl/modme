@@ -492,20 +492,27 @@ d3.chart("Monitoring", {
     // Resets a given sliders location to the middle dash if the slider is in an alert state
     resetSliders: function(sliderNum, time){
         var chart = this;
+        var slider = chart.data.scales[sliderNum];
         var sliderCenter = Math.round(chart.ticks/2);
         var currentPosition = chart.y.invert(d3.select("#monitor_slider_"+sliderNum).attr("transform").split(",")[1].split(")")[0]);
+
         if((currentPosition>sliderCenter+3.75 || currentPosition<sliderCenter+1.75)){
-            chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: chart.data.scales[sliderNum].i, ascii:chart.data.scales[sliderNum].button, time:time});});
-            chart.data.scales[sliderNum].alert=4;
-            chart.data.scales[sliderNum].y = Math.round(chart.ticks/2);
+            chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: slider.i, ascii: slider.button, time:time});});
+            slider.alert=4;
+            slider.y = Math.round(chart.ticks/2);
+            var xp0 = chart.x(slider.x);
+            var yp0 = chart.y(slider.y+2.75);
             d3.select("#monitor_slider_"+sliderNum)
                     .transition()
                     .duration(0)
-                    .attr("transform", ["translate("+chart.x(chart.data.scales[sliderNum].x)+","+chart.y(chart.data.scales[sliderNum].y+2.75)+")","scale("+chart.x(.5)/5+","+(chart.y(0)-chart.y(1.5))/10+")"])
+                    .attr("transform", [
+                        "translate("+xp0+","+yp0+")",
+                        "scale("+chart.x(.5)/5+","+(chart.y(0)-chart.y(1.5))/10+")"
+                    ])
                     .each("end", chart.translate);
         }
         else{
-            chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:"false", ascii:chart.data.scales[sliderNum].button, time:time});});
+            chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:"false", ascii: slider.button, time:time});});
         }
     },
 
