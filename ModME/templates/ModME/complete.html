@@ -45,10 +45,10 @@ p.fullScreenCenteredTextExperimentor {
 	d3.select(window).on("keydown",function(){
 		var keyCode = d3.event.keyCode;
 		if(keyCode == 32){
-			window.location.href = window.location.href.substr(0,window.location.href.length-8);0
+			window.location.href = window.location.href.replace(/\/(complete|survey)\/$/, "");
 		}
 	});
 	d3.select(window).on("touchstart", function(){
-        window.location.href = window.location.href.substr(0,window.location.href.length-8);
+        window.location.href = window.location.href.replace(/\/(complete|survey)\/$/, "");
     });
 </script>

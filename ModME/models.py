@@ -38,7 +38,7 @@ class Condition(models.Model):
     task4Data = models.CharField(default="{}", max_length=5000)
     task4GUI = models.BooleanField(default=False)
 
-    surveys = models.ManyToManyField(Survey)
+    surveys = models.ManyToManyField(Survey, blank=True)
 
     def __unicode__(self):
         return self.Name

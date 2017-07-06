@@ -310,7 +310,9 @@ def complete(request):
 ######SaveUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########
 
     print condition
-    print condition.surveys.all()[0].fileName
+    conditions = condition.surveys.all()
+    if conditions:
+        print conditions[0].fileName
 
     template = 'ModME/complete.html'
     context = None
