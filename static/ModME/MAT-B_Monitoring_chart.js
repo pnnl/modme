@@ -497,25 +497,24 @@ d3.chart("Monitoring", {
         var currentPosition = chart.y.invert(d3.select("#monitor_slider_"+sliderNum).attr("transform").split(",")[1].split(")")[0]);
         var sliderIsInsideAllowedRange = currentPosition<=sliderCenter+3.75 && currentPosition>=sliderCenter+1.75;
 
-        if(!sliderIsInsideAllowedRange) {
-            chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: slider.i, ascii: slider.button, time:time});});
-            slider.alert=4;
-            slider.y = Math.round(chart.ticks/2);
-            var xp0 = chart.x(slider.x);
-            var yp0 = chart.y(slider.y+2.75);
-
-            d3.select("#monitor_slider_"+sliderNum)
-                    .transition()
-                    .duration(0)
-                    .attr("transform", [
-                        "translate("+xp0+","+yp0+")",
-                        "scale("+chart.x(.5)/5+","+(chart.y(0)-chart.y(1.5))/10+")"
-                    ])
-                    .each("end", chart.translate);
-        }
-        else{
+        if(sliderIsInsideAllowedRange) {
             chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:"false", ascii: slider.button, time:time});});
+            return;
         }
+        chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: slider.i, ascii: slider.button, time:time});});
+        slider.alert=4;
+        slider.y = Math.round(chart.ticks/2);
+        var xp0 = chart.x(slider.x);
+        var yp0 = chart.y(slider.y+2.75);
+
+        d3.select("#monitor_slider_"+sliderNum)
+            .transition()
+            .duration(0)
+            .attr("transform", [
+                "translate("+xp0+","+yp0+")",
+                "scale("+chart.x(.5)/5+","+(chart.y(0)-chart.y(1.5))/10+")"
+            ])
+            .each("end", chart.translate);
     },
 
     // Resets a given buttons color to it's non alert color if the button is in an alert state
