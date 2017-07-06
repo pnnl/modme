@@ -495,13 +495,15 @@ d3.chart("Monitoring", {
         var slider = chart.data.scales[sliderNum];
         var sliderCenter = Math.round(chart.ticks/2);
         var currentPosition = chart.y.invert(d3.select("#monitor_slider_"+sliderNum).attr("transform").split(",")[1].split(")")[0]);
+        var sliderIsInsideAllowedRange = currentPosition<=sliderCenter+3.75 && currentPosition>=sliderCenter+1.75;
 
-        if((currentPosition>sliderCenter+3.75 || currentPosition<sliderCenter+1.75)){
+        if(!sliderIsInsideAllowedRange) {
             chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: slider.i, ascii: slider.button, time:time});});
             slider.alert=4;
             slider.y = Math.round(chart.ticks/2);
             var xp0 = chart.x(slider.x);
             var yp0 = chart.y(slider.y+2.75);
+
             d3.select("#monitor_slider_"+sliderNum)
                     .transition()
                     .duration(0)
