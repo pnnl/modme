@@ -171,7 +171,7 @@ def save(request):
         condition.task4Data = request.POST.get('task4Data')
         condition.task4GUI = request.POST.get('task4GUI') == "true"
 
-        condition.experiment_duration = request.POST.get('duration')
+        condition.experimentDuration = request.POST.get('duration')
         condition.save()
 
     else:
@@ -188,7 +188,7 @@ def save(request):
             task4=int(request.POST.get('task4')),
             task4Data=request.POST.get('task4Data'),
             task4GUI=request.POST.get('task1GUI') == "true",
-            experiment_duration=request.POST.get('duration'),
+            experimentDuration=request.POST.get('duration'),
             Name=request.POST.get('name')
         )
         condition.save()
