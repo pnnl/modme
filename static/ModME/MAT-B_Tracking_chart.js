@@ -52,8 +52,8 @@ d3.chart("Tracking", {
             .attr("id", "tracking_area")
             .style("fill-opacity", 0)
             .style("cursor", "move")
-            .on("mousemove", function(event){
-                chart.mouseLocation(event);
+            .on("mousemove", function(datum, index){
+                chart.mouseLocation(d3.event);
             })
             .on("click", function(){
                 var temp = d3.select(this);
@@ -268,11 +268,11 @@ d3.chart("Tracking", {
                         var temp = d3.select(this);
                         temp.classed("alert") ? chart.activate(temp.attr("id"),time):chart.missClick(temp.attr("id"),time)
                     })
-                    .on("mousemove", function(event){
-                        chart.mouseLocation(event)
+                    .on("mousemove", function(datum, index){
+                        chart.mouseLocation(d3.event)
                     })
-                    .on("touchmove", function(event){
-                        chart.mouseLocation(event)
+                    .on("touchmove", function(datum, index){
+                        chart.mouseLocation(d3.event)
                     });
 
                 circles.append("path")
@@ -340,7 +340,7 @@ d3.chart("Tracking", {
     // NOTE: does not actualy move the mouse
     // When changing the mouse location in the data also logs the new location to the database
     mouseLocation: function(pos){
-        if(!pos || !pos.length)
+        if(!pos)
             return this.mouseEvent;
         var active = this.circleBase.selectAll("circle").filter(function(d,i){
             return d3.select(this).classed("active")
