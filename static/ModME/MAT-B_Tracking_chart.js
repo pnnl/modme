@@ -52,8 +52,14 @@ d3.chart("Tracking", {
             .attr("id", "tracking_area")
             .style("fill-opacity", 0)
             .style("cursor", "move")
-            .on("mousemove", function(event){chart.mouseLocation(event);})
-            .on("click", function(){var temp = d3.select(this); var time = (new Date()).getTime(); chart.missClick(temp.attr("id"), time)});
+            .on("mousemove", function(event){
+                chart.mouseLocation(event);
+            })
+            .on("click", function(){
+                var temp = d3.select(this);
+                var time = (new Date()).getTime();
+                chart.missClick(temp.attr("id"), time)
+            });
 
         var circleBase = chart.base.append("g")
             .attr("width", chart.w)
@@ -252,10 +258,22 @@ d3.chart("Tracking", {
                 var circles = this.append("circle")
                     .classed("tracking", true)
                     .style("cursor", "move")
-                    .on("click", function(d){var time = (new Date()).getTime(); var temp = d3.select(this); temp.classed("alert") ? chart.activate(temp.attr("id"),time):chart.missClick(temp.attr("id"),time)})
-                    .on("touchstart", function(d){var time = (new Date()).getTime(); var temp = d3.select(this); temp.classed("alert") ? chart.activate(temp.attr("id"),time):chart.missClick(temp.attr("id"),time)})
-                    .on("mousemove", function(event){chart.mouseLocation(event)})
-                    .on("touchmove", function(event){chart.mouseLocation(event)});
+                    .on("click", function(d){
+                        var time = (new Date()).getTime();
+                        var temp = d3.select(this);
+                        temp.classed("alert") ? chart.activate(temp.attr("id"),time):chart.missClick(temp.attr("id"),time)
+                    })
+                    .on("touchstart", function(d){
+                        var time = (new Date()).getTime();
+                        var temp = d3.select(this);
+                        temp.classed("alert") ? chart.activate(temp.attr("id"),time):chart.missClick(temp.attr("id"),time)
+                    })
+                    .on("mousemove", function(event){
+                        chart.mouseLocation(event)
+                    })
+                    .on("touchmove", function(event){
+                        chart.mouseLocation(event)
+                    });
 
                 circles.append("path")
                     .style("stroke","none");
