@@ -494,8 +494,8 @@ d3.chart("Monitoring", {
         var chart = this;
         var slider = chart.data.scales[sliderNum];
         var sliderCenter = Math.round(chart.ticks/2);
-        var currentPosition = chart.y.invert(d3.select("#monitor_slider_"+sliderNum).attr("transform").split(",")[1].split(")")[0]);
-        var sliderIsInsideAllowedRange = currentPosition<=sliderCenter+3.75 && currentPosition>=sliderCenter+1.75;
+        var currentPosition = chart.y.invert(d3.select("#monitor_slider_"+sliderNum).attr("transform").split(",")[1].split(")")[0]) - 2.75;
+        var sliderIsInsideAllowedRange = currentPosition<=sliderCenter+1 && currentPosition>=sliderCenter-1;
 
         if(sliderIsInsideAllowedRange) {
             chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:"false", ascii: slider.button, time:time});});
@@ -505,8 +505,18 @@ d3.chart("Monitoring", {
         slider.alert=4;
         slider.y = Math.round(chart.ticks/2);
         var xp0 = chart.x(slider.x);
+        // TODO I think yp0 and sliderIsInsideAllowedRange should be calculated based on ranges, not magic numbers
         var yp0 = chart.y(slider.y+2.75);
-
+        var isMovingUp = slider.i % 2 == 0;
+        var isAboveRestPoint = currentPosition > sliderCenter;
+        var isMovingAwayFromRestPosition = isMovingUp && isAboveRestPoint || !isMovingUp && !isAboveRestPoint;
+        var distanceFromRestPoint = Math.abs(currentPosition - sliderCenter);
+        var distanceToTravelToReachRestPoint = distanceFromRestPoint;
+        if (isMovingAwayFromRestPosition) {
+            slider.i++; // change direction
+            distanceToTravelToReachRestPoint = chart.slider_range[1] - chart.slider_range[0] + 1 - distanceFromRestPoint;
+        }
+        var timeToReachRestPoint = distanceToTravelToReachRestPoint * slider.slider_interval;
         d3.select("#monitor_slider_"+sliderNum)
             .transition()
             .duration(0)
@@ -514,7 +524,12 @@ d3.chart("Monitoring", {
                 "translate("+xp0+","+yp0+")",
                 "scale("+chart.x(.5)/5+","+(chart.y(0)-chart.y(1.5))/10+")"
             ])
-            .each("end", chart.translate);
+            .each("end", function() {
+                d3.select(this).transition()
+                .transition()
+                .duration(timeToReachRestPoint)
+                .each("end", chart.translate)
+            });
     },
 
     // Resets a given buttons color to it's non alert color if the button is in an alert state

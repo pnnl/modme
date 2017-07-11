@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var preprogrammedMonitorEvents = window.preprogrammedAlerts.filter(function(event) { return event.chart == "monitoring"; });
         preprogrammedMonitorEvents.forEach(function(event) {
             event.index = Number(event.domID.match(/\d+/));
+            if (event.arg.widget && event.arg.widget == "slider") {
+                var sliderIndex = event.arg.index - monitor_data.buttons.length;
+                var slider = monitor_data.scales[sliderIndex];
+                var rangeEventDistance = (monitor_data.range[1] - monitor_data.range[0]) / 4.0;
+                var rangeEventLeadTime = slider.slider_interval * rangeEventDistance;
+                event.time = event.time - rangeEventLeadTime;
+            }
         });
         var nextEventIndex = 0;
         var generateEvent = function() {
