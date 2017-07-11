@@ -72,7 +72,6 @@ d3.chart("Communication", {
                     domID: "comm_channel_" + newChannel + "_name",
                     channel: newChannel,
                     target: newFrequency,
-                    current: chart.data.channels[newChannel].frequency
                 };
                 return alert;
             }
@@ -88,6 +87,7 @@ d3.chart("Communication", {
             chart.data.currentAlert = null;
         };
         chart.beginAlert = function(alert) {
+            alert.current = chart.data.channels[alert.channel].frequency;
             chart.data.currentAlert = alert;
             chart.data.target.name = chart.data.channels[alert.channel].name;
             chart.data.target.frequency = alert.target;
