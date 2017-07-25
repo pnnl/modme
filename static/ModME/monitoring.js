@@ -55,14 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     if(!monitor_data.distractor) {
-        monitor_chart.when("rangeChange", function(args){data.push({
-            time: (new Date()).getTime()-startTime,
-            eventType: "sliderRange",
-            chart: "monitoring",
-            arg: args.args,
-            id: args.domID,
-            table: "Event"
-        })});
         monitor_chart.when("alert", function(args){data.push({
             time: (new Date()).getTime()-startTime,
             eventType: "alert",

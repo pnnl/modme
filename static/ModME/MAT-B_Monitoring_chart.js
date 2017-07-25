@@ -22,7 +22,6 @@ d3.chart("Monitoring", {
         chart.responseListeners = [];
         chart.alertListeners = [];
         chart.timeoutListeners = [];
-        chart.rangeChangeListeners = [];
 
         var scalesBase = this.base.append("g")
             .classed("monitoring", true)
@@ -105,16 +104,6 @@ d3.chart("Monitoring", {
                 chart.data.event_range = [chart.slider_range[0]-rangeIncrease, chart.slider_range[1]+rangeIncrease];
             }
             chart.data.scales[sliderIndex].i--; // keeps it going in the same direction once it hits the original range limit
-            var event = {
-                type: "sliderRange",
-                domID: "monitor_slider_" + sliderIndex,
-                args: {
-                    index: index,
-                    change: rangeIncrease,
-                    newRange: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
-                },
-            }
-            chart.rangeChangeListeners.forEach(function(listener){listener(event);});
         }
         chart.raiseEvent = function() {
             var event = chart.generateEvent();
