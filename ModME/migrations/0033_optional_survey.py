@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from ModME.models import Survey
 
 
 class Migration(migrations.Migration):
@@ -15,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='condition',
             name='surveys',
-            field=models.ManyToManyField(Survey, blank=True)
+            field=models.ManyToManyField('ModME.Survey', blank=True)
         )
     ]
