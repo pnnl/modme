@@ -212,9 +212,8 @@ var Communication = function(){
 	        "comm_svg");
 
 	var comm_chart = comm_svg.chart("CommunicationGUI").eventFunc(function(){t = eval(comm_data.eventFunction); return t;}).startFunc(comm_data.startFunction).responseTime(comm_data.response);
-	var newstartTime = (new Date).getTime()
-	comm_chart.when("alert", function(args){newstartTime = (new Date).getTime(); console.log("alert")});
-	comm_chart.when("timeout", function(args){console.log(-newstartTime + (new Date).getTime())});
+	comm_chart.when("alert", function(args){});
+	comm_chart.when("timeout", function(args){});
 	comm_chart.when("response", function(args){});
 
 	comm_chart.draw(comm_data);
