@@ -39,6 +39,7 @@ class Condition(models.Model):
     task4GUI = models.BooleanField(default=False)
 
     surveys = models.ManyToManyField(Survey, blank=True)
+    surveys.help_text = 'Hold down "Control", or "Command" on a Mac, to <em>de</em>select one.<br/>'
 
     def __unicode__(self):
         return self.Name
