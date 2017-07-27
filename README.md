@@ -14,13 +14,20 @@ This project provides a modular multi-tasking experiment environment.
   $ python --version
   Python 2.7.13
   ```
-2. Install and configure the ModME server locally (replacing the email address and password as appropriate)
+2. Create a virtual environment to contain the server (optional)
   ```bash
-  virtualenv-2.7 wright
+  virtualenv wright # using macports?  Try virtualenv-2.7
   cd wright/
   source bin/activate
+  ```
+2. Install prerequisite libraries for Python
+  ```bash
   pip install Django==1.11
   pip install tornado==4.3
+  ```
+2. Install and configure the ModME server locally  
+  _replace the email address and password as appropriate_
+  ```bash
   tar -xzvf ~/Downloads/modme.tgz
   cd modme/
   python ./manage.py migrate
