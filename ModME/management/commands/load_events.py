@@ -24,7 +24,20 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         csvfilename = options['csvfilename']
         conditionName = options['condition']
-        # TODO fail gracefully if there is no matching condition
+        if not Condition.objects.filter(Name=conditionName).exists():
+            self.stdout.write(self.style.ERROR('Failure: there is no condition with the name %s' % (conditionName)))
+            conditionNames = [condition.Name for condition in Condition.objects.all()]
+            self.stdout.write(self.style.NOTICE('Available conditions include: \n\t%s' % "\n\t".join(conditionNames)))
+            return
+        with open(csvfilename) as csvfile:
+            reader = csv.DictReader(csvfile)
+            requiredColumnNames = ['time', 'chart', 'arg', 'domID']
+            if not set(requiredColumnNames) <= set(reader.fieldnames):
+                self.stdout.write(self.style.ERROR('Failure: csv file %s does is missing columns or does not include column headers' % (csvfilename)))
+                self.stdout.write(self.style.NOTICE('required: \n\t%s' % "\n\t".join(requiredColumnNames)))
+                self.stdout.write(self.style.NOTICE('found: \n\t%s' % "\n\t".join(reader.fieldnames)))
+                return
+
         condition = Condition.objects.get(Name=conditionName)
 
         with transaction.atomic():
