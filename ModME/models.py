@@ -14,7 +14,7 @@ class Survey(models.Model):
 
 
 class SurveyFile(models.Model):
-    task = models.ForeignKey(Survey)
+    survey = models.ForeignKey(Survey)
     name = models.CharField(max_length=200)
 
 
