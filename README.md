@@ -67,7 +67,9 @@ This project provides a modular multi-tasking experiment environment.
   * Enter the participant, session, and study IDs and press Begin
   * When the participant initiates the session on the next page, their session will reuse the previously-recorded alerts
 3. Modifying a sequence of reusable events
-  * grab previously-recorded alerts from the database (using the right metadata_id)
+  * find the id for the session you want to modify  
+    _find the id at http://localhost:9000/admin/ModME/metadata _
+  * grab previously-recorded alerts from the database _using the right metadata_id_
     ```bash
     echo $'.mode csv
     select time, eventType, chart, domid, arg
