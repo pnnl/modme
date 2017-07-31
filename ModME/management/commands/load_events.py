@@ -69,6 +69,7 @@ class Command(BaseCommand):
                         arg = row['arg'],
                         domID = row['domID'],
                         metadata = metadata,
+                        eventType = 'alert',
                     )
                     event.save()
         self.stdout.write(self.style.SUCCESS('Success %s %s' % (csvfilename, conditionName)))
