@@ -20,12 +20,12 @@ This project provides a modular multi-tasking experiment environment.
   cd wright/
   source bin/activate
   ```
-2. Install prerequisite libraries for Python
+3. Install prerequisite libraries for Python
   ```bash
   pip install Django==1.11
   pip install tornado==4.3
   ```
-2. Install and configure the ModME server locally  
+4. Install and configure the ModME server locally  
   _replace the email address and password as appropriate_
   ```bash
   tar -xzvf ~/Downloads/modme.tgz
@@ -34,7 +34,7 @@ This project provides a modular multi-tasking experiment environment.
   python ./manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'hunter2')"
   python ./Tornado.py
   ```
-3. Verify the server is running
+5. Verify the server is running
   * Open a browser to http://localhost:9000
   * You will see a large banner proclaiming 'INDEX' and links to ModME, Administration, Conditions, and "Add a New Table"
 
@@ -56,7 +56,7 @@ This project provides a modular multi-tasking experiment environment.
   * Browse to the ModME experiment initiation page http://localhost:9000/ModME/
   * Select a condition from the drop-down, enter a participant, session, and study id, and press the Begin button
   * Press the space bar when prompted
-  * Wait for the experiment to finish.  You do not need to repond to alerts or otherwise while the experiment is running.
+  * Wait for the experiment to finish.  You do not need to respond to alerts or otherwise while the experiment is running.
   * Once the session is complete, browse to http://localhost:9000/admin/ModME/metadata/
   * Find the entry for your recorded session and click the link
   * Check the AllowEventReuse box and press Save
@@ -68,7 +68,7 @@ This project provides a modular multi-tasking experiment environment.
   * When the participant initiates the session on the next page, their session will reuse the previously-recorded alerts
 3. Modifying a sequence of reusable events
   * find the id for the session you want to modify  
-    _find the id at http://localhost:9000/admin/ModME/metadata _
+    _find the id at http://localhost:9000/admin/ModME/metadata_
   * grab previously-recorded alerts from the database _using the right metadata_id_
     ```bash
     echo $'.mode csv
@@ -79,7 +79,8 @@ This project provides a modular multi-tasking experiment environment.
       ;'   | sqlite3 db.sqlite3 > repeatableAlerts.csv
     ```
   * modify the alerts in your favorite csv editor
-  * load the alerts using the command-line tools for site management
+  * load the alerts using the command-line tools for site management  
+    _Correct the condition name as appropriate_
     ```python
     python manage.py load_events -c demoCondition ./repeatableAlerts.csv
     ```
