@@ -46,7 +46,7 @@ def getAlertsForMetadata(request):
     metadataId = request.GET.get('metadataId')
 
     if metadataId:
-        alertList = list(Event.objects.filter(metadata=metadataId, eventType='alert'))
+        alertList = list(Event.objects.filter(metadata=metadataId, eventType='alert').order_by('time'))
         flatAlertList = [{
             'arg': json.loads(alert.arg),
             'time': alert.time,
