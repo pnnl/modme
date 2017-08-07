@@ -67,8 +67,7 @@ class ResourceSwitchAdmin(admin.ModelAdmin):
 
 
 class TrackingAdmin(admin.ModelAdmin):
-    list_display = ('time', 'metadata', 'x', 'y', 'domID', 'state',
-        'mouseX', 'mouseY',)
+    list_display = ('time', 'metadata', 'x', 'y', 'domID', 'state', 'mouseX', 'mouseY',)
 
 
 class MouseTrackingAdmin(admin.ModelAdmin):
@@ -96,7 +95,19 @@ class SurveyAdmin(admin.ModelAdmin):
 
 
 class NasaTlxAdmin(admin.ModelAdmin):
-    list_display = ('time', 'metadata', 'mental', 'physical', 'temporal', 'performance', 'effort', 'frustration', 'fatigue', 'boredom')
+    list_display = (
+        'time',
+        'metadata',
+        'mental',
+        'physical',
+        'temporal',
+        'performance',
+        'effort',
+        'frustration',
+        'fatigue',
+        'boredom',
+    )
+
 
 ########################
 #  Model Registration  #
