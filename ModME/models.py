@@ -73,7 +73,7 @@ class Participant(models.Model):
     """ Protect a participant's confidentiality and privacy """
     alias = models.CharField(max_length=500, unique=True)
 
-    def __unicode(self):
+    def __unicode__(self):
         return self.alias
 
 
@@ -82,7 +82,7 @@ class Session(models.Model):
     name = models.CharField(max_length=500, unique=True)
     study = models.CharField(max_length=500, default='')
 
-    def __unicode(self):
+    def __unicode__(self):
         return self.name
 
 
