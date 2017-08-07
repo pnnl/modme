@@ -79,11 +79,14 @@ class Participant(models.Model):
 
 class Session(models.Model):
     """ A session may comprise multiple runs of one or more conditions """
-    name = models.CharField(max_length=500, unique=True)
+    name = models.CharField(max_length=500)
     study = models.CharField(max_length=500, default='')
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        unique_together = (("name", "study"))
 
 
 class Metadata(models.Model):
@@ -100,6 +103,7 @@ class Metadata(models.Model):
 
     class Meta:
         verbose_name_plural = "Metadata"
+        unique_together = (("condition", "participant", "session"))
 
 
 class Event(models.Model):
