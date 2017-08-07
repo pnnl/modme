@@ -46,11 +46,11 @@ class ConditionAdmin(admin.ModelAdmin):
 class MetadataAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'startTime',
-        'session',
-        'duration',
-        'participant',
         'condition',
+        'session',
+        'participant',
+        'startTime',
+        'duration',
     )
 
 
