@@ -37,7 +37,9 @@
 function check() {
     var select = document.getElementById("Parameters");
     var condition = select.options[select.selectedIndex].innerHTML;
-    // TODO if the user has already completed the condition in this session, confirm with user before submitting.  Discuss this with Leslie first.  It's not clear if the old code was trying to prevent id confusion because of poor database design.  It could be that the we just don't want users to repeat conditions.
+    // TODO if the user has already completed the condition in this session, confirm with user before submitting.
+    // Discuss this with Leslie first.  It's not clear if the old code was trying to prevent id confusion because of poor database design.
+    // It could be that the we just don't want users to repeat conditions.
     document.getElementById("submit").click();
 }
 
