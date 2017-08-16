@@ -179,7 +179,7 @@ var Monitoring = function(){
                         monitor_data.startFunction = monitor_chart.startFunc();
 
     		            monitor_data.ticks = JSON.parse(document.getElementById("task_textarea5").value);
-    		            monitor_data.range = JSON.parse(document.getElementById("task_textarea5").value);
+    		            monitor_data.range = JSON.parse(document.getElementById("task_textarea6").value);
 
                         monitor_data.distractor = document.getElementById("task_checkbox1").checked;
 
