@@ -145,11 +145,11 @@ var Tracking = function(){
 
 		            document.getElementById("applyButton").onclick = function(){
 		            	objectName = document.getElementById("object_name").innerHTML.split(" ");
-		            	track_param = JSON.parse(document.getElementById("task_textarea3").value);
+		            	track_param = JSON.parse(document.getElementById("task_textarea4").value);
 		        		for(i in track_param) {
 		            		track_param[i] = track_param[i]*1000;
 		        		}
-		        		track_chart.startFunc(document.getElementById("task_textarea1").value*1000);
+		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
 		        		if(document.getElementById("task_select2").selectedIndex==0){
 		            		track_data.eventFunction = "(Math.random()*(track_param.max-track_param.min))+track_param.min;";
@@ -158,7 +158,7 @@ var Tracking = function(){
 		            		track_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);"
 		        		}
 		        		track_data.startFunction = track_chart.startFunc();
-		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea4").value);
+		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea5").value);
 		        		track_data.orbits[objectName[1]-1].points = 	JSON.parse(document.getElementById("object_textarea1").value);
 		        		track_data.orbits[objectName[1]-1].interval = 	JSON.parse(document.getElementById("object_textarea2").value)*1000;
 		        		track_data.orbits[objectName[1]-1].radius = 	JSON.parse(document.getElementById("object_textarea3").value);
@@ -311,11 +311,11 @@ var Tracking = function(){
 
 		            document.getElementById("applyButton").onclick = function(){
 		            	objectName = document.getElementById("object_name").innerHTML.split(" ");
-		            	track_param = JSON.parse(document.getElementById("task_textarea3").value);
+		            	track_param = JSON.parse(document.getElementById("task_textarea4").value);
 		        		for(i in track_param) {
 		            		track_param[i] = track_param[i]*1000;
 		        		}
-		        		track_chart.startFunc(document.getElementById("task_textarea1").value*1000);
+		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
 		        		if(document.getElementById("task_select2").selectedIndex==0){
 		            		track_data.eventFunction = "(Math.random()*(track_param.max-track_param.min))+track_param.min;";
@@ -324,7 +324,7 @@ var Tracking = function(){
 		            		track_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);"
 		        		}
 		        		track_data.startFunction = track_chart.startFunc();
-		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea4").value);
+		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea5").value);
 		        		track_data.orbits[objectName[1]-1].points = 	JSON.parse(document.getElementById("object_textarea1").value);
 		        		track_data.orbits[objectName[1]-1].interval = 	JSON.parse(document.getElementById("object_textarea2").value)*1000;
 		        		track_data.orbits[objectName[1]-1].radius = 	JSON.parse(document.getElementById("object_textarea3").value);
@@ -473,11 +473,11 @@ var Tracking = function(){
 
 		            document.getElementById("applyButton").onclick = function(){
 		            	objectName = document.getElementById("object_name").innerHTML.split(" ");
-		            	track_param = JSON.parse(document.getElementById("task_textarea3").value);
+		            	track_param = JSON.parse(document.getElementById("task_textarea4").value);
 		        		for(i in track_param) {
 		            		track_param[i] = track_param[i]*1000;
 		        		}
-		        		track_chart.startFunc(document.getElementById("task_textarea1").value*1000);
+		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
 		        		if(document.getElementById("task_select2").selectedIndex==0){
 		            		track_data.eventFunction = "(Math.random()*(track_param.max-track_param.min))+track_param.min;";
@@ -486,7 +486,7 @@ var Tracking = function(){
 		            		track_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);"
 		        		}
 		        		track_data.startFunction = track_chart.startFunc();
-		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea4").value);
+		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea5").value);
 		        		track_data.orbits[objectName[1]-1].points = 	JSON.parse(document.getElementById("object_textarea1").value);
 		        		track_data.orbits[objectName[1]-1].interval = 	JSON.parse(document.getElementById("object_textarea2").value)*1000;
 		        		track_data.orbits[objectName[1]-1].radius = 	JSON.parse(document.getElementById("object_textarea3").value);
