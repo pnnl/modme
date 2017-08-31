@@ -149,6 +149,7 @@ var Tracking = function(){
 		        		for(i in track_param) {
 		            		track_param[i] = track_param[i]*1000;
 		        		}
+                        track_data.parameters = track_param;
 		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
 		        		if(document.getElementById("task_select2").selectedIndex==0){
@@ -315,6 +316,7 @@ var Tracking = function(){
 		        		for(i in track_param) {
 		            		track_param[i] = track_param[i]*1000;
 		        		}
+                        track_data.parameters = track_param;
 		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
 		        		if(document.getElementById("task_select2").selectedIndex==0){
@@ -477,6 +479,7 @@ var Tracking = function(){
 		        		for(i in track_param) {
 		            		track_param[i] = track_param[i]*1000;
 		        		}
+                        track_data.parameters = track_param;
 		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
 		        		if(document.getElementById("task_select2").selectedIndex==0){

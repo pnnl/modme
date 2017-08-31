@@ -168,6 +168,7 @@ var Monitoring = function(){
     		            for(i in monitor_param) {
     		                monitor_param[i] = monitor_param[i]*1000;
     		            }
+                        monitor_data.parameters = monitor_param;
     		            monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea2").value*1000));
     		            if(document.getElementById("task_select3").selectedIndex==0){
     		                monitor_chart.eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;});
@@ -367,6 +368,7 @@ var Monitoring = function(){
                         for(i in monitor_param) {
                             monitor_param[i] = monitor_param[i]*1000;
                         }
+                        monitor_data.parameters = monitor_param;
                         monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea2").value*1000));
                         if(document.getElementById("task_select3").selectedIndex==0){
                             monitor_chart.eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;});
