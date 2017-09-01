@@ -77,6 +77,7 @@ var Resource = function(){
                     document.getElementById("task_textarea1").style.display = "none";
                     document.getElementById("task_select1").style.display = "none";
                     document.getElementById("task_checkbox1").style.display = "inline";
+                    document.getElementById("task_checkbox1").checked = chart.data.distractor;
 
                     document.getElementById("task_label2").style.display = "inline";
                     document.getElementById("task_textarea2").style.display = "inline";
@@ -254,6 +255,7 @@ var Resource = function(){
                     document.getElementById("task_textarea1").style.display = "none";
                     document.getElementById("task_select1").style.display = "none";
                     document.getElementById("task_checkbox1").style.display = "inline";
+                    document.getElementById("task_checkbox1").checked = chart.data.distractor;
 
                     document.getElementById("task_label2").style.display = "inline";
                     document.getElementById("task_textarea2").style.display = "inline";
