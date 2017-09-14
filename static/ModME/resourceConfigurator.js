@@ -133,14 +133,14 @@ var Resource = function(){
 
                     document.getElementById("applyButton").onclick = function(){
                         objectName = document.getElementById("object_name").innerHTML.split(" ");
-    	                resource_param = JSON.parse(document.getElementById("task_textarea3").value);
+    	                resource_param = JSON.parse(document.getElementById("task_textarea4").value);
 
     		            for(i in resource_param) {
     		                resource_param[i] = resource_param[i]*1000;
     		            }
-    		            resource_chart.startFunc(document.getElementById("task_textarea1").value*1000);
+    		            resource_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 
-    		            if(document.getElementById("task_select2").selectedIndex==0){
+    		            if(document.getElementById("task_select3").selectedIndex==0){
     		                resource_data.eventFunction = "(Math.random()*(resource_param.max-resource_param.min))+resource_param.min;";
     		            }
     		            else{
@@ -150,7 +150,7 @@ var Resource = function(){
                         resource_data.distractor = document.getElementById("task_checkbox1").checked;
 
                         resource_data.startFunction = resource_chart.startFunc();
-    		            resource_data.refresh = JSON.parse(document.getElementById("task_textarea4").value);
+    		            resource_data.refresh = JSON.parse(document.getElementById("task_textarea5").value);
     		            resource_chart.refreshRate(resource_data.refresh);
 
     		            if(objectName[0] == "Tank"){
@@ -166,7 +166,7 @@ var Resource = function(){
     		            else if(objectName[0] == "Switch"){
     		                resource_data.switches[objectName[1]-1].transferRate = 		JSON.parse(document.getElementById("object_textarea1").value)/60000;
     		                resource_data.switches[objectName[1]-1].repairTime = 		JSON.parse(document.getElementById("object_textarea2").value);
-    		                resource_data.switches[objectName[1]-1].keyboard = 			document.getElementById("object_textArea3").value;
+    		                resource_data.switches[objectName[1]-1].keyboard = 			document.getElementById("object_textarea3").value;
     		                resource_data.switches[objectName[1]-1].key = 				JSON.parse(document.getElementById("object_textarea4").value);
     		                resource_data.switches[objectName[1]-1].prob = 				JSON.parse(document.getElementById("object_textarea5").value);
 
@@ -311,14 +311,14 @@ var Resource = function(){
 
                     document.getElementById("applyButton").onclick = function(){
                         objectName = document.getElementById("object_name").innerHTML.split(" ");
-                        resource_param = JSON.parse(document.getElementById("task_textarea3").value);
+                        resource_param = JSON.parse(document.getElementById("task_textarea4").value);
 
                         for(i in resource_param) {
                             resource_param[i] = resource_param[i]*1000;
                         }
-                        resource_chart.startFunc(document.getElementById("task_textarea1").value*1000);
+                        resource_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 
-                        if(document.getElementById("task_select2").selectedIndex==0){
+                        if(document.getElementById("task_select3").selectedIndex==0){
                             resource_data.eventFunction = "(Math.random()*(resource_param.max-resource_param.min))+resource_param.min;";
                         }
                         else{
@@ -328,7 +328,7 @@ var Resource = function(){
                         resource_data.distractor = document.getElementById("task_checkbox1").checked;
 
                         resource_data.startFunction = resource_chart.startFunc();
-                        resource_data.refresh = JSON.parse(document.getElementById("task_textarea4").value);
+                        resource_data.refresh = JSON.parse(document.getElementById("task_textarea5").value);
                         resource_chart.refreshRate(resource_data.refresh);
 
                         if(objectName[0] == "Tank"){
@@ -344,7 +344,7 @@ var Resource = function(){
                         else if(objectName[0] == "Switch"){
                             resource_data.switches[objectName[1]-1].transferRate =      JSON.parse(document.getElementById("object_textarea1").value)/60000;
                             resource_data.switches[objectName[1]-1].repairTime =        JSON.parse(document.getElementById("object_textarea2").value);
-                            resource_data.switches[objectName[1]-1].keyboard =          document.getElementById("object_textArea3").value;
+                            resource_data.switches[objectName[1]-1].keyboard =          document.getElementById("object_textarea3").value;
                             resource_data.switches[objectName[1]-1].key =               JSON.parse(document.getElementById("object_textarea4").value);
                             resource_data.switches[objectName[1]-1].prob =              JSON.parse(document.getElementById("object_textarea5").value);
 
