@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^tableAdd/$', views.tableAdd, name='tableAdd'),
     url(r'^survey/$', views.survey, name='survey'),
     url(r'^get-reusable-sessions$', services.getReusableSessions, name='getReusableSessions'),
-    url(r'^get-alerts-for-metadata$', services.getAlertsForMetadata, name='getAlertsForMetadata')
+    url(r'^get-alerts-for-metadata$', services.getAlertsForMetadata, name='getAlertsForMetadata'),
+    url(r'^metadata/json$', services.metadataList, name='metadata')
 ]
