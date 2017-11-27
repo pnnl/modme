@@ -21,6 +21,7 @@
             padding: 1em;
         }
     </style>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>
 </head>
 
 <body>
@@ -45,18 +46,28 @@
         <select id="metadata" name="metadata_id"></select>
         <input id="submit" type="submit" value="Begin" style="display:none"/>
     </form>
-        <button id="begin" onclick="check()"> Begin </button>
+    <button id="begin" onclick="checkAndSubmit()"> Begin </button>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" defer>
+const ValidationStatus = Object.freeze({'valid': {}, 'invalid': {}});
 
+function warn(message) {
+	console.log(message);    
+}
+function checkAndSubmit() {
+    check()
+    .then(
+        success => document.getElementById("submit").click(),
+        failure => warn(failure)
+    );
+}
 function check() {
-    var select = document.getElementById("Parameters");
-    var condition = select.options[select.selectedIndex].innerHTML;
-    // TODO if the user has already completed the condition in this session, confirm with user before submitting.
-    // Discuss this with Leslie first.  It's not clear if the old code was trying to prevent id confusion because of poor database design.
-    // It could be that the we just don't want users to repeat conditions.
-    document.getElementById("submit").click();
+    var dataPromise = fetchMetadata();
+    return dataPromise.then(
+        data => (data.length == 0) ? ValidationStatus.valid : Promise.reject('duplicate record detected'),
+        failure => failure
+    );
 }
 
 function stopRKey(evt) {
@@ -91,7 +102,7 @@ function formatDate (value) {
     return output + " " + hour + ":" + dateLeftZero(date.getMinutes()) + part + " " + date.toString().match(/\(([^)]+)\)$/)[1];
 }
 
-function fetchMetdata() {
+function fetchReusableSessions() {
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -107,6 +118,16 @@ function fetchMetdata() {
     xhr.send();
 }
 
+function fetchMetadata(filter) {
+    var address = location.href.substr(0, location.href.length-(location.search.length+location.hash.length)) + "metadata/json";
+    var query = "?session=" + encodeURIComponent(sessionName.value)
+        + "&participant=" + encodeURIComponent(participantAlias.value)
+        + "&study=" + encodeURIComponent(studyName.value);
+    var data = fetch(address + query)
+    .then(response => response.json(), failure => failure)
+    return data;
+}
+
 Parameters.addEventListener("change", function() {
 
     reuse.disabled = Parameters.value === "%";
@@ -117,7 +138,7 @@ Parameters.addEventListener("change", function() {
     }
     else
     {
-        fetchMetdata();
+        fetchReusableSessions();
     }
 });
 
