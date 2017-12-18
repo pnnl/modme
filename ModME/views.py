@@ -13,7 +13,7 @@ from ModME.models import (
     Task,
     TableAdd,
     NasaTlx,
-# End of model imports
+    # End of model imports
 )
 import json
 import string
@@ -46,7 +46,7 @@ def index(request):
                 tableName=request.POST.get('tableName'),
                 uniqueString=uString,
                 applyed=False
-            )
+        )
         t.save()
 
     return render(request, 'ModME/index.html', {'parameters_list': Condition.objects.order_by('Name'), 'meta_list': Metadata.objects.order_by('id')})
@@ -111,7 +111,7 @@ def configuration(request, parameter_id):
     condition = Condition.objects.get(pk=parameter_id)
     cssList = []
     requiredFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
-    for taskID in Task.objects.order_by('fileName'): # TODO refactor down to (two?) lines of code after model changes
+    for taskID in Task.objects.order_by('fileName'):  # TODO refactor down to (two?) lines of code after model changes
         for resourceFile in taskID.file_set.all():
             if resourceFile.name[-3:] == "css":
                 if resourceFile.name not in cssList:

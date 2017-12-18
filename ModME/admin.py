@@ -13,7 +13,7 @@ from .models import (
     SurveyFile,
     Survey,
     NasaTlx,
-# End of model imports
+    # End of model imports
 )
 from django.http import HttpResponseRedirect
 

@@ -17,4 +17,4 @@ class Migration(migrations.Migration):
             old_name='task',
             new_name='survey',
         ),
-   ]
+    ]
