@@ -4,29 +4,60 @@ This project provides a modular multi-tasking experiment environment.
 
 ## Motivation
 
-## Contributing
+## Prerequisites
+The details of installation and configuration of prerequisites is outside the scope of this document.
 
-## License
+|prerequisite||notes|
+|----|----|----|
+|Python 2.7|required|[beginner's guide](https://wiki.python.org/moin/BeginnersGuide/Download)|
+|pip|required|Recent versions of Python include [pip](https://pip.pypa.io/en/stable/).|
+|tar|required|Many alternatives exist, such as [7-zip](http://www.7-zip.org/).|
+|virtualenv|optional|Recent versions of Python include [virtualenv](https://virtualenv.pypa.io/en/stable/).|
+
+### Mac prerequisite installation (macports)
+
+```bash
+sudo port install python27 py27-virtualenv py27-pip
+sudo port select python python27
+sudo port select pip pip27
+sudo port select virtualenv virtualenv27
+```
+
+### Linux prerequisite installation (Ubuntu 16.04)
+
+```bash
+sudo apt install python python-pip python-virtualenv tar
+```
+
+### verify prerequisites
+
+Ensure everything is 2.7 installed and available from the command line. ex.
+
+>$ python --version
+>Python 2.7.13
+>$ pip --version
+>pip 9.0.1 from >/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages (python 2.7)
+>$ tar --version
+>bsdtar 2.8.3 - libarchive 2.8.3
+>$ virtualenv --version
+>15.1.0
 
 ## Installation
-1. Make sure you have Python 2.7 installed and available from the command line. ex.
-  ```bash
-  $ python --version
-  Python 2.7.13
-  ```
 2. Create a virtual environment to contain the server (optional)
   ```bash
-  virtualenv wright # using macports?  Try virtualenv-2.7
-  cd wright/
+  virtualenv modme
+  cd modme/
   source bin/activate
   ```
-3. Install prerequisite libraries for Python
+  __tips__
+  * make sure virtualenv is on your PATH
+3. Install Python library dependencies
   ```bash
   pip install Django==1.11
   pip install tornado==4.3
   ```
 4. Install and configure the ModME server locally  
-  _replace the email address and password as appropriate_
+  _replace the email address, password, and download location as appropriate_
   ```bash
   tar -xzvf ~/Downloads/modme.tgz
   cd modme/
@@ -84,4 +115,19 @@ This project provides a modular multi-tasking experiment environment.
     ```python
     python manage.py load_events -c demoCondition ./repeatableAlerts.csv
     ```
+
 ## Tests
+
+## Contributing
+Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/pnnl/modme/tags).
+
+## Authors
+
+## License
+[MIT](LICENSE.md)
+
+## Acknowledgments
