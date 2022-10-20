@@ -45,7 +45,11 @@ d3.chart("Resource", {
             chart.tick.forEach(function(d){d({state:state, tanks:chart.data.tanks});});
             chart.data.tanks.forEach(function(d,i){
                 //d.delta=d.decayRate*chart.refresh>d.resource? -d.resource:-d.decayRate*chart.refresh;
-                d.delta=-d.decayRate*chart.refresh;
+                if(chart.data.distractor){
+					d.delta = 0;
+				}else{
+					d.delta=-d.decayRate*chart.refresh;
+				}
             });
 
             chart.data.generators.forEach(function(d){
@@ -79,8 +83,9 @@ d3.chart("Resource", {
             tankBase.selectAll("rect").filter(function(d,i){return !(i%2)}).attr("height", function(d){return chart.y(0)-chart.y(d.height*d.resource/d.maxResource);})
                                     .attr("y", function(d){return chart.y(d.y-d.height*(1-d.resource/d.maxResource));});
             tankBase.selectAll("text").text(function(d){return Math.round(d.resource);});
-            switchBase.selectAll("path").classed("alert", function(d){return d.alert;}).classed("on", function(d){return d.on;});
-
+            if(!chart.data.distractor){
+				switchBase.selectAll("path").classed("alert", function(d){return d.alert;}).classed("on", function(d){return d.on;});
+			}
             setTimeout(step, chart.refresh);
         }
 
@@ -89,6 +94,10 @@ d3.chart("Resource", {
         chart.defaults = {};
         
         chart.defaults.generateAlert = function(){
+			if(chart.data.distractor){
+				return null;
+			}
+
             chart.totalProb = 0;                                                                                        // Initialize totalProb to 0
             chart.data.switches.forEach(function(d){                                                                    // Start forEach loop over switches
                 chart.totalProb += d.prob;                                                                              // Sum probs to calculate totalProb
@@ -307,7 +316,8 @@ d3.chart("Resource", {
                 grps.append("path")
                     .classed("switches", true)
                     .attr("d", "M 0 3 L 1 3 L 1 0 L 5 5 L 1 10 L 1 7 L 0 7 z")
-                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.flipSwitch(i, time);});
+                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.flipSwitch(i, time);})
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.flipSwitch(i, time);});
 
                 grps.append("text")
                     .classed("resourceManagement", true);

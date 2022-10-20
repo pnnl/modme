@@ -17,6 +17,8 @@ d3.chart("Tracking", {
 
         chart.mouseEvent = {x:0, y:0};
 
+        var inboundAirplanes = []
+
         chart.x = d3.scale.linear().domain([0,1]);
         chart.y = d3.scale.linear().domain([0,1]);
 
@@ -67,11 +69,17 @@ d3.chart("Tracking", {
 
         chart.circleBase = circleBase;
 
-        chart.refresh=100;
-        chart.distract=false;
+        //chart.refresh=100;
+        //chart.distract=false;
+    
+
 
         chart.defaults = {};
         chart.defaults.generateAlert = function() {
+			if(chart.distract){
+				return null;
+			}
+			
             chart.totalProb = 0;                                                                                            // Initialize totalProb to 0
             chart.data.forEach(function(d){                                                                                 // Start forEach loop over data
                 chart.totalProb += d.prob;                                                                                  // Sum probs to calculate totalProb
@@ -124,7 +132,7 @@ d3.chart("Tracking", {
         // startFunction is currently a misnomer.  It is used here as a number, not a function.
         setTimeout(function(){setTimeout(chart.alertEvent, chart.startFunction);}, 1);
 
-        setInterval(function(){
+        function atInterval(){
             state = [];
 
             circleBase.selectAll("circle").each(function(d){
@@ -139,7 +147,10 @@ d3.chart("Tracking", {
                 }
             });
             chart.tick.forEach(function(d){d({event: chart.mouseEvent, state: state});});
-        },chart.refresh);
+            setTimeout(atInterval,chart.refresh);
+        }
+
+        setTimeout(function(){setTimeout(atInterval,chart.refresh);}, 1);
 
         this.layer("path", pathBase, {
             dataBind: function(data){
@@ -170,9 +181,10 @@ d3.chart("Tracking", {
                     .interpolate("basis-closed");
 
 //  Object { base=[1],  _layers={...},  _attached={...},  more...} 0.357 0.152 [Object { x=0.357,  y=0.152}, Object { x=0.342,  y=0.179}, Object { x=0.643,  y=0.848}, Object { x=0.658,  y=0.821}] MNaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaN
-                    return this.attr("d", function(d){var line = lineFunction(d.points); return line;}).attr("id", function(d,i){return "track_path_"+i});
+                    return this.attr("d", function(d){var line = lineFunction(d.points); return line;}).attr("id", function(d,i){return "track_path_"+i}).style("stroke-width", function(d){return d.width;});
                 },
                 "update": function(){
+
                     var chart = this.chart();
 
                     var lineFunction = d3.svg.line()
@@ -180,7 +192,7 @@ d3.chart("Tracking", {
                     .y(function(d){return chart.y(d.y)})
                     .interpolate("basis-closed")
 
-                    return this.attr("d", function(d){return lineFunction(d.points);}).attr("id", function(d,i){return "track_path_"+i});
+                    return this.attr("d", function(d){return lineFunction(d.points);}).attr("id", function(d,i){return "track_path_"+i}).style("stroke-width", function(d){return d.width;});
                 },
                 "exit": function(){
                     return this.remove();
@@ -229,7 +241,7 @@ d3.chart("Tracking", {
                     .y(function(d){return chart.y(d.y)})
                     .interpolate("basis-closed")
 
-                    return this.attr("d", function(d){return lineFunction(d.points);}).attr("id", function(d,i){return "track_path_"+i});
+                    return this.attr("d", function(d){return lineFunction(d.points);}) ;
                 },
                 "exit": function(){
                     return this.remove();

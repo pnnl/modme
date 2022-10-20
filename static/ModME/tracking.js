@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         var getTimeToNextAlert = function() {
             if (nextAlertIndex == preprogrammedTrackingAlerts.length)
-                return null; // signal no more events
+                return null; // signal no more events1
             var nextAlert = preprogrammedTrackingAlerts[nextAlertIndex];
             var elapsedTime = (new Date()).getTime()-startTime;
             return nextAlert.time - elapsedTime;
@@ -34,16 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
         track_chart.eventFunc(function(){t = eval(track_data.eventFunction); return t;})
         track_chart.startFunc(track_data.startFunction)
     }
-    track_chart.refreshRate(track_data.refresh)
+    track_chart.refreshRate(track_data.refresh);
+	track_chart.distractor(track_data.distractor);
 
+	//this code puts a big blue circle in the middle of the tracking task, comment out to remove circle, 
+	//there is similar code in the trackingConfigurator.js file
+	
+    /*
     track_svg.insert("circle", "g")
             .attr("r", track_svg.h/4)
             .attr("cx", track_svg.w/2)
             .attr("cy", track_svg.h/2)
             .style("stroke-width", "10px")
             .style("stroke", "midnightblue")
-            .style("fill", "none");
+            .style("fill", "none");*/
     
+	
     if(!track_data.distractor) {
         track_chart.when("alert", function(args){data.push({time: (new Date()).getTime()-startTime, eventType: "alert", chart: "tracking", arg: "", id: args.domID, table: "Event"} )});
         track_chart.when("tick", function(args){

@@ -15,17 +15,34 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+#because we are useing Tornado with wsgi and we have no async code, we can do this.
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qv(3s(onpdrxl^vn_j_013)gp)c!5^twvw@c2x+geebsr*p(5-'
+#To keep our security key a secret we don't commit the security key file.
+#A new key is generated on the fist run and stored in a separate file to be from then on.
+SecretKeyFilePath = os.path.join(BASE_DIR, "multiTask/secretKey.txt")
+if(os.path.exists(SecretKeyFilePath)):
+    with open(SecretKeyFilePath) as keyFile:
+        SECRET_KEY = keyFile.read().strip()
+else:
+    #generate a new secret key
+    import secrets
+    length = 50
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    SECRET_KEY = ''.join(secrets.choice(chars) for i in range(length))
+
+    #store secret key in file
+    with open(SecretKeyFilePath, 'a+') as keyFile:
+        keyFile.write(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,16 +58,25 @@ INSTALLED_APPS = (
     'home',
 )
 
+MIDDLEWARE = (
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	
+)
+
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+
 
 ROOT_URLCONF = 'multiTask.urls'
 
@@ -104,6 +130,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-# increase max upload size from 25MB (default)
-DATA_UPLOAD_MAX_MEMORY_SIZE = 50*1024*1024
-FILE_UPLOAD_MAX_MEMORY_SIZE = 50*1024*1024
+
+# increase max upload size from 2.5MB (default)
+DATA_UPLOAD_MAX_MEMORY_SIZE = None#Don't check size at all
+FILE_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024

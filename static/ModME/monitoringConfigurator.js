@@ -91,7 +91,8 @@ var Monitoring = function(){
                     document.getElementById("task_label3").style.display = "inline";
                     document.getElementById("task_select3").style.display = "inline";
                     document.getElementById("task_label3").value = "Event Function";
-                    if(monitor_param.min){
+					
+                    if(monitor_data.eventFunction == eventFunctionOption1){
                         document.getElementById("task_select3").selectedIndex = 0;
                     }
                     else{
@@ -129,6 +130,21 @@ var Monitoring = function(){
                     document.getElementById("task_textarea7").style.display = "none";
                     document.getElementById("task_select7").style.display = "none";
                     document.getElementById("task_checkbox7").style.display = "none";
+					
+					document.getElementById("task_label8").style.display = "none";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "none";
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
 
                     document.getElementById("button1").style.display = "inline";
                     document.getElementById("button1").innerHTML = "Decrease Sliders";
@@ -170,13 +186,14 @@ var Monitoring = function(){
     		                monitor_param[i] = monitor_param[i]*1000;
     		            }
                         monitor_data.parameters = monitor_param;
+						
     		            monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea2").value*1000));
     		            if(document.getElementById("task_select3").selectedIndex==0){
-    		                monitor_chart.eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;});
-    		            }
+    		                monitor_data.eventFunction = eventFunctionOption1;
+						}
     		            else{
-    		                monitor_chart.eventFunc(function(){return 1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(monitor_param.avg_wait/1000)))) + 1);});
-    		            }
+    		                monitor_data.eventFunction = eventFunctionOption2;
+						}
 
                         monitor_data.startFunction = monitor_chart.startFunc();
 
@@ -292,7 +309,7 @@ var Monitoring = function(){
                     document.getElementById("task_label3").style.display = "inline";
                     document.getElementById("task_select3").style.display = "inline";
                     document.getElementById("task_label3").value = "Event Function";
-                    if(monitor_param.min){
+                    if(monitor_data.eventFunction == eventFunctionOption1){
                         document.getElementById("task_select3").selectedIndex = 0;
                     }
                     else{
@@ -330,6 +347,26 @@ var Monitoring = function(){
                     document.getElementById("task_textarea7").style.display = "none";
                     document.getElementById("task_select7").style.display = "none";
                     document.getElementById("task_checkbox7").style.display = "none";
+					
+					document.getElementById("task_label8").style.display = "none";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "none";
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
+					
+					document.getElementById("task_label11").style.display = "none";
+                    document.getElementById("task_textarea11").style.display = "none";
+                    document.getElementById("task_select11").style.display = "none";
+                    document.getElementById("task_checkbox11").style.display = "none";
 
                     document.getElementById("button1").style.display = "inline";
                     document.getElementById("button1").innerHTML = "Decrease Sliders";
@@ -373,11 +410,11 @@ var Monitoring = function(){
                         monitor_data.parameters = monitor_param;
                         monitor_chart.startFunc(JSON.parse(document.getElementById("task_textarea2").value*1000));
                         if(document.getElementById("task_select3").selectedIndex==0){
-                            monitor_chart.eventFunc(function(){rand = Math.random()*(monitor_param.max-monitor_param.min); return rand+monitor_param.min;});
-                        }
+                            monitor_data.eventFunction = eventFunctionOption1;
+						}
                         else{
-                            monitor_chart.eventFunc(function(){return 1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(monitor_param.avg_wait/1000)))) + 1);});
-                        }
+							monitor_data.eventFunction = eventFunctionOption2;
+						}
 
                         monitor_data.startFunction = monitor_chart.startFunc();
 
@@ -412,7 +449,8 @@ var Monitoring = function(){
         } // end of initialize
     }); // end of extention
 
-
+	let eventFunctionOption1 = "(Math.random()*(monitor_param.max-monitor_param.min))+monitor_param.min;";
+	let eventFunctionOption2 = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(monitor_param.avg_wait/1000)))) + 1);";
 
 	setup.Monitoring.Default = {
 		scales: [{button: 112, key: "F1", slider_interval: 2000, prob: 1},

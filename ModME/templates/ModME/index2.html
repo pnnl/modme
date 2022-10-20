@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        h1 {
+            margin-bottom: 0;
+            text-align: center;
+            font-size: 100px;
+            color: black;
+            background-color: #FFA500;
+        }
+        p {
+            font-family: "Arial";
+            text-align: left;
+        }
+        body {
+            background-color: #EEEEEE;
+        }
+        label {
+            display: inline-block;
+            width: 20ex;
+            text-align: right;
+        }
+        input {
+            display: inline-block;
+        }
+        .validationError {
+            outline: solid #990000 .3ex;
+            color: #990000;
+        }
+        #newSession {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #content {
+            background-color: #DDDDDD;
+            text-align: center;
+            padding: 1em;
+        }
+        #messages {
+            background-color: #fC0;
+            color: #900;
+        }
+        #messages > p {
+            margin: 0;
+            padding: .2rem .5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="header">
+    <h1>ModME</h1>
+</div>
+
+<div id="messages">
+</div>
+<p>Experiment ID: {{experiment_id}}</p>
+<p>Participant ID: {{ participant_id.userSessionCode }}</p>
+<p>Session ID: {{session_id}}</p>
+<p>Study ID: {{study_id}}</p>
+
+<div id="content">
+    <form id="newSession" action="{% url 'ModME:begin' %}" method="post">
+        {% csrf_token %}
+        <p>
+            <label for="Parameters">Experiment id:</label>
+            <input id="Parameters" type="text" value={{experiment_id}} name="parameter_id"/>
+        </p>
+        <p>
+            <label for="participantAlias">Participant id:</label>
+            <input id="participantAlias" type="text" value={{participant_id.userSessionCode}} name="participantAlias"/>
+        </p>
+        <p>
+            <label for="sessionName">Session id:</label>
+            <input id="sessionName" type="text" value={{session_id}} name="sessionName"/>
+        </p>
+        <p>
+            <label for="studyName">Study id:</label>
+            <input id="studyName" type="text" value={{study_id}} name="studyName"/>
+        </p>
+        <p>
+            <label for="reuse">Reuse Session Data:</label>
+            <input id="reuse" type="checkbox">
+            <select id="metadata" name="metadata_id"></select>
+        </p>
+        <input id="submit" type="submit" value="Begin" style="display:none"/>
+        <button id="begin" onclick="checkAndSubmit()" type="button"> Begin </button>
+    </form>
+</div>
+
+<script src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript">
+const ValidationStatus = Object.freeze({'valid': {}, 'invalid': {}});
+
+function warn(message, type) {
+    newMessage = $('<p class="message warning"></p>');
+    newMessage.addClass(type);
+    newMessage.text(message);
+    $('#messages').append(newMessage);
+}
+function checkAndSubmit() {
+    $('.validationError').removeClass('validationError');
+    $('#messages .validationMessage').remove();
+    check()
+    .then(
+        success => document.getElementById("submit").click(),
+        failure => warn(failure, 'validationMessage')
+    );
+}
+function check() {
+    var dataPromise = fetchMetadata();
+    return dataPromise.then(
+        function(data) {
+            if (data.length == 0)
+                return ValidationStatus.valid;
+            document.getElementById("participantAlias").classList.add("validationError");
+            document.getElementById("sessionName").classList.add("validationError");
+            document.getElementById("studyName").classList.add("validationError");
+            return Promise.reject('The combination of participant, session, and study must be unique.  A duplicate record was detected.');
+        },
+        failure => failure
+    );
+}
+
+function stopRKey(evt) {
+
+    var evt = evt ? evt : ((event) ? event :null);
+    var node = (evt.target) ? (evt.target) : (evt.srcElement ? (evt.srcElement) : null);
+    if ((evt.keyCode == 13) && (node.type=="text")) {return false;}
+
+}
+document.onkeypress = stopRKey;
+
+function escape (value) {
+    return (value + "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function dateLeftZero (value)
+{
+    return (value < 10 ? "0" + value : value);
+}
+
+function formatDate (value) {
+    var date = new Date(value);
+    var output = date.getFullYear() + "-" + dateLeftZero(date.getMonth() + 1) + "-" + dateLeftZero(date.getDay());
+    var hour = date.getHours();
+    var part = "am";
+
+    if (hour > 12)
+    {
+        hour -= 12;
+        part = "pm";
+    }
+    return output + " " + hour + ":" + dateLeftZero(date.getMinutes()) + part + " " + date.toString().match(/\(([^)]+)\)$/)[1];
+}
+
+function fetchReusableSessions() {
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+
+        if (xhr.readyState === 4 && xhr.status === 200) {
+
+            metadata.innerHTML = JSON.parse(xhr.responseText).reduce(function(last, entry) {
+                return last + "<option value='" + escape(entry.id) + "'>" + escape(entry.session.name + " - " + formatDate(entry.startTime)) + "</option>";
+            }, []);
+        }
+    };
+    xhr.open("GET", (location + "") + "get-reusable-sessions?condition=" + encodeURIComponent(Parameters.value));
+    xhr.send();
+}
+
+function fetchMetadata(filter) {
+    var address = location.href.substr(0, location.href.length-(location.search.length+location.hash.length)) + "metadata/json";
+    var query = "?session=" + encodeURIComponent(sessionName.value)
+        + "&participant=" + encodeURIComponent(participantAlias.value)
+        + "&study=" + encodeURIComponent(studyName.value);
+    var data = fetch(address + query)
+    .then(response => response.json(), failure => failure)
+    return data;
+}
+
+Parameters.addEventListener("change", function() {
+
+    reuse.disabled = Parameters.value === "%";
+
+    if (reuse.disabled)
+    {
+        metadata.innerHTML = "";
+    }
+    else
+    {
+        fetchReusableSessions();
+    }
+});
+
+reuse.disabled = Parameters.value === "%";
+reuse.checked = false;
+reuse.addEventListener("change", function() {
+
+    metadata.disabled = !reuse.checked;
+});
+
+if (!reuse.disabled)
+{
+    fetchReusableSessions();
+}
+
+begin.disabled = false;
+metadata.disabled = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> Condition Instructions </title>
+		<style>
+			.container { 
+			  height: 75px;
+			  position: center;
+			  border: 3px solid blue;
+			  background-color: bisque;
+			}
+			
+			.center {
+			display: flex;
+  			justify-content: center;
+  			align-items: center;
+  			height: 20px;
+			}
+			</style>
+	</head>
+	<body>
+
+		<h1><center>Condition Instructions</center></h1>
+		<div>
+			<object data="/{{pdf}}#toobar-0" width="100%" height="600px"></object>
+		</div>
+
+		<div class="container">
+
+			<div class="center">
+				<p1>Please click "Next" when you are ready to continue</p1>
+			</div>
+
+			<div class="center">
+				<p1> </p1>
+			</div>
+
+			<div class="center">
+				<form action="{% url 'ModME:begin' %}" method="post">
+					{% csrf_token %}
+    				<input type="hidden" name="experimentId" id="experimentId" value="{{experimentId}}"/>
+    				<input type="hidden" name="conditionIndex" id="conditionIndex" value="{{ conditionIndex }}"/>
+    				<input type="hidden" name="conditionList" id="conditionList" value="{{ conditionList }}"/>
+    				<input type="hidden" name="participantAlias" id="participantAlias" value="{{participantAlias}}"/>
+    				<input type="hidden" name="sessionName" id="sessionName" value="{{sessionName}}"/>
+    				<input type="hidden" name="studyName" id="studyName" value="{{studyName}}"/>
+    				{% if metadataId %}
+    				<input type="hidden" name="metadataId" id="metadataId" value="{{metadataId}}"/>
+    				{% endif %}
+    				<input type="submit" value="Complete" id="complete" style="visibility:hidden"/>
+
+					<button type="submit"  id="Next"> Next </button>
+				</form>
+			</div>
+
+
+			{% if skipInstructions %}
+				<form action="{% url 'ModME:begin' %}" id="skip" style="display:none" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="experimentId" id="experimentId" value="{{experimentId}}"/>
+					<input type="hidden" name="conditionIndex" id="conditionIndex" value="{{ conditionIndex }}"/>
+					<input type="hidden" name="conditionList" id="conditionList" value="{{ conditionList }}"/>
+					<input type="hidden" name="participantAlias" id="participantAlias" value="{{participantAlias}}"/>
+					<input type="hidden" name="sessionName" id="sessionName" value="{{sessionName}}"/>
+					<input type="hidden" name="studyName" id="studyName" value="{{studyName}}"/>
+					{% if metadataId %}
+					<input type="hidden" name="metadataId" id="metadataId" value="{{metadataId}}"/>
+					{% endif %}
+					<input type="submit" value="Complete" id="complete" style="visibility:hidden"/>
+
+					<input name="Submit" type="submit" />
+				</form>
+				<script type="text/javascript">
+					window.onload = function () {
+					document.getElementById("skip").submit(); 
+					}
+				</script>
+			{% endif %}
+
+		</div>
+
+	</body>
+</html>

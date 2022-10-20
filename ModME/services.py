@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http import HttpResponseBadRequest
 from ModME.models import (
     Metadata,
     Event,
@@ -30,6 +31,37 @@ def serialize(obj):
     return obj.__dict__
 
 
+def metadataList(request):
+    ':param django.http.HttpRequest request:'
+    ':rtype django.http.HttpResponse'
+
+    def queryToFilterKey(key, value):
+        return key if isinstance(value, str) else key + "__in"
+    keyToQueryField = {
+        'participant': 'participant__alias',
+        'session': 'session__name',
+        'study': 'session__study',
+    }
+    disallowedKeys = set(request.GET.keys()) - set(keyToQueryField.keys())
+    if (disallowedKeys):
+        return HttpResponseBadRequest()
+    filterArgs = {queryToFilterKey(keyToQueryField[key], value): value for key, value in list(request.GET.items())}
+    metadata = Metadata.objects.all().filter(**filterArgs).select_related()
+    blarg = [{
+            'id': metadatum.id,
+            'allowEventReuse': metadatum.allowEventReuse,
+            'condition': metadatum.condition_id,  # Not serializing condition here... tree gets large.
+            'session': metadatum.session_id,
+            'startTime': metadatum.startTime,
+            'participant': metadatum.participant_id,
+            'duration': metadatum.duration
+    } for metadatum in metadata]
+    # serializedMetadata = json.dumps(list(metadata), default=serialize)
+    serializedMetadata = json.dumps(blarg, indent=2)
+    response = HttpResponse(serializedMetadata, content_type='application/json')
+    return response
+
+
 def getReusableSessions(request):
     metadata = '[]'
     condition = request.GET.get('condition')
@@ -58,3 +90,4 @@ def getAlertsForMetadata(request):
         serializedAlerts = json.dumps(flatAlertList, indent=2)
 
     return HttpResponse(serializedAlerts, content_type='application/json')
+
