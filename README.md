@@ -4,6 +4,8 @@
 
 This project provides a modular multi-tasking experiment environment.
 
+The complete User Guide/Documentation can be found [here](https://github.com/SmartAdaptiveInterfaces/modme/blob/master/ModME%20User%20Manual_AFRL-2022.pdf).
+
 
 ## Prerequisites
 
