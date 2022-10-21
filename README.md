@@ -5,11 +5,6 @@
 This project provides a modular multi-tasking experiment environment.
 
 
-
-## Motivation
-
-
-
 ## Prerequisites
 
 
