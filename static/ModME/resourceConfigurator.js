@@ -89,7 +89,7 @@ var Resource = function(){
                     document.getElementById("task_label3").style.display = "inline";
                     document.getElementById("task_select3").style.display = "inline";
                     document.getElementById("task_label3").innerHTML = "Event Function";
-                    if(resource_param.min){
+                    if(resource_data.eventFunction == EventFunctionOption1){
                         document.getElementById("task_select3").selectedIndex = 0;
                     }
                     else{
@@ -125,6 +125,26 @@ var Resource = function(){
                     document.getElementById("task_textarea7").style.display = "none";
                     document.getElementById("task_select7").style.display = "none";
                     document.getElementById("task_checkbox7").style.display = "none";
+					
+					document.getElementById("task_label8").style.display = "none";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "none";
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
+					
+					document.getElementById("task_label11").style.display = "none";
+                    document.getElementById("task_textarea11").style.display = "none";
+                    document.getElementById("task_select11").style.display = "none";
+                    document.getElementById("task_checkbox11").style.display = "none";
 
                     document.getElementById("button1").style.display = "none";
                     document.getElementById("button2").style.display = "none";
@@ -133,24 +153,26 @@ var Resource = function(){
 
                     document.getElementById("applyButton").onclick = function(){
                         objectName = document.getElementById("object_name").innerHTML.split(" ");
-    	                resource_param = JSON.parse(document.getElementById("task_textarea3").value);
+    	                resource_param = JSON.parse(document.getElementById("task_textarea4").value);
 
     		            for(i in resource_param) {
     		                resource_param[i] = resource_param[i]*1000;
     		            }
-    		            resource_chart.startFunc(document.getElementById("task_textarea1").value*1000);
+						resource_data.parameters = resource_param;
+						
+    		            resource_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 
-    		            if(document.getElementById("task_select2").selectedIndex==0){
-    		                resource_data.eventFunction = "(Math.random()*(resource_param.max-resource_param.min))+resource_param.min;";
+    		            if(document.getElementById("task_select3").selectedIndex==0){
+    		                resource_data.eventFunction = EventFunctionOption1;
     		            }
     		            else{
-    		            	resource_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(resource_param.avg_wait/1000)))) + 1);"
+    		            	resource_data.eventFunction = EventFunctionOption2;
     		            }
 
                         resource_data.distractor = document.getElementById("task_checkbox1").checked;
 
                         resource_data.startFunction = resource_chart.startFunc();
-    		            resource_data.refresh = JSON.parse(document.getElementById("task_textarea4").value);
+    		            resource_data.refresh = JSON.parse(document.getElementById("task_textarea5").value);
     		            resource_chart.refreshRate(resource_data.refresh);
 
     		            if(objectName[0] == "Tank"){
@@ -166,7 +188,7 @@ var Resource = function(){
     		            else if(objectName[0] == "Switch"){
     		                resource_data.switches[objectName[1]-1].transferRate = 		JSON.parse(document.getElementById("object_textarea1").value)/60000;
     		                resource_data.switches[objectName[1]-1].repairTime = 		JSON.parse(document.getElementById("object_textarea2").value);
-    		                resource_data.switches[objectName[1]-1].keyboard = 			document.getElementById("object_textArea3").value;
+    		                resource_data.switches[objectName[1]-1].keyboard = 			document.getElementById("object_textarea3").value;
     		                resource_data.switches[objectName[1]-1].key = 				JSON.parse(document.getElementById("object_textarea4").value);
     		                resource_data.switches[objectName[1]-1].prob = 				JSON.parse(document.getElementById("object_textarea5").value);
 
@@ -267,7 +289,7 @@ var Resource = function(){
                     document.getElementById("task_label3").style.display = "inline";
                     document.getElementById("task_select3").style.display = "inline";
                     document.getElementById("task_label3").innerHTML = "Event Function";
-                    if(resource_param.min){
+                    if(resource_data.eventFunction == EventFunctionOption1){
                         document.getElementById("task_select3").selectedIndex = 0;
                     }
                     else{
@@ -303,6 +325,22 @@ var Resource = function(){
                     document.getElementById("task_textarea7").style.display = "none";
                     document.getElementById("task_select7").style.display = "none";
                     document.getElementById("task_checkbox7").style.display = "none";
+					
+					document.getElementById("task_label8").style.display = "none";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "none";
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
+
 
                     document.getElementById("button1").style.display = "none";
                     document.getElementById("button2").style.display = "none";
@@ -311,24 +349,26 @@ var Resource = function(){
 
                     document.getElementById("applyButton").onclick = function(){
                         objectName = document.getElementById("object_name").innerHTML.split(" ");
-                        resource_param = JSON.parse(document.getElementById("task_textarea3").value);
+                        resource_param = JSON.parse(document.getElementById("task_textarea4").value);
 
                         for(i in resource_param) {
                             resource_param[i] = resource_param[i]*1000;
                         }
-                        resource_chart.startFunc(document.getElementById("task_textarea1").value*1000);
+						resource_data.parameters = resource_param;
+						
+                        resource_chart.startFunc(document.getElementById("task_textarea2").value*1000);
 
-                        if(document.getElementById("task_select2").selectedIndex==0){
-                            resource_data.eventFunction = "(Math.random()*(resource_param.max-resource_param.min))+resource_param.min;";
+                        if(document.getElementById("task_select3").selectedIndex==0){
+                            resource_data.eventFunction = EventFunctionOption1;
                         }
                         else{
-                            resource_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(resource_param.avg_wait/1000)))) + 1);"
+                            resource_data.eventFunction = EventFunctionOption2;
                         }
 
                         resource_data.distractor = document.getElementById("task_checkbox1").checked;
 
                         resource_data.startFunction = resource_chart.startFunc();
-                        resource_data.refresh = JSON.parse(document.getElementById("task_textarea4").value);
+                        resource_data.refresh = JSON.parse(document.getElementById("task_textarea5").value);
                         resource_chart.refreshRate(resource_data.refresh);
 
                         if(objectName[0] == "Tank"){
@@ -344,7 +384,7 @@ var Resource = function(){
                         else if(objectName[0] == "Switch"){
                             resource_data.switches[objectName[1]-1].transferRate =      JSON.parse(document.getElementById("object_textarea1").value)/60000;
                             resource_data.switches[objectName[1]-1].repairTime =        JSON.parse(document.getElementById("object_textarea2").value);
-                            resource_data.switches[objectName[1]-1].keyboard =          document.getElementById("object_textArea3").value;
+                            resource_data.switches[objectName[1]-1].keyboard =          document.getElementById("object_textarea3").value;
                             resource_data.switches[objectName[1]-1].key =               JSON.parse(document.getElementById("object_textarea4").value);
                             resource_data.switches[objectName[1]-1].prob =              JSON.parse(document.getElementById("object_textarea5").value);
 
@@ -359,6 +399,9 @@ var Resource = function(){
             }); // end of switch layer
         } // end of initialize
     }); // end of extention
+	
+	let EventFunctionOption1 = "(Math.random()*(resource_param.max-resource_param.min))+resource_param.min;";
+	let EventFunctionOption2 = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(resource_param.avg_wait/1000)))) + 1);";
 
 	setup.Resource.Default = {tanks: [{label: "A", x:3 , y: 8.75, width:4 , height: 3.75, decayRate: .0125, startingResource: 2400, maxResource: 4000, targetRangeMax:2800 ,targetRangeMin:2100, index:0},
 								{label: "B", x:11 , y: 8.75, width:4 , height: 3.75, decayRate: .0125, startingResource: 2400, maxResource: 4000, targetRangeMax:2800 ,targetRangeMin:2100, index:1},

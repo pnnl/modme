@@ -40,8 +40,10 @@ var Tracking = function(){
 		            document.getElementById("object_textarea4").value = d.prob;
 		            document.getElementById("object_select4").style.display = "none";
 
-		            document.getElementById("object_label5").style.display = "none";
-		            document.getElementById("object_textarea5").style.display = "none";
+		            document.getElementById("object_label5").style.display = "inline";
+		            document.getElementById("object_textarea5").style.display = "inline";
+					document.getElementById("object_label5").innerHTML = "Path Width";
+		            document.getElementById("object_textarea5").value = d.width;
 		            document.getElementById("object_select5").style.display = "none";
 
 		            document.getElementById("object_label6").style.display = "none";
@@ -80,7 +82,7 @@ var Tracking = function(){
                     document.getElementById("task_textarea1").style.display = "none";
                     document.getElementById("task_select1").style.display = "none";
                     document.getElementById("task_checkbox1").style.display = "inline";
-                    document.getElementById("task_checkbox1").checked = chart.data.distractor;
+                    document.getElementById("task_checkbox1").checked = track_data.distractor;//chart.data.distractor;
 
 		            document.getElementById("task_label2").style.display = "inline";
 		            document.getElementById("task_textarea2").style.display = "inline";
@@ -92,7 +94,7 @@ var Tracking = function(){
 		            document.getElementById("task_label3").style.display = "inline";
 		            document.getElementById("task_select3").style.display = "inline";
 		            document.getElementById("task_label3").innerHTML = "Event Function";
-		            if(track_param.min){
+		            if(track_data.eventFunction == eventFunctionOption1){
 		                document.getElementById("task_select3").selectedIndex = 0;
 		            }
 		            else{
@@ -129,6 +131,21 @@ var Tracking = function(){
 		            document.getElementById("task_select7").style.display = "none";
 		            document.getElementById("task_checkbox7").style.display = "none";
 
+					document.getElementById("task_label8").style.display = "none";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "none";
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
+					
 		            document.getElementById("button1").style.display = "inline";
 		            document.getElementById("button1").innerHTML = "Decrease Paths";
 		            document.getElementById("button1").onclick = function(){
@@ -138,7 +155,7 @@ var Tracking = function(){
 		            document.getElementById("button2").style.display = "inline";
 		            document.getElementById("button2").innerHTML = "Increase Paths";
 		            document.getElementById("button2").onclick = function(){
-		                track_data.orbits.push({points: [{"x": .1,"y":.9},{"x": .1,"y":.8},{"x": .2,"y":.8},{"x": .2,"y":.9}], interval: 10000, radius:13, prob:1});
+		                track_data.orbits.push({points: [{"x": .1,"y":.9},{"x": .1,"y":.8},{"x": .2,"y":.8},{"x": .2,"y":.9}], interval: 10000, radius:13, prob:1, width:"3px"});
 	            		track_chart.draw(track_data);
 	                };
 		            document.getElementById("button3").style.display = "none";
@@ -151,13 +168,17 @@ var Tracking = function(){
 		            		track_param[i] = track_param[i]*1000;
 		        		}
                         track_data.parameters = track_param;
+						
 		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
-		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
-		        		if(document.getElementById("task_select2").selectedIndex==0){
-		            		track_data.eventFunction = "(Math.random()*(track_param.max-track_param.min))+track_param.min;";
+		        		
+						track_data.distractor = document.getElementById("task_checkbox1").checked;
+		        		track_chart.distractor(document.getElementById("task_checkbox1").checked);
+						
+						if(document.getElementById("task_select3").selectedIndex==0){
+		            		track_data.eventFunction = eventFunctionOption1;
 		       			}
 		        		else{
-		            		track_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);"
+		            		track_data.eventFunction = eventFunctionOption2;
 		        		}
 		        		track_data.startFunction = track_chart.startFunc();
 		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea5").value);
@@ -165,6 +186,7 @@ var Tracking = function(){
 		        		track_data.orbits[objectName[1]-1].interval = 	JSON.parse(document.getElementById("object_textarea2").value)*1000;
 		        		track_data.orbits[objectName[1]-1].radius = 	JSON.parse(document.getElementById("object_textarea3").value);
 		        		track_data.orbits[objectName[1]-1].prob = 		JSON.parse(document.getElementById("object_textarea4").value);
+						track_data.orbits[objectName[1]-1].width = 		document.getElementById("object_textarea5").value;
 		        		track_chart.draw(track_data);
 		        		setup.Tracking.data = track_data;
 					};
@@ -208,8 +230,10 @@ var Tracking = function(){
 		            document.getElementById("object_textarea4").value = d.prob;
 		            document.getElementById("object_select4").style.display = "none";
 
-		            document.getElementById("object_label5").style.display = "none";
-		            document.getElementById("object_textarea5").style.display = "none";
+		            document.getElementById("object_label5").style.display = "inline";
+		            document.getElementById("object_textarea5").style.display = "inline";
+					document.getElementById("object_label5").innerHTML = "Path Width";
+		            document.getElementById("object_textarea5").value = d.width;
 		            document.getElementById("object_select5").style.display = "none";
 
 		            document.getElementById("object_label6").style.display = "none";
@@ -248,7 +272,7 @@ var Tracking = function(){
                     document.getElementById("task_textarea1").style.display = "none";
                     document.getElementById("task_select1").style.display = "none";
                     document.getElementById("task_checkbox1").style.display = "inline";
-                    document.getElementById("task_checkbox1").checked = chart.data.distractor;
+                    document.getElementById("task_checkbox1").checked = track_data.distractor;//chart.data.distractor;
 
 		            document.getElementById("task_label2").style.display = "inline";
 		            document.getElementById("task_textarea2").style.display = "inline";
@@ -260,7 +284,7 @@ var Tracking = function(){
 		            document.getElementById("task_label3").style.display = "inline";
 		            document.getElementById("task_select3").style.display = "inline";
 		            document.getElementById("task_label3").innerHTML = "Event Function";
-		            if(track_param.min){
+		            if(track_data.eventFunction == eventFunctionOption1){
 		                document.getElementById("task_select3").selectedIndex = 0;
 		            }
 		            else{
@@ -296,6 +320,22 @@ var Tracking = function(){
 		            document.getElementById("task_textarea7").style.display = "none";
 		            document.getElementById("task_select7").style.display = "none";
 		            document.getElementById("task_checkbox7").style.display = "none";
+					
+					document.getElementById("task_label8").style.display = "none";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "none";
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
+
 
 		            document.getElementById("button1").style.display = "inline";
 		            document.getElementById("button1").innerHTML = "Decrease Paths";
@@ -306,7 +346,7 @@ var Tracking = function(){
 		            document.getElementById("button2").style.display = "inline";
 		            document.getElementById("button2").innerHTML = "Increase Paths";
 		            document.getElementById("button2").onclick = function(){
-		                track_data.orbits.push({points: [{"x": .1,"y":.9},{"x": .1,"y":.8},{"x": .2,"y":.8},{"x": .2,"y":.9}], interval: 10000, radius:13, prob:1});
+		                track_data.orbits.push({points: [{"x": .1,"y":.9},{"x": .1,"y":.8},{"x": .2,"y":.8},{"x": .2,"y":.9}], interval: 10000, radius:13, prob:1,width:"3px"});
 	            		track_chart.draw(track_data);
 	                };
 		            document.getElementById("button3").style.display = "none";
@@ -320,12 +360,15 @@ var Tracking = function(){
 		        		}
                         track_data.parameters = track_param;
 		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
-		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
-		        		if(document.getElementById("task_select2").selectedIndex==0){
-		            		track_data.eventFunction = "(Math.random()*(track_param.max-track_param.min))+track_param.min;";
+		        		
+						track_data.distractor = document.getElementById("task_checkbox1").checked;
+		        		track_chart.distractor(document.getElementById("task_checkbox1").checked);
+						
+						if(document.getElementById("task_select3").selectedIndex==0){
+		            		track_data.eventFunction = eventFunctionOption1;
 		       			}
 		        		else{
-		            		track_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);"
+		            		track_data.eventFunction = eventFunctionOption2;
 		        		}
 		        		track_data.startFunction = track_chart.startFunc();
 		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea5").value);
@@ -333,6 +376,7 @@ var Tracking = function(){
 		        		track_data.orbits[objectName[1]-1].interval = 	JSON.parse(document.getElementById("object_textarea2").value)*1000;
 		        		track_data.orbits[objectName[1]-1].radius = 	JSON.parse(document.getElementById("object_textarea3").value);
 		        		track_data.orbits[objectName[1]-1].prob = 		JSON.parse(document.getElementById("object_textarea4").value);
+						track_data.orbits[objectName[1]-1].width = 		document.getElementById("object_textarea5").value;
 		        		track_chart.draw(track_data);
 		        		setup.Tracking.data = track_data;
 					};
@@ -372,8 +416,10 @@ var Tracking = function(){
 		            document.getElementById("object_textarea4").value = d.prob;
 		            document.getElementById("object_select4").style.display = "none";
 
-		            document.getElementById("object_label5").style.display = "none";
-		            document.getElementById("object_textarea5").style.display = "none";
+		            document.getElementById("object_label5").style.display = "inline";
+		            document.getElementById("object_textarea5").style.display = "inline";
+					document.getElementById("object_label5").innerHTML = "Path Width";
+		            document.getElementById("object_textarea5").value = d.width;
 		            document.getElementById("object_select5").style.display = "none";
 
 		            document.getElementById("object_label6").style.display = "none";
@@ -412,7 +458,7 @@ var Tracking = function(){
                     document.getElementById("task_textarea1").style.display = "none";
                     document.getElementById("task_select1").style.display = "none";
                     document.getElementById("task_checkbox1").style.display = "inline";
-                    document.getElementById("task_checkbox1").checked = chart.data.distractor;
+                    document.getElementById("task_checkbox1").checked = track_data.distractor;//chart.data.distractor;
 
 		            document.getElementById("task_label2").style.display = "inline";
 		            document.getElementById("task_textarea2").style.display = "inline";
@@ -424,7 +470,7 @@ var Tracking = function(){
 		            document.getElementById("task_label3").style.display = "inline";
 		            document.getElementById("task_select3").style.display = "inline";
 		            document.getElementById("task_label3").innerHTML = "Event Function";
-		            if(track_param.min){
+		            if(track_data.eventFunction == eventFunctionOption1){
 		                document.getElementById("task_select3").selectedIndex = 0;
 		            }
 		            else{
@@ -460,6 +506,26 @@ var Tracking = function(){
 		            document.getElementById("task_textarea7").style.display = "none";
 		            document.getElementById("task_select7").style.display = "none";
 		            document.getElementById("task_checkbox7").style.display = "none";
+					
+					document.getElementById("task_label8").style.display = "none";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "none";
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
+
+					document.getElementById("task_label11").style.display = "none";
+                    document.getElementById("task_textarea11").style.display = "none";
+                    document.getElementById("task_select11").style.display = "none";
+                    document.getElementById("task_checkbox11").style.display = "none";
 
 		            document.getElementById("button1").style.display = "inline";
 		            document.getElementById("button1").innerHTML = "Decrease Paths";
@@ -470,7 +536,7 @@ var Tracking = function(){
 		            document.getElementById("button2").style.display = "inline";
 		            document.getElementById("button2").innerHTML = "Increase Paths";
 		            document.getElementById("button2").onclick = function(){
-		                track_data.orbits.push({points: [{"x": .1,"y":.9},{"x": .1,"y":.8},{"x": .2,"y":.8},{"x": .2,"y":.9}], interval: 10000, radius:13, prob:1});
+		                track_data.orbits.push({points: [{"x": .1,"y":.9},{"x": .1,"y":.8},{"x": .2,"y":.8},{"x": .2,"y":.9}], interval: 10000, radius:13, prob:1, width:"3px"});
 	            		track_chart.draw(track_data);
 	                };
 		            document.getElementById("button3").style.display = "none";
@@ -484,12 +550,15 @@ var Tracking = function(){
 		        		}
                         track_data.parameters = track_param;
 		        		track_chart.startFunc(document.getElementById("task_textarea2").value*1000);
-		        		track_data.distractor = document.getElementById("task_checkbox1").checked;
-		        		if(document.getElementById("task_select2").selectedIndex==0){
-		            		track_data.eventFunction = "(Math.random()*(track_param.max-track_param.min))+track_param.min;";
+		        		
+						track_data.distractor = document.getElementById("task_checkbox1").checked;
+		        		track_chart.distractor(document.getElementById("task_checkbox1").checked);
+						
+						if(document.getElementById("task_select3").selectedIndex==0){
+		            		track_data.eventFunction = eventFunctionOption1;
 		       			}
 		        		else{
-		            		track_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);"
+		            		track_data.eventFunction = eventFunctionOption2;
 		        		}
 		        		track_data.startFunction = track_chart.startFunc();
 		        		track_data.refresh = 							JSON.parse(document.getElementById("task_textarea5").value);
@@ -497,6 +566,7 @@ var Tracking = function(){
 		        		track_data.orbits[objectName[1]-1].interval = 	JSON.parse(document.getElementById("object_textarea2").value)*1000;
 		        		track_data.orbits[objectName[1]-1].radius = 	JSON.parse(document.getElementById("object_textarea3").value);
 		        		track_data.orbits[objectName[1]-1].prob = 		JSON.parse(document.getElementById("object_textarea4").value);
+						track_data.orbits[objectName[1]-1].width = 		document.getElementById("object_textarea5").value;
 		        		track_chart.draw(track_data);
 		        		setup.Tracking.data = track_data;
 					};
@@ -505,13 +575,16 @@ var Tracking = function(){
 
 		}
 	});
+	
+	let eventFunctionOption1 = "(Math.random()*(track_param.max-track_param.min))+track_param.min;";
+	let eventFunctionOption2 = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(track_param.avg_wait/1000)))) + 1);";
 
 
 	setup.Tracking.Default = {
 		orbits: [
-        	{points: [{x:0.357,y:0.152},{x:0.342,y:0.179},{x:0.643,y:0.848},{x:0.658,y:0.821}], interval: 30000, radius:13, prob:1},
-        	{points: [{x:0.28,y:0.402},{x:0.277,y:0.442},{x:0.72,y:0.598},{x:0.723,y:0.558}],   interval: 30000, radius:13, prob:1},
-        	{points: [{x:0.28,y:0.597},{x:0.285,y:0.636},{x:0.72,y:0.403},{x:0.715,y:0.364}],   interval: 30000, radius:13, prob:1}
+        	{points: [{x:0.357,y:0.152},{x:0.342,y:0.179},{x:0.643,y:0.848},{x:0.658,y:0.821}], interval: 30000, radius:13, prob:1,width:"3px"},
+        	{points: [{x:0.28,y:0.402},{x:0.277,y:0.442},{x:0.72,y:0.598},{x:0.723,y:0.558}],   interval: 30000, radius:13, prob:1,width:"3px"},
+        	{points: [{x:0.28,y:0.597},{x:0.285,y:0.636},{x:0.72,y:0.403},{x:0.715,y:0.364}],   interval: 30000, radius:13, prob:1,width:"3px"}
         ],
         parameters: {min: 8000, max: 14000},
         eventFunction: "(Math.random()*(track_param.max-track_param.min))+track_param.min;",
@@ -538,6 +611,8 @@ var Tracking = function(){
 	var track_chart = track_svg.chart("TrackingGUI").eventFunc(function(){t = eval(track_data.eventFunction); return t;}).startFunc(track_data.startFunction)
 	                            .refreshRate(track_data.refresh);
 
+	//this code puts a big blue circle in the middle of the tracking task, comment out to remove circle from configuration
+	//there is similar code in the tracking.js file
 	track_svg.insert("circle", "g")
 	        .attr("r", track_svg.h/4)
 	        .attr("cx", track_svg.w/2)
@@ -545,12 +620,13 @@ var Tracking = function(){
 	        .style("stroke-width", "10px")
 	        .style("stroke", "midnightblue")
 	        .style("fill", "none");
-
+	
 	track_chart.when("alert", function(args){});
 	track_chart.when("tick", function(args){});
 	track_chart.when("response", function(args){});
 	track_chart.when("timeout", function(args){});
 	track_chart.when("mouseMove", function(args){});
+	track_chart.distractor(track_data.distractor);
 
 
 	track_chart.draw(track_data);

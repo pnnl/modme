@@ -10,6 +10,7 @@ var Communication = function(){
 	            return this.on("click", function(d,i){
 	                document.getElementById("object_name").style.display = "inline";
 	                document.getElementById("object_name").innerHTML = "Channels "+(i+1);
+					
 	                document.getElementById("object_label1").style.display = "inline";
 	                document.getElementById("object_textarea1").style.display = "inline";
 	                document.getElementById("object_label1").innerHTML = "Channels Name";
@@ -84,7 +85,7 @@ var Communication = function(){
 	                document.getElementById("task_label3").style.display = "inline";
 	                document.getElementById("task_select3").style.display = "inline";
 	                document.getElementById("task_label3").innerHTML = "Event Function";
-	                if(comm_param.min){
+	                if(comm_data.eventFunction == eventFunctionOption1){
 	                    document.getElementById("task_select3").selectedIndex = 0;
 	                }
 	                else{
@@ -124,6 +125,28 @@ var Communication = function(){
 	                document.getElementById("task_textarea7").value = chart.data.absoluteMax/10.0;
 	                document.getElementById("task_select7").style.display = "none";
 	                document.getElementById("task_checkbox7").style.display = "none";
+					
+					document.getElementById("task_label8").style.display = "inline";
+					document.getElementById("task_label8").innerHTML = "Show Mouse Controls";
+                    document.getElementById("task_textarea8").style.display = "none";
+                    document.getElementById("task_select8").style.display = "none";
+                    document.getElementById("task_checkbox8").style.display = "inline";
+					document.getElementById("task_checkbox8").checked = chart.data.mouseVersion;
+					
+					document.getElementById("task_label9").style.display = "none";
+                    document.getElementById("task_textarea9").style.display = "none";
+                    document.getElementById("task_select9").style.display = "none";
+                    document.getElementById("task_checkbox9").style.display = "none";
+					
+					document.getElementById("task_label10").style.display = "none";
+                    document.getElementById("task_textarea10").style.display = "none";
+                    document.getElementById("task_select10").style.display = "none";
+                    document.getElementById("task_checkbox10").style.display = "none";
+
+					document.getElementById("task_label11").style.display = "none";
+                    document.getElementById("task_textarea11").style.display = "none";
+                    document.getElementById("task_select11").style.display = "none";
+                    document.getElementById("task_checkbox11").style.display = "none";
 
 	                document.getElementById("button1").style.display = "inline";
 	                document.getElementById("button1").innerHTML = "Decrease Channels";
@@ -156,10 +179,10 @@ var Communication = function(){
 							comm_data.distractor = document.getElementById("task_checkbox1").checked;
 
 							if(document.getElementById("task_select3").selectedIndex==0){
-								comm_data.eventFunction = "(Math.random()*(comm_param.max-comm_param.min))+comm_param.min;";
+								comm_data.eventFunction = eventFunctionOption1;
 							}
 							else{
-								comm_data.eventFunction = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(comm_param.avg_wait/1000)))) + 1);"
+								comm_data.eventFunction = eventFunctionOption2;
 							}
 							comm_data.startFunction = comm_chart.startFunc();
 							comm_data.parameters = comm_param;
@@ -168,6 +191,8 @@ var Communication = function(){
 
 							comm_data.absoluteMin = JSON.parse(document.getElementById("task_textarea6").value)*10;
 							comm_data.absoluteMax = JSON.parse(document.getElementById("task_textarea7").value)*10;
+
+							comm_data.mouseVersion = document.getElementById("task_checkbox8").checked;
 
 							comm_data.channels[objectName[1]-1].name = document.getElementById("object_textarea1").value;
 							comm_data.channels[objectName[1]-1].differential = JSON.parse(document.getElementById("object_textarea2").value)*10;
@@ -181,6 +206,10 @@ var Communication = function(){
 	        }); // end communication layer
 	    } // end of initializtion
 	}); // end of extention
+	
+	let eventFunctionOption1 = "(Math.random()*(comm_param.max-comm_param.min))+comm_param.min;";
+	let eventFunctionOption2 = "1000*(Math.floor(Math.log(1-Math.random())/Math.log(1-(1/(comm_param.avg_wait/1000)))) + 1);";
+	
 	setup.Communication.Default = {channels: [{name: "OPS 1", avalibleFrequency: [1173,1231,1123,1131], differential: 6, prob:1},
                     {name: "OPS 2", avalibleFrequency: [1235,1231,1123,1131], differential: 6, prob:1},
                     {name: "INT 1", avalibleFrequency: [1141,1231,1123,1131], differential: 6, prob:1},
@@ -188,6 +217,7 @@ var Communication = function(){
                     ],
             target: {name: "OPS 1",frequency:1173},
             distractor: false,
+			mouseVersion: true,
             response: 8000,
             startFunction: 5000,
             absoluteMin:1100,

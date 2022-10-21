@@ -27,24 +27,44 @@ d3.chart("Communication", {
         chart.target = chart.base.append("rect")
             .classed("communication", true)
             .attr("id", "comm_target_rect")
-            .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
+            .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);})
+			.on("mousedown", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
 
         chart.target_name = chart.base.append("svg:text")
             .classed("communication", true)
             .classed("alert", false)
             .attr("text-anchor", "start")
             .attr("id", "comm_target_name")
-            .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
+            .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);})
+			.on("mousedown", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
 
         chart.target_frequency = chart.base.append("svg:text")
             .classed("communication", true)
             .classed("alert", false)
-            .attr("text-anchor", "end")
+			.attr("text-anchor", "end")
             .attr("id", "comm_target_frequency")
-            .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
+            .on("touchstart", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);})
+			.on("mousedown", function(){var time=(new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
+
+
+		chart.enter_box = chart.base.append("rect")
+			.classed("communication", true)
+            .classed("alert", false)
+            .attr("text-anchor", "end")
+            .attr("id", "enter_box");
+		
+		chart.enter_text = chart.base.append("svg:text")
+			.classed("communication", true)
+            .classed("alert", false)
+            .attr("text-anchor", "end")
+            .attr("id", "enter_text");
 
         chart.defaults = {};
         chart.defaults.generateAlert = function() {
+			if(chart.data.distractor){
+				return null;
+			}
+			
             // Choose new Channel for alert event
             chart.totalProb = 0;                                                // Initialize totalProb to 0
             chart.data.channels.forEach(function(d){                            // Start forEach loop over channels
@@ -118,8 +138,6 @@ d3.chart("Communication", {
                 chart.data = data;
                 chart.y.domain([0,data.channels.length*1.25+3.75]);
 
-
-
                 return this.selectAll("g").data(data.channels);
             },
 
@@ -132,18 +150,28 @@ d3.chart("Communication", {
                 chart.target.attr("width", chart.x(2))
                 .attr("height", chart.y(0)-chart.y(1))
                 .attr("x", chart.x(1))
-                .attr("y", chart.y(chart.data.channels.length*1.25+2.75));
+                .attr("y", chart.y(chart.data.channels.length*1.25+3.425));
+
+				chart.enter_box.attr("width", chart.x(2))
+					.attr("height", chart.y(0)-chart.y(1))
+					.attr("x", chart.x(1))
+					.attr("y", chart.y(1.125))
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
+					
+				chart.enter_text.text("ENTER").attr("x", chart.x(2.35)).attr("y", chart.y(0.425)).on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.accept(time);});
+
 
                 var grps = this.append("g")
                                 .classed("communication", true);
 
                 chart.last = -1;
-
+				
                 grps.append("rect")
                     .classed("highlighted", function(d,i){return chart.select==i})
                     .attr("width", chart.x(2))
                     .attr("height", chart.y(0)-chart.y(1))
                     .attr("id", function(d,i){return "comm_channel_"+i+"_rect";})
+					.attr("y", chart.y(chart.y.domain()[1] + .7))
                     .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.indexSet(i, time);})
                     .on("touchmove", function(){var time = (new Date()).getTime(); d3.event.preventDefault();
                         if (chart.last != -1) {
@@ -154,13 +182,42 @@ d3.chart("Communication", {
                             }
                         }
                         chart.last = d3.event.touches[0].clientX;
-                    });
+                    })
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.indexSet(i, time);});
+				
+				
+				let str1 = '' + chart.x(2.3) + ' ' + chart.y(chart.y.domain()[1]-0.3) + ',' + chart.x(2.1) + ' ' + chart.y(chart.y.domain()[1]+.1) + ',' + chart.x(2.5) + ' ' + chart.y(chart.y.domain()[1]+.1);
+					
+				if(chart.data.mouseVersion){
+				grps.append("polyline")
+					.attr("id", "arrowDown")
+					.attr("points", str1)
+					.attr('visibility', function(d,i){if(chart.select!=i){return 'hidden'}else{return 'visible'}})
+					.style('fill', 'midnightblue')
+					.style('stroke-width', '0')
+					.on("mousedown", function(){var time = (new Date()).getTime(); d3.event.preventDefault();chart.frequencyDown(time);});
+						
+				let str2 = '' + chart.x(2.3) + ' ' + chart.y(chart.y.domain()[1] + 0.7) + ',' + chart.x(2.1) + ' ' + chart.y(chart.y.domain()[1]+.3) + ',' + chart.x(2.5) + ' ' + chart.y(chart.y.domain()[1]+.3);
+					
+				grps.append("polyline")
+					.attr("id", "arrowUp")
+					.attr("points", str2)
+					.attr('visibility', function(d,i){if(chart.select!=i){return 'hidden'}else{return 'visible'}})
+					.style('fill', 'midnightblue')
+					.style('stroke-width', '0')
+					.on("mousedown", function(){var time = (new Date()).getTime(); d3.event.preventDefault();chart.frequencyUp(time);});
+				}
+				
+				//x chart.x(1.8)
+				//y chart.y(chart.y.domain()[1]-.75)
+				//.style("visibility", function(d,i){if(chart.select!=i){return 'hidden';}else{return 'show';}})
 
+				
                 grps.append("svg:text")
                     .classed("communication", true)
                     .attr("text-anchor", "end")
                     .attr("x", chart.x(1.8))
-                    .attr("y", chart.y(chart.y.domain()[1]-.75))
+                    .attr("y", chart.y(chart.y.domain()[1]))
                     .attr("id", function(d,i){return "comm_channel_"+i+"_frequency";})
                     .text(function(d){d.frequency = Math.floor(Math.random()*(chart.data.absoluteMax - chart.data.absoluteMin) + chart.data.absoluteMin); d.frequency = d.frequency%2==0 ? d.frequency+1 : d.frequency; return d.frequency/10})
                     .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.indexSet(i, time);})
@@ -173,13 +230,14 @@ d3.chart("Communication", {
                             }
                         }
                         chart.last = d3.event.touches[0].clientX;
-                    });
+                    })
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.indexSet(i, time);});
 
                 grps.append("svg:text")
                     .classed("communication", true)
                     .attr("text-anchor", "start")
                     .attr("x", chart.x(.2))
-                    .attr("y", chart.y(0)-chart.y(.75))
+                    .attr("y", chart.y(chart.y.domain()[1]))
                     .attr("id", function(d,i){return "comm_channel_"+i+"_name";})
                     .text(function(d){return d.name})
                     .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.indexSet(i, time);})
@@ -192,8 +250,8 @@ d3.chart("Communication", {
                             }
                         }
                         chart.last = d3.event.touches[0].clientX;
-                    });
-
+                    })
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.indexSet(i, time);});
 
 
                 return grps;
@@ -211,14 +269,19 @@ d3.chart("Communication", {
 
                     chart.target_name.text(chart.data.channels[channel].name)
                         .attr("x", chart.x(1.2))
-                        .attr("y", chart.y(chart.data.channels.length*1.25+2.75)+chart.y(0)-chart.y(.75));
+                        .attr("y", chart.y(chart.data.channels.length*1.25+3.5)+chart.y(0)-chart.y(.75));
 
                     chart.target_frequency.text(frequency/10)
                         .attr("x", chart.x(2.8))
-                        .attr("y", chart.y(chart.data.channels.length*1.25+2.75)+chart.y(0)-chart.y(.75));
+                        .attr("y", chart.y(chart.data.channels.length*1.25+3.5)+chart.y(0)-chart.y(.75));
+
+                    this.select("rect")
+                        .classed("highlighted", function(d,i){return chart.select==i})
+                        .attr("width", chart.x(2))
+                        .attr("height", chart.y(0)-chart.y(1));
 
                     return this.attr("transform", function(d,i){
-                            return "translate("+[chart.x(1),chart.y(chart.data.channels.length*1.25+.75-i*1.25)]+")";
+                        return "translate("+[chart.x(1),chart.y(chart.data.channels.length*1.25+.75-i*1.25)]+")";
                     });
                 },
                 "update": function(){
@@ -226,31 +289,34 @@ d3.chart("Communication", {
 
                     chart.target_name
                         .attr("x", chart.x(1.2))
-                        .attr("y", chart.y(chart.data.channels.length*1.25+2.75)+chart.y(0)-chart.y(.75));
+                        .attr("y", chart.y(chart.data.channels.length*1.25+3.5)+chart.y(0)-chart.y(.75));
 
                     chart.target_frequency
                         .attr("x", chart.x(2.8))
-                        .attr("y", chart.y(chart.data.channels.length*1.25+2.75)+chart.y(0)-chart.y(.75));
+                        .attr("y", chart.y(chart.data.channels.length*1.25+3.5)+chart.y(0)-chart.y(.75));
 
                     this.select("rect")
                             .classed("highlighted", function(d,i){return chart.select==i})
-                            .attr("width", chart.x(2))
-                            .attr("height", chart.y(0)-chart.y(1));
-
+					        .attr("width", chart.x(2))
+                            .attr("height", chart.y(0)-chart.y(1))
+                            .attr("y", chart.y(chart.y.domain()[1] + .7));
+					
+					
+					this.select("#arrowUp").attr('visibility', function(d,i){if(chart.select!=i || !chart.data.mouseVersion){return 'hidden';}else{return 'visible';}});
+					this.select("#arrowDown").attr('visibility', function(d,i){if(chart.select!=i || !chart.data.mouseVersion){return 'hidden';}else{return 'visible';}});
+					
                     this.selectAll("text")
-                            .text(function(d){return d.name})
-                            .attr("y", chart.y(0)-chart.y(.75));
+                            .text(function(d){return d.name});
 
                     this.select("text")
                             .text(function(d){return d.frequency/10;});
 
                     var temp=this;
 
-
-
                     return this.attr("transform", function(d,i){
                             return "translate("+[chart.x(1),chart.y(chart.data.channels.length*1.25+.75-i*1.25)]+")";
                     });
+					
                 },
                 "exit": function(){
                     return this.remove();
@@ -310,7 +376,7 @@ d3.chart("Communication", {
         chart.draw(chart.data);
     },
 
-    // Increases the frequency of the correctly selected channel
+    // Decreases the frequency of the correctly selected channel
     frequencyDown: function(time){
         var chart = this;
         chart.data.channels[chart.select].frequency-=2;

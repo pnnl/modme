@@ -13,6 +13,12 @@
 
 <form action="{% url 'ModME:survey' %}" style="display:none" method="post">
 {% csrf_token %}
+<input type="hidden" name="experimentId" id="experimentId" value="{{ experimentId }}"/>
+<input type="hidden" name="conditionIndex" id="conditionIndex" value="{{ conditionIndex }}"/>
+<input type="hidden" name="conditionList" id="conditionList" value="{{ conditionList }}"/>
+<input type="hidden" name="participantAlias" id="participantAlias" value="{{ participantAlias }}"/>
+<input type="hidden" name="sessionName" id="sessionName" value="{{ sessionName }}"/>
+<input type="hidden" name="studyName" id="studyName" value="{{ studyName }}"/>
 <input type="hidden" name="data" id="data"/>
 <input type="hidden" name="surveyIndex" id="surveyIndex" value="{{ surveyIndex }}"/>
 <input type="hidden" name="metadataID" id="metadataID" value="{{ metadata.id }}"/>

@@ -216,7 +216,59 @@ button:hover {
                         <textarea id="task_textarea7" style="display:none"></textarea>
                     </td>
                 </tr>
-
+				<tr>
+                    <td>
+                        <label id="task_label8" style="display:none">label15</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox8" style="display:none"></input>
+                        <select id="task_select8" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea8" style="display:none"></textarea>
+                    </td>
+                </tr>
+				<tr>
+                    <td>
+                        <label id="task_label9" style="display:none">label15</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox9" style="display:none"></input>
+                        <select id="task_select9" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea9" style="display:none"></textarea>
+                    </td>
+                </tr>
+				<tr>
+                    <td>
+                        <label id="task_label10" style="display:none">label15</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox10" style="display:none"></input>
+                        <select id="task_select10" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea10" style="display:none"></textarea>
+                    </td>
+                </tr>
+				<tr>
+                    <td>
+                        <label id="task_label11" style="display:none">label15</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="task_checkbox11" style="display:none"></input>
+                        <select id="task_select11" style="display:none">
+                            <option>option1</option>
+                            <option>option2</option>
+                        </select>
+                        <textarea id="task_textarea11" style="display:none"></textarea>
+                    </td>
+                </tr>
+				
                 <tr>
                     <td>
                         <button id = "button1" type = "button" style="background-color:bbbbbb; display:none;"> button 1 </button>
@@ -703,7 +755,7 @@ button:hover {
         document.getElementById("durationField").value = document.getElementById("duration").value;
         document.getElementById("nameField").value = document.getElementById("name").value;
 
-        document.getElementById("parameterIdField").value = {{ parameters.id }};
+        document.getElementById("experimentIdField").value = {{ parameters.id }};
 
         document.getElementById("save").click();
     };
@@ -731,7 +783,7 @@ button:hover {
 <input type="hidden" name="duration" id="durationField"/>
 <input type="hidden" name="name" id="nameField"/>
 
-<input type="hidden" name="parameterId" id="parameterIdField"/>
+<input type="hidden" name="experimentId" id="experimentIdField"/>
 
 <input type="submit" value="Save" id="save" style="visibility:hidden"/>
 </form>

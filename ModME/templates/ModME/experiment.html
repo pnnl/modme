@@ -388,6 +388,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <form action="{% url 'ModME:done' %}" method="post" style="display:none">
 {% csrf_token %}
+<input type="hidden" name="experimentId" id="experimentId" value="{{ experimentId }}"/>
+<input type="hidden" name="conditionIndex" id="conditionIndex" value="{{ conditionIndex }}"/>
+<input type="hidden" name="conditionList" id="conditionList" value="{{ conditionList }}"/>
+<input type="hidden" name="participantAlias" id="participantAlias" value="{{ participantAlias }}"/>
+<input type="hidden" name="sessionName" id="sessionName" value="{{ sessionName }}"/>
+<input type="hidden" name="studyName" id="studyName" value="{{ studyName }}"/>
 <input type="hidden" name="data" id="data_field"/>
 <input type="hidden" name="id" id="id_field" value="{{ parameters.id }}"/>
 {% if eventReuseMetadataId %}

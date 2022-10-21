@@ -35,6 +35,15 @@ p.fullScreenCenteredTextExperimentor {
 		<p class="fullScreenCenteredTextExperimentee" align="center">
 			Thank you for completing the experiment.<br>You may now alert the experimenter that you are done.
 		</p>
+
+		{% if completion_code != "" or null %}
+
+			<p class="fullScreenCenteredTextExperimentee" align="center">
+				Your Completion Code:  {{completion_code}}
+				Participant Alias: {{participant_Alias}}
+			</p>
+
+		{% endif %}
 		<p class="fullScreenCenteredTextExperimentor" align="center">
 			Experimenter press space or tap the screen to return to experiment home page.
 		</p>
@@ -45,10 +54,10 @@ p.fullScreenCenteredTextExperimentor {
 	d3.select(window).on("keydown",function(){
 		var keyCode = d3.event.keyCode;
 		if(keyCode == 32){
-			window.location.href = window.location.href.replace(/\/(complete|survey)\/$/, "");
+			window.location.href = window.location.href.replace(/\/(complete|survey)\/$/, "/");
 		}
 	});
 	d3.select(window).on("touchstart", function(){
-        window.location.href = window.location.href.replace(/\/(complete|survey)\/$/, "");
+        window.location.href = window.location.href.replace(/\/(complete|survey)\/$/, "/");
     });
 </script>

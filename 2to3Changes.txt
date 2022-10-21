@@ -1,0 +1,625 @@
+C:\Users\Bob\Desktop\modme>2to3 .
+RefactoringTool: Skipping optional fixer: buffer
+RefactoringTool: Skipping optional fixer: idioms
+RefactoringTool: Skipping optional fixer: set_literal
+RefactoringTool: Skipping optional fixer: ws_comma
+RefactoringTool: Refactored .\NewTask.py
+--- .\NewTask.py        (original)
++++ .\NewTask.py        (refactored)
+@@ -76,7 +76,7 @@
+             i = i + 1
+
+         views[i - 1] = "    " + '    '.join(newViews[3:]) + '\n'
+-        print newViews[3:]
++        print(newViews[3:])
+
+     with open('ModME/views.py', 'w') as file:
+         file.writelines(views)
+@@ -87,44 +87,44 @@
+ objects = TableAdd.objects.all()
+
+ for uniquestring in os.listdir('ModME/tableAdditions/'):
+-    if filter(lambda object: object.uniqueString == uniquestring, objects) == []:
++    if [object for object in objects if object.uniqueString == uniquestring] == []:
+         model = []
+         with open('ModME/tableAdditions/' + str(uniquestring) + '/models.txt', 'r') as file:
+             model = file.readlines()
+-        print model[0].split('(')[0][6:-1] + "table was not detected in the database."
+-        if raw_input("Do you want to delete it? [Y/n]: ").lower() != 'n':
++        print(model[0].split('(')[0][6:-1] + "table was not detected in the database.")
++        if input("Do you want to delete it? [Y/n]: ").lower() != 'n':
+             changesFlag = True
+             shutil.rmtree('ModME/tableAdditions/' + uniquestring)
+             model = []
+             with open('ModME/models.py', 'r') as file:
+                 model = file.readlines()
+-            model = filter(lambda x: not x.endswith(uniquestring + '\n'), model)
++            model = [x for x in model if not x.endswith(uniquestring + '\n')]
+             with open('ModME/models.py', 'w') as file:
+                 file.writelines(model)
+
+             admin = []
+             with open('ModME/admin.py', 'r') as file:
+                 admin = file.readlines()
+-            admin = filter(lambda x: not x.endswith(uniquestring + '\n'), admin)
++            admin = [x for x in admin if not x.endswith(uniquestring + '\n')]
+             with open('ModME/admin.py', 'w') as file:
+                 file.writelines(admin)
+
+             view = []
+             with open('ModME/views.py', 'r') as file:
+                 view = file.readlines()
+-            view = filter(lambda x: not x.endswith(uniquestring + '\n'), view)
++            view = [x for x in view if not x.endswith(uniquestring + '\n')]
+             with open('ModME/views.py', 'w') as file:
+                 file.writelines(view)
+         else:
+             tableAdded = True
+-            print "Adding to table"
++            print("Adding to table")
+             t = TableAdd(tableName=model[0].split('(')[0][6:-1], uniqueString=uniquestring, applyed=True)
+             t.save()
+
+ if changesFlag:
+     sys.argv = ['manage.py', 'makemigrations']
+-    execfile('manage.py')
++    exec(compile(open('manage.py', "rb").read(), 'manage.py', 'exec'))
+     sys.argv = ['manage.py', 'migrate']
+-    execfile('manage.py')
++    exec(compile(open('manage.py', "rb").read(), 'manage.py', 'exec'))
+ # else if not tableAdded:
+ #     print "No changes detected"
+RefactoringTool: Refactored .\Tornado.py
+--- .\Tornado.py        (original)
++++ .\Tornado.py        (refactored)
+@@ -16,9 +16,9 @@
+     f = open("pid", "w")
+     f.write(repr(os.getpid()))
+     f.close()
+-    print "Django version " + django.get_version() + ", using settings " + repr(os.environ['DJANGO_SETTINGS_MODULE'])
+-    print "Tornado " + tornado.version + " server started at http://127.0.0.1:" + repr(port) + "/"
+-    print "Quit the server with CONTROL-C"
++    print("Django version " + django.get_version() + ", using settings " + repr(os.environ['DJANGO_SETTINGS_MODULE']))
++    print("Tornado " + tornado.version + " server started at http://127.0.0.1:" + repr(port) + "/")
++    print("Quit the server with CONTROL-C")
+     PATH = os.path.dirname(__file__)
+     wsgi_app = tornado.wsgi.WSGIContainer(
+         django.core.handlers.wsgi.WSGIHandler())
+@@ -33,7 +33,7 @@
+
+
+ if __name__ == "__main__":
+-    print "server Started"
++    print("server Started")
+     if(len(sys.argv) == 2):
+         main(sys.argv[1])
+     else:
+RefactoringTool: No changes to .\manage.py
+RefactoringTool: Refactored .\ModME\admin.py
+--- .\ModME\admin.py    (original)
++++ .\ModME\admin.py    (refactored)
+@@ -26,7 +26,7 @@
+
+     # Adds link column that takes user to the configuration page this is a test
+     def view_link(self, obj):
+-        return u"<a href='/ModME/configuration/%d'>Configure</a>" % (obj.id)
++        return "<a href='/ModME/configuration/%d'>Configure</a>" % (obj.id)
+
+     def response_add(self, request, obj, post_url_continue="../%s/"):
+         if '_continue' in request.POST:
+RefactoringTool: No changes to .\ModME\models.py
+RefactoringTool: Refactored .\ModME\services.py
+--- .\ModME\services.py (original)
++++ .\ModME\services.py (refactored)
+@@ -36,7 +36,7 @@
+     ':rtype django.http.HttpResponse'
+
+     def queryToFilterKey(key, value):
+-        return key if isinstance(value, basestring) else key + "__in"
++        return key if isinstance(value, str) else key + "__in"
+     keyToQueryField = {
+         'participant': 'participant__alias',
+         'session': 'session__name',
+@@ -45,7 +45,7 @@
+     disallowedKeys = set(request.GET.keys()) - set(keyToQueryField.keys())
+     if (disallowedKeys):
+         return HttpResponseBadRequest()
+-    filterArgs = {queryToFilterKey(keyToQueryField[key], value): value for key, value in request.GET.items()}
++    filterArgs = {queryToFilterKey(keyToQueryField[key], value): value for key, value in list(request.GET.items())}
+     metadata = Metadata.objects.all().filter(**filterArgs).select_related()
+     blarg = [{
+             'id': metadatum.id,
+RefactoringTool: No changes to .\ModME\urls.py
+RefactoringTool: Refactored .\ModME\views.py
+--- .\ModME\views.py    (original)
++++ .\ModME\views.py    (refactored)
+@@ -61,9 +61,9 @@
+     nominalTaskIds = [condition.task1, condition.task2, condition.task3, condition.task4]
+     tasks = list(Task.objects.filter(pk__in=nominalTaskIds))
+     taskFiles = set([taskFile.name for task in tasks for taskFile in task.file_set.all()])
+-    cssFiles = filter(lambda filename: filename.endswith(".css"), taskFiles)
++    cssFiles = [filename for filename in taskFiles if filename.endswith(".css")]
+     baseFiles = ["d3/d3.v3.min.js", "d3/d3.chart.min.js"]
+-    jsTaskFiles = filter(lambda filename: not filename.endswith(".css"), taskFiles)
++    jsTaskFiles = [filename for filename in taskFiles if not filename.endswith(".css")]
+     requiredFiles = OrderedDict.fromkeys(baseFiles + jsTaskFiles)  # no duplicates
+     taskNames = []
+     for (index, nominalTaskId) in enumerate(nominalTaskIds):
+@@ -296,8 +296,8 @@
+                                        )
+                                )
+                        except KeyError:
+-                               print "Error in mouse:"
+-                               print info
++                               print("Error in mouse:")
++                               print(info)
+
+
+ ######ParseUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########
+@@ -313,10 +313,10 @@
+
+ ######SaveUniqueString3m3n4h5g6c6c3n3id8fg7o3n033hn########
+
+-    print condition
++    print(condition)
+     conditions = condition.surveys.all()
+     if conditions:
+-        print conditions[0].fileName
++        print(conditions[0].fileName)
+
+     template = 'ModME/complete.html'
+     context = None
+RefactoringTool: No changes to .\ModME\management\commands\load_events.py
+RefactoringTool: Refactored .\ModME\migrations\0001_initial.py
+--- .\ModME\migrations\0001_initial.py  (original)
++++ .\ModME\migrations\0001_initial.py  (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0002_auto_20150622_1058.py
+--- .\ModME\migrations\0002_auto_20150622_1058.py       (original)
++++ .\ModME\migrations\0002_auto_20150622_1058.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0003_auto_20150622_1100.py
+--- .\ModME\migrations\0003_auto_20150622_1100.py       (original)
++++ .\ModME\migrations\0003_auto_20150622_1100.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0004_auto_20150622_1137.py
+--- .\ModME\migrations\0004_auto_20150622_1137.py       (original)
++++ .\ModME\migrations\0004_auto_20150622_1137.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0005_auto_20150622_1149.py
+--- .\ModME\migrations\0005_auto_20150622_1149.py       (original)
++++ .\ModME\migrations\0005_auto_20150622_1149.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0006_auto_20150622_1233.py
+--- .\ModME\migrations\0006_auto_20150622_1233.py       (original)
++++ .\ModME\migrations\0006_auto_20150622_1233.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0007_file.py
+--- .\ModME\migrations\0007_file.py     (original)
++++ .\ModME\migrations\0007_file.py     (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0008_auto_20150624_1112.py
+--- .\ModME\migrations\0008_auto_20150624_1112.py       (original)
++++ .\ModME\migrations\0008_auto_20150624_1112.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0009_auto_20150624_1113.py
+--- .\ModME\migrations\0009_auto_20150624_1113.py       (original)
++++ .\ModME\migrations\0009_auto_20150624_1113.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0010_auto_20150624_1121.py
+--- .\ModME\migrations\0010_auto_20150624_1121.py       (original)
++++ .\ModME\migrations\0010_auto_20150624_1121.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0011_auto_20150630_0711.py
+--- .\ModME\migrations\0011_auto_20150630_0711.py       (original)
++++ .\ModME\migrations\0011_auto_20150630_0711.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0012_auto_20150707_1156.py
+--- .\ModME\migrations\0012_auto_20150707_1156.py       (original)
++++ .\ModME\migrations\0012_auto_20150707_1156.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0013_auto_20150729_1123.py
+--- .\ModME\migrations\0013_auto_20150729_1123.py       (original)
++++ .\ModME\migrations\0013_auto_20150729_1123.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0014_auto_20150730_0756.py
+--- .\ModME\migrations\0014_auto_20150730_0756.py       (original)
++++ .\ModME\migrations\0014_auto_20150730_0756.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0015_auto_20150804_0903.py
+--- .\ModME\migrations\0015_auto_20150804_0903.py       (original)
++++ .\ModME\migrations\0015_auto_20150804_0903.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0016_auto_20150804_0904.py
+--- .\ModME\migrations\0016_auto_20150804_0904.py       (original)
++++ .\ModME\migrations\0016_auto_20150804_0904.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0017_auto_20150806_0746.py
+--- .\ModME\migrations\0017_auto_20150806_0746.py       (original)
++++ .\ModME\migrations\0017_auto_20150806_0746.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0018_tableadd.py
+--- .\ModME\migrations\0018_tableadd.py (original)
++++ .\ModME\migrations\0018_tableadd.py (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0019_tableadd_applyed.py
+--- .\ModME\migrations\0019_tableadd_applyed.py (original)
++++ .\ModME\migrations\0019_tableadd_applyed.py (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0020_auto_20150917_0832.py
+--- .\ModME\migrations\0020_auto_20150917_0832.py       (original)
++++ .\ModME\migrations\0020_auto_20150917_0832.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0021_pvt.py
+--- .\ModME\migrations\0021_pvt.py      (original)
++++ .\ModME\migrations\0021_pvt.py      (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0022_delete_pvt.py
+--- .\ModME\migrations\0022_delete_pvt.py       (original)
++++ .\ModME\migrations\0022_delete_pvt.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0023_pvc.py
+--- .\ModME\migrations\0023_pvc.py      (original)
++++ .\ModME\migrations\0023_pvc.py      (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0024_auto_20160204_1437.py
+--- .\ModME\migrations\0024_auto_20160204_1437.py       (original)
++++ .\ModME\migrations\0024_auto_20160204_1437.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0025_survay.py
+--- .\ModME\migrations\0025_survay.py   (original)
++++ .\ModME\migrations\0025_survay.py   (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0026_auto_20160407_1329.py
+--- .\ModME\migrations\0026_auto_20160407_1329.py       (original)
++++ .\ModME\migrations\0026_auto_20160407_1329.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0027_auto_20160407_1611.py
+--- .\ModME\migrations\0027_auto_20160407_1611.py       (original)
++++ .\ModME\migrations\0027_auto_20160407_1611.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0028_nasatlx_surveyfile.py
+--- .\ModME\migrations\0028_nasatlx_surveyfile.py       (original)
++++ .\ModME\migrations\0028_nasatlx_surveyfile.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0029_test.py
+--- .\ModME\migrations\0029_test.py     (original)
++++ .\ModME\migrations\0029_test.py     (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0030_delete_test.py
+--- .\ModME\migrations\0030_delete_test.py      (original)
++++ .\ModME\migrations\0030_delete_test.py      (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0031_third_normal.py
+--- .\ModME\migrations\0031_third_normal.py     (original)
++++ .\ModME\migrations\0031_third_normal.py     (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0032_study_name.py
+--- .\ModME\migrations\0032_study_name.py       (original)
++++ .\ModME\migrations\0032_study_name.py       (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0033_optional_survey.py
+--- .\ModME\migrations\0033_optional_survey.py  (original)
++++ .\ModME\migrations\0033_optional_survey.py  (refactored)
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from __future__ import unicode_literals
++
+
+ from django.db import models, migrations
+
+RefactoringTool: Refactored .\ModME\migrations\0034_add_default_tasks.py
+--- .\ModME\migrations\0034_add_default_tasks.py        (original)
++++ .\ModME\migrations\0034_add_default_tasks.py        (refactored)
+@@ -1,5 +1,5 @@
+ # vim: set fileencoding=utf-8 :
+-from __future__ import unicode_literals
++
+
+ from django.db import migrations
+ from ModME.models import (
+RefactoringTool: Refactored .\ModME\migrations\0035_add_condition_survey_field_help_text.py
+--- .\ModME\migrations\0035_add_condition_survey_field_help_text.py     (original)
++++ .\ModME\migrations\0035_add_condition_survey_field_help_text.py     (refactored)
+@@ -1,6 +1,6 @@
+ # -*- coding: utf-8 -*-
+ # Generated by Django 1.11 on 2017-07-28 18:19
+-from __future__ import unicode_literals
++
+
+ from django.db import migrations, models
+
+RefactoringTool: Refactored .\ModME\migrations\0036_rename_surveyfile_survey_property.py
+--- .\ModME\migrations\0036_rename_surveyfile_survey_property.py        (original)
++++ .\ModME\migrations\0036_rename_surveyfile_survey_property.py        (refactored)
+@@ -1,6 +1,6 @@
+ # -*- coding: utf-8 -*-
+ # Generated by Django 1.11 on 2017-07-28 18:19
+-from __future__ import unicode_literals
++
+
+ from django.db import migrations, models
+
+RefactoringTool: Refactored .\ModME\migrations\0037_add_nasa_tlx_survey.py
+--- .\ModME\migrations\0037_add_nasa_tlx_survey.py      (original)
++++ .\ModME\migrations\0037_add_nasa_tlx_survey.py      (refactored)
+@@ -1,5 +1,5 @@
+ # vim: set fileencoding=utf-8 :
+-from __future__ import unicode_literals
++
+
+ from django.db import migrations
+ from ModME.models import (
+RefactoringTool: Refactored .\ModME\migrations\0038_session_uniqueness.py
+--- .\ModME\migrations\0038_session_uniqueness.py       (original)
++++ .\ModME\migrations\0038_session_uniqueness.py       (refactored)
+@@ -1,6 +1,6 @@
+ # -*- coding: utf-8 -*-
+ # Generated by Django 1.11 on 2017-08-07 17:26
+-from __future__ import unicode_literals
++
+
+ from django.db import migrations, models
+
+RefactoringTool: Refactored .\ModME\migrations\0039_add_metadata_uniqueness_constraint.py
+--- .\ModME\migrations\0039_add_metadata_uniqueness_constraint.py       (original)
++++ .\ModME\migrations\0039_add_metadata_uniqueness_constraint.py       (refactored)
+@@ -1,6 +1,6 @@
+ # -*- coding: utf-8 -*-
+ # Generated by Django 1.11 on 2017-08-07 17:45
+-from __future__ import unicode_literals
++
+
+ from django.db import migrations
+
+RefactoringTool: No changes to .\home\views.py
+RefactoringTool: No changes to .\multiTask\settings.py
+RefactoringTool: No changes to .\multiTask\urls.py
+RefactoringTool: No changes to .\multiTask\wsgi.py
+RefactoringTool: Files that need to be modified:
+RefactoringTool: .\NewTask.py
+RefactoringTool: .\Tornado.py
+RefactoringTool: .\manage.py
+RefactoringTool: .\ModME\admin.py
+RefactoringTool: .\ModME\models.py
+RefactoringTool: .\ModME\services.py
+RefactoringTool: .\ModME\urls.py
+RefactoringTool: .\ModME\views.py
+RefactoringTool: .\ModME\management\commands\load_events.py
+RefactoringTool: .\ModME\migrations\0001_initial.py
+RefactoringTool: .\ModME\migrations\0002_auto_20150622_1058.py
+RefactoringTool: .\ModME\migrations\0003_auto_20150622_1100.py
+RefactoringTool: .\ModME\migrations\0004_auto_20150622_1137.py
+RefactoringTool: .\ModME\migrations\0005_auto_20150622_1149.py
+RefactoringTool: .\ModME\migrations\0006_auto_20150622_1233.py
+RefactoringTool: .\ModME\migrations\0007_file.py
+RefactoringTool: .\ModME\migrations\0008_auto_20150624_1112.py
+RefactoringTool: .\ModME\migrations\0009_auto_20150624_1113.py
+RefactoringTool: .\ModME\migrations\0010_auto_20150624_1121.py
+RefactoringTool: .\ModME\migrations\0011_auto_20150630_0711.py
+RefactoringTool: .\ModME\migrations\0012_auto_20150707_1156.py
+RefactoringTool: .\ModME\migrations\0013_auto_20150729_1123.py
+RefactoringTool: .\ModME\migrations\0014_auto_20150730_0756.py
+RefactoringTool: .\ModME\migrations\0015_auto_20150804_0903.py
+RefactoringTool: .\ModME\migrations\0016_auto_20150804_0904.py
+RefactoringTool: .\ModME\migrations\0017_auto_20150806_0746.py
+RefactoringTool: .\ModME\migrations\0018_tableadd.py
+RefactoringTool: .\ModME\migrations\0019_tableadd_applyed.py
+RefactoringTool: .\ModME\migrations\0020_auto_20150917_0832.py
+RefactoringTool: .\ModME\migrations\0021_pvt.py
+RefactoringTool: .\ModME\migrations\0022_delete_pvt.py
+RefactoringTool: .\ModME\migrations\0023_pvc.py
+RefactoringTool: .\ModME\migrations\0024_auto_20160204_1437.py
+RefactoringTool: .\ModME\migrations\0025_survay.py
+RefactoringTool: .\ModME\migrations\0026_auto_20160407_1329.py
+RefactoringTool: .\ModME\migrations\0027_auto_20160407_1611.py
+RefactoringTool: .\ModME\migrations\0028_nasatlx_surveyfile.py
+RefactoringTool: .\ModME\migrations\0029_test.py
+RefactoringTool: .\ModME\migrations\0030_delete_test.py
+RefactoringTool: .\ModME\migrations\0031_third_normal.py
+RefactoringTool: .\ModME\migrations\0032_study_name.py
+RefactoringTool: .\ModME\migrations\0033_optional_survey.py
+RefactoringTool: .\ModME\migrations\0034_add_default_tasks.py
+RefactoringTool: .\ModME\migrations\0035_add_condition_survey_field_help_text.py
+RefactoringTool: .\ModME\migrations\0036_rename_surveyfile_survey_property.py
+RefactoringTool: .\ModME\migrations\0037_add_nasa_tlx_survey.py
+RefactoringTool: .\ModME\migrations\0038_session_uniqueness.py
+RefactoringTool: .\ModME\migrations\0039_add_metadata_uniqueness_constraint.py
+RefactoringTool: .\home\views.py
+RefactoringTool: .\multiTask\settings.py
+RefactoringTool: .\multiTask\urls.py
+RefactoringTool: .\multiTask\wsgi.py
+
+C:\Users\Bob\Desktop\modme>

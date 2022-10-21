@@ -1,4 +1,4 @@
-.background, .communication {
+.background, .communication, .audiocommunication {
 	stroke-width: 5px;
 	stroke: midnightblue;
 }
@@ -7,7 +7,7 @@
 	fill: steelblue;
 }
 
-.communication {
+.communication, .audiocommunication {
 	fill: black;
 }
 
@@ -21,21 +21,36 @@ circle.tracking.active, .resource, .switches.on {
 	fill: yellowgreen;
 }
 
-circle.tracking.alert, text.communication.alert, .switches.alert {
+.safeUserPlane, .inboundPlane {
+	fill: white;
+	stroke: white;
+}
+
+.dangerUserPlane {
+	fill: crimson;
+	stroke: crimson;
+}
+
+
+circle.tracking.alert, text.communication.alert, .switches.alert , text.audiocommunication.alert{ 
 	fill:crimson;
 }
 
-text.monitoring,  text.resourceManagement, text.communication{
+text.monitoring,  text.resourceManagement, text.communication, text.audiocommunication{
 	fill: white;
 	stroke-width: 0px;
 }
 
-text.communication {
+text.communication, text.audiocommunication {
 	font-size: 35px;
 }
 
 .highlighted {
 	stroke: crimson;
+}
+
+.entered{
+	stroke: green;
 }
 
 path, .monitoring, .resourceManagement {
@@ -71,4 +86,9 @@ text.resourceManagement{
 
 circle.resourceManagement{
 	fill: yellowgreen;
+}
+
+text.crossHairTracking{
+	fill: yellow;
+	font-size: 30px;
 }

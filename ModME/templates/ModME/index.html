@@ -1,46 +1,126 @@
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
-    p {
-        font-family: "Arial";
-    }
-</style>
+    <style type="text/css">
+        h1 {
+            margin-bottom: 0;
+            text-align: center;
+            font-size: 100px;
+            color: black;
+            background-color: #FFA500;
+        }
+        p {
+            font-family: "Arial";
+            text-align: left;
+        }
+        body {
+            background-color: #EEEEEE;
+        }
+        label {
+            display: inline-block;
+            width: 20ex;
+            text-align: right;
+        }
+        input {
+            display: inline-block;
+        }
+        .validationError {
+            outline: solid #990000 .3ex;
+            color: #990000;
+        }
+        #newSession {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #content {
+            background-color: #DDDDDD;
+            text-align: center;
+            padding: 1em;
+        }
+        #messages {
+            background-color: #fC0;
+            color: #900;
+        }
+        #messages > p {
+            margin: 0;
+            padding: .2rem .5rem;
+        }
+    </style>
 </head>
 
-<body style="background-color:EEEEEE">
-<div id="header" style="background-color:#FFA500;">
-    <h1 style="margin-bottom:0;text-align:center;font-size:100px;color:#000000">ModME</h1>
+<body>
+
+<div id="header">
+    <h1>ModME</h1>
 </div>
 
+<div id="messages">
+</div>
 
-
-<div id="content" style="background-color:#DDDDDD;height=600px;width=600px;text-align:center;">
-    <form action="{% url 'ModME:begin' %}" method="post">
+<div id="content">
+    <form id="newSession" action="{% url 'ModME:icd' %}" method="post">
         {% csrf_token %}
-        <select id = "Parameters" name = "parameter_id">
+        <select id = "experiments" name = "experimentId">
             <option value="%">---------</option>
-            {% for entry in parameters_list %}
-                <option value="{{ entry.id }}">{{ entry.Name }}</option>
+            {% for entry in experiment_list %}
+                <option value="{{ entry.id }}">{{ entry.name }}</option>
             {% endfor %}
-        </select><br>
-        <p>Participant id: <input id="participantAlias" type="text" name="participantAlias"/></p>
-        <p>Session id: <input id="sessionName" type="text" name="sessionName"/></p>
-        <p>Study id: <input id="studyName" type="text" name="studyName"/></p>
-        <label>Reuse Session Data: <input id="reuse" type="checkbox"></label>
-        <select id="metadata" name="metadata_id"></select>
+        </select>
+        <p>
+            <label for="participantAlias">Participant id:</label>
+            <input id="participantAlias" type="text" name="participantAlias" required/>
+        </p>
+        <p>
+            <label for="sessionName">Session id:</label>
+            <input id="sessionName" type="text" name="sessionName" required/>
+        </p>
+        <p>
+            <label for="studyName">Study id:</label>
+            <input id="studyName" type="text" name="studyName" required/>
+        </p>
+        <p>
+            <label for="reuse">Reuse Session Data:</label>
+            <input id="reuse" type="checkbox">
+            <select id="metadata" name="metadata_id"></select>
+        </p>
         <input id="submit" type="submit" value="Begin" style="display:none"/>
+        <button id="icd" onclick="checkAndSubmit()" type="button"> Begin </button>
     </form>
-        <button id="begin" onclick="check()"> Begin </button>
 </div>
 
+<script src="/static/admin/js/jquery.min.js"></script>
 <script type="text/javascript">
+const ValidationStatus = Object.freeze({'valid': {}, 'invalid': {}});
 
+function warn(message, type) {
+    newMessage = $('<p class="message warning"></p>');
+    newMessage.addClass(type);
+    newMessage.text(message);
+    $('#messages').append(newMessage);
+}
+function checkAndSubmit() {
+    $('.validationError').removeClass('validationError');
+    $('#messages .validationMessage').remove();
+    check()
+    .then(
+        success => document.getElementById("submit").click(),
+        failure => warn(failure, 'validationMessage')
+    );
+}
 function check() {
-    var select = document.getElementById("Parameters");
-    var condition = select.options[select.selectedIndex].innerHTML;
-    // TODO if the user has already completed the condition in this session, confirm with user before submitting.
-    // Discuss this with Leslie first.  It's not clear if the old code was trying to prevent id confusion because of poor database design.
-    // It could be that the we just don't want users to repeat conditions.
-    document.getElementById("submit").click();
+    var dataPromise = fetchMetadata();
+    return dataPromise.then(
+        function(data) {
+            if (data.length == 0)
+                return ValidationStatus.valid;
+            document.getElementById("participantAlias").classList.add("validationError");
+            document.getElementById("sessionName").classList.add("validationError");
+            document.getElementById("studyName").classList.add("validationError");
+            return Promise.reject('The combination of participant, session, and study must be unique.  A duplicate record was detected.');
+        },
+        failure => failure
+    );
 }
 
 function stopRKey(evt) {
@@ -75,7 +155,7 @@ function formatDate (value) {
     return output + " " + hour + ":" + dateLeftZero(date.getMinutes()) + part + " " + date.toString().match(/\(([^)]+)\)$/)[1];
 }
 
-function fetchMetdata() {
+function fetchReusableSessions() {
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -87,13 +167,23 @@ function fetchMetdata() {
             }, []);
         }
     };
-    xhr.open("GET", (location + "") + "get-reusable-sessions?condition=" + encodeURIComponent(Parameters.value));
+    xhr.open("GET", (location + "") + "get-reusable-sessions?condition=" + encodeURIComponent(experiments.value));
     xhr.send();
 }
 
-Parameters.addEventListener("change", function() {
+function fetchMetadata(filter) {
+    var address = location.href.substr(0, location.href.length-(location.search.length+location.hash.length)) + "metadata/json";
+    var query = "?session=" + encodeURIComponent(sessionName.value)
+        + "&participant=" + encodeURIComponent(participantAlias.value)
+        + "&study=" + encodeURIComponent(studyName.value);
+    var data = fetch(address + query)
+    .then(response => response.json(), failure => failure)
+    return data;
+}
 
-    reuse.disabled = Parameters.value === "%";
+experiments.addEventListener("change", function() {
+
+    reuse.disabled = experiments.value === "%";
 
     if (reuse.disabled)
     {
@@ -101,11 +191,11 @@ Parameters.addEventListener("change", function() {
     }
     else
     {
-        fetchMetdata();
+        fetchReusableSessions();
     }
 });
 
-reuse.disabled = Parameters.value === "%";
+reuse.disabled = experiments.value === "%";
 reuse.checked = false;
 reuse.addEventListener("change", function() {
 
@@ -114,9 +204,11 @@ reuse.addEventListener("change", function() {
 
 if (!reuse.disabled)
 {
-    fetchMetdata();
+    fetchReusableSessions();
 }
 
 begin.disabled = false;
 metadata.disabled = true;
 </script>
+</body>
+</html>

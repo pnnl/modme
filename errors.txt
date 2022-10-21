@@ -1,0 +1,122 @@
+PS C:\Users\Bob\Desktop\modme> python Tornado.py
+server Started
+Django version 2.2.7, using settings 'multiTask.settings'
+Tornado 6.0.3 server started at http://127.0.0.1:9000/
+Quit the server with CONTROL-C
+
+//warnnings that appeared when i configured the conditions
+
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.31) 15.61ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.31) 15.62ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.31) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.31) 0.00ms
+
+//when conditon started
+
+Not Found: /ModME/get-reusable-sessions
+WARNING:django.request:Not Found: /ModME/get-reusable-sessions
+WARNING:tornado.access:404 GET /ModME/get-reusable-sessions?condition=2 (192.1.1.31) 0.00ms
+Not Found: /ModME/get-reusable-sessions
+WARNING:django.request:Not Found: /ModME/get-reusable-sessions
+WARNING:tornado.access:404 GET /ModME/get-reusable-sessions?condition=1 (192.1.1.31) 0.00ms
+Not Found: /ModME/metadata/json
+WARNING:django.request:Not Found: /ModME/metadata/json
+WARNING:tornado.access:404 GET /ModME/metadata/json?session=Test&participant=gwd&study=test (192.1.1.31) 0.00ms
+
+//when condition completes
+
+Condition object (1)
+ModME/nasatlx.js
+
+//when run on an tablet over the network that has a mouse attached
+
+Not Found: /ModME/get-reusable-sessions
+WARNING:django.request:Not Found: /ModME/get-reusable-sessions
+WARNING:tornado.access:404 GET /ModME/get-reusable-sessions?condition=1 (192.1.1.28) 15.59ms
+Not Found: /ModME/metadata/json
+WARNING:django.request:Not Found: /ModME/metadata/json
+WARNING:tornado.access:404 GET /ModME/metadata/json?session=Test&participant=Table_test120519b&study=Test (192.1.1.28) 1
+5.59ms
+Condition object (1)
+ModME/nasatlx.js
+
+//browsing through admin on the tablet
+
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 15.64ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 15.64ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 31.26ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 31.26ms
+WARNING:tornado.access:404 GET /static/admin/js/prepopulate_init.js (192.1.1.28) 15.61ms
+WARNING:tornado.access:404 GET /static/admin/js/change_form.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/change_form.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/prepopulate_init.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/img/search.svg (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 15.62ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 15.62ms
+WARNING:tornado.access:404 GET /static/admin/img/icon-yes.svg (192.1.1.28) 15.62ms
+WARNING:tornado.access:404 GET /static/admin/img/search.svg (192.1.1.28) 15.62ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/img/search.svg (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/img/icon-yes.svg (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 15.63ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 15.63ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/jquery/jquery.js (192.1.1.28) 15.63ms
+WARNING:tornado.access:404 GET /static/admin/js/vendor/xregexp/xregexp.js (192.1.1.28) 15.62ms
+WARNING:tornado.access:404 GET /static/admin/css/responsive.css (192.1.1.28) 0.00ms
+ 
+
+
+

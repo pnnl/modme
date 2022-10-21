@@ -40,6 +40,10 @@ d3.chart("Monitoring", {
 
         chart.defaults = {};
         chart.defaults.generateEvent = function(){
+			if(chart.data.distractor){
+				return null;
+			}
+			
             // sum the distribution so we can choose a random sample
             chart.totalProb=0;
             chart.data.buttons.forEach(function(d){
@@ -161,28 +165,30 @@ d3.chart("Monitoring", {
                 .ease("linear")
                 .attr("transform", ["translate("+chart.xScale(d.x)+","+chart.yScale(d.y+2.75)+")","scale("+chart.xScale(.5)/5+","+(chart.yScale(0)-chart.yScale(1.5))/10+")"])
                 .each("end", chart.translate);
-
-            if(d.event){
-                slider = d3.select(this);
-                var alert = {
-                    domID: slider.attr("id"),
-                    args: {
-                        widget: "slider",
-                        index: d.index,
-                        direction: direction,
-                        change: Math.abs(chart.data.event_range[direction] - chart.slider_range[direction]),
-                        range: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
-                    }
-                }
-                chart.alertListeners.forEach(function(d){d(alert);});
-                d.event=false;
-                d.i++;
-            }
-            else if(d.alert==3){
-                slider = d3.select(this);
-                chart.timeoutListeners.forEach(function(d){d({domID: slider.attr("id")});});
-                d.alert++;
-            }
+			if(!chart.data.distractor){
+				if(d.event){
+					slider = d3.select(this);
+					var alert = {
+						domID: slider.attr("id"),
+						args: {
+							widget: "slider",
+							index: d.index,
+							direction: direction,
+							change: Math.abs(chart.data.event_range[direction] - chart.slider_range[direction]),
+							range: { min: chart.data.event_range[0], max: chart.data.event_range[1] },
+						}
+                        
+					}
+					chart.alertListeners.forEach(function(d){d(alert);});
+					d.event=false;
+					d.i++;
+				}
+				else if(d.alert==3){
+					slider = d3.select(this);
+					chart.timeoutListeners.forEach(function(d){d({domID: slider.attr("id")});});
+					d.alert++;
+				}
+			}
         }
 
         this.layer("scale", scalesBase, {
@@ -238,7 +244,8 @@ d3.chart("Monitoring", {
                     .style("fill-opacity", 0)
                     .style("stroke-width", 0)
                     .style("fill", "black")
-                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetSliders(i, time);});
+                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetSliders(i, time);})
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetSliders(i, time);});
 
                 return grps;
             },
@@ -323,7 +330,9 @@ d3.chart("Monitoring", {
                     .attr("d", "M 0 3 L 1 3 L 1 0 L 5 5 L 1 10 L 1 7 L 0 7 z")
                     .style("stroke-width", ".6")
                     .classed("monitoring",true)
-                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetSliders(i, time);});
+                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetSliders(i, time);})
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetSliders(i, time);});
+
             },
             events: {
                 "enter":function(){
@@ -406,7 +415,9 @@ d3.chart("Monitoring", {
                     .attr("width", chart.x(rect_width))
                     .attr("height", chart.y(0)-chart.y(2))
                     .attr("y", chart.y(chart.ticks+7))
-                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetButtons(i, time);});
+                    .on("touchstart", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetButtons(i, time);})
+					.on("mousedown", function(d,i){var time = (new Date()).getTime(); d3.event.preventDefault(); chart.resetButtons(i, time);});
+
 
                 grps.append("text")
                     .attr("class", "monitoring")
@@ -493,7 +504,7 @@ d3.chart("Monitoring", {
         chart.responseListeners.forEach(function(d){d({domID:"monitor_slider_"+sliderNum, correct:true, direction: slider.i, ascii: slider.button, time:time});});
         slider.alert=4;
         slider.y = Math.round(chart.ticks/2);
-        var xp0 = chart.x(slider.x);
+        var xp0 = chart.xScale(slider.x);//chart.xScale(2.5*i+1.5); //chart.x(slider.x);
         // TODO I think yp0 and sliderIsInsideAllowedRange should be calculated based on ranges, not magic numbers
         var yp0 = chart.y(slider.y+2.75);
         var isMovingUp = slider.i % 2 == 0;
@@ -510,8 +521,8 @@ d3.chart("Monitoring", {
             .transition()
             .duration(0)
             .attr("transform", [
-                "translate("+xp0+","+yp0+")",
-                "scale("+chart.x(.5)/5+","+(chart.y(0)-chart.y(1.5))/10+")"
+                "translate("+xp0+","+yp0+")"
+                ,"scale("+chart.xScale(.5)/5+","+(chart.y(0)-chart.y(1.5))/10+")"
             ])
             .each("end", function() {
                 d3.select(this).transition()

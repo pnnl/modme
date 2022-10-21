@@ -76,7 +76,7 @@ for o in TableAdd.objects.filter(applyed=False):
             i = i + 1
 
         views[i - 1] = "    " + '    '.join(newViews[3:]) + '\n'
-        print newViews[3:]
+        print(newViews[3:])
 
     with open('ModME/views.py', 'w') as file:
         file.writelines(views)
@@ -87,44 +87,44 @@ for o in TableAdd.objects.filter(applyed=False):
 objects = TableAdd.objects.all()
 
 for uniquestring in os.listdir('ModME/tableAdditions/'):
-    if filter(lambda object: object.uniqueString == uniquestring, objects) == []:
+    if [object for object in objects if object.uniqueString == uniquestring] == []:
         model = []
         with open('ModME/tableAdditions/' + str(uniquestring) + '/models.txt', 'r') as file:
             model = file.readlines()
-        print model[0].split('(')[0][6:-1] + "table was not detected in the database."
-        if raw_input("Do you want to delete it? [Y/n]: ").lower() != 'n':
+        print(model[0].split('(')[0][6:-1] + "table was not detected in the database.")
+        if input("Do you want to delete it? [Y/n]: ").lower() != 'n':
             changesFlag = True
             shutil.rmtree('ModME/tableAdditions/' + uniquestring)
             model = []
             with open('ModME/models.py', 'r') as file:
                 model = file.readlines()
-            model = filter(lambda x: not x.endswith(uniquestring + '\n'), model)
+            model = [x for x in model if not x.endswith(uniquestring + '\n')]
             with open('ModME/models.py', 'w') as file:
                 file.writelines(model)
 
             admin = []
             with open('ModME/admin.py', 'r') as file:
                 admin = file.readlines()
-            admin = filter(lambda x: not x.endswith(uniquestring + '\n'), admin)
+            admin = [x for x in admin if not x.endswith(uniquestring + '\n')]
             with open('ModME/admin.py', 'w') as file:
                 file.writelines(admin)
 
             view = []
             with open('ModME/views.py', 'r') as file:
                 view = file.readlines()
-            view = filter(lambda x: not x.endswith(uniquestring + '\n'), view)
+            view = [x for x in view if not x.endswith(uniquestring + '\n')]
             with open('ModME/views.py', 'w') as file:
                 file.writelines(view)
         else:
             tableAdded = True
-            print "Adding to table"
+            print("Adding to table")
             t = TableAdd(tableName=model[0].split('(')[0][6:-1], uniqueString=uniquestring, applyed=True)
             t.save()
 
 if changesFlag:
     sys.argv = ['manage.py', 'makemigrations']
-    execfile('manage.py')
+    exec(compile(open('manage.py', "rb").read(), 'manage.py', 'exec'))
     sys.argv = ['manage.py', 'migrate']
-    execfile('manage.py')
+    exec(compile(open('manage.py', "rb").read(), 'manage.py', 'exec'))
 # else if not tableAdded:
 #     print "No changes detected"
