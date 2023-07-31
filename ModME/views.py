@@ -135,6 +135,7 @@ def conditionInstructions(request):
         'sessionName': sessionName,
         'studyName': studyName,
         'metadataId': metadataId,
+        'participantAlias': participantAlias,
         'conditionList': ','.join(map(str, splitList)),
         'pdf': pdf,
         'skipInstructions': skipInstructions,
